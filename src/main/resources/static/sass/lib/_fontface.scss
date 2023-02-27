@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Material Icons';
+    src: url('../../fonts/materialdesignicons/materialdesignicons-webfont.eot'); /* For IE6-8 */
+    src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+      url('../../fonts/materialdesignicons/materialdesignicons-webfont.woff2') format('woff2'),
+      url('../../fonts/materialdesignicons/materialdesignicons-webfont.woff') format('woff'),
+      url('../../fonts/materialdesignicons/materialdesignicons-webfont.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Alte Haas Grotesk'), url('../../fonts/alteHaasGrotesk/AlteHaasGroteskRegular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Alte Haas Grotesk'), url('../../fonts/alteHaasGrotesk/AlteHaasGroteskBold.woff') format('woff');
+}
