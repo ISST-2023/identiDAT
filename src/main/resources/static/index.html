@@ -1,18 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <title>identiDAT - Login</title>
-</head>
-<body>
-    
-    
-    <script src="js/jquery-3.6.3.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/materialdesignicons.min.css" />
+		<link rel="stylesheet" href="css/main.css" />
+
+		<link rel="stylesheet" href="css/siu/app.css" />
+		<link rel="stylesheet" href="css/siu/base.css" />
+		<link rel="stylesheet" href="css/siu/patternfly.min.css" />
+		<link rel="stylesheet" href="css/siu/patternfly-additions.min.css" />
+		<link rel="stylesheet" href="css/siu/pficon.css" />
+		<link rel="stylesheet" href="css/siu/login.css" />
+		<link rel="stylesheet" href="css/siu/upm.css" />
+		<title>identiDAT - Login</title>
+	</head>
+
+	<body
+		style="
+			background-image: url('img/fondo_siu.svg');
+			background-repeat: no-repeat no-repeat;
+			background-position: center center;
+			background-size: cover;
+		"
+	>
+		<div class="login-pf-page">
+			<div id="kc-header" class="login-pf-page-header">
+				<div id="kc-header-wrapper" class="">UPM</div>
+			</div>
+			<div class="card-pf">
+				<header class="login-pf-header">
+					<div class="pf-c-dropdown" id="kc-locale">
+						<div id="kc-locale-wrapper" class="">
+							<div id="kc-locale-dropdown" class="">
+								<a href="#" id="kc-current-locale-link"
+									>Español</a
+								>
+							</div>
+						</div>
+					</div>
+					<h1 id="kc-page-title">Servicio de Autenticación</h1>
+				</header>
+				<div id="kc-content">
+					<div id="kc-content-wrapper">
+						<div id="kc-form">
+							<div id="kc-form-wrapper">
+								<form
+									id="kc-form-login"
+									onsubmit="login.disabled = true; return true;"
+									action="https://siu.upm.es/realms/sso-upm/login-actions/authenticate?session_code=Ng4ntB9t3lE7wA3MqDa78aqmtqJjnCIRA1oTrLGAgH0&amp;execution=f2a01105-bae1-450c-ad9c-d22933fbb440&amp;client_id=account-console&amp;tab_id=RCsbr0l_qEE"
+									method="post"
+								>
+									<div class="form-group">
+										<label
+											for="username"
+											class="pf-c-form__label pf-c-form__label-text"
+											>Usuario (parte izquierda del correo
+											sin el @****.upm.es)</label
+										>
+
+										<input
+											tabindex="1"
+											id="username"
+											class="pf-c-form-control"
+											name="username"
+											value=""
+											type="text"
+											autofocus
+											autocomplete="off"
+											aria-invalid=""
+										/>
+									</div>
+
+									<div class="form-group">
+										<label
+											for="password"
+											class="pf-c-form__label pf-c-form__label-text"
+											>Contraseña</label
+										>
+
+										<input
+											tabindex="2"
+											id="password"
+											class="pf-c-form-control"
+											name="password"
+											type="password"
+											autocomplete="off"
+											aria-invalid=""
+										/>
+									</div>
+
+									<div class="form-group login-pf-settings">
+										<div id="kc-form-options"></div>
+										<div class=""></div>
+									</div>
+
+									<div
+										id="kc-form-buttons"
+										class="form-group"
+									>
+										<input
+											type="hidden"
+											id="id-hidden-input"
+											name="credentialId"
+										/>
+										<!--<input
+											tabindex="4"
+											class="pf-c-button pf-m-primary pf-m-block btn-lg"
+											name="login"
+											id="kc-login"
+											type="submit"
+											value="Iniciar sesión"
+										/>-->
+										<a
+											href="profile"
+											tabindex="4"
+											class="pf-c-button pf-m-primary pf-m-block btn-lg"
+											id="kc-login"
+											>Iniciar sesión</a
+										>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery-3.6.3.min.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
+	</body>
 </html>

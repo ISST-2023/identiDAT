@@ -19,4 +19,18 @@
 }
 body {
   background-color: rgb(255, 255, 255);
+}
+
+.global-margin-top {
+  margin-top: 50px;
+}
+
+.btn {
+  background-color: #F65555;
+  color: rgb(255, 255, 255) !important;
+}
+
+#logo_identiDAT {
+  width: 100%;
+  margin-bottom: 50px;
 }/*# sourceMappingURL=main.css.map */
