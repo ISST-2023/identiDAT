@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class GetMappingController {
-    @GetMapping("/profile")
-    public String profile(Model model) {
-      return "profile";
+    @GetMapping("/register")
+    public String register(Model model) {
+      return "register";
     }
 }

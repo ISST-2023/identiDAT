@@ -25,6 +25,10 @@ body {
   margin-top: 50px;
 }
 
+.global-margin-bottom {
+  margin-bottom: 50px;
+}
+
 .btn {
   background-color: #F65555;
   color: rgb(255, 255, 255) !important;
@@ -33,4 +37,8 @@ body {
 #logo_identiDAT {
   width: 100%;
   margin-bottom: 50px;
+}
+
+.logo_smaller {
+  width: 40% !important;
 }/*# sourceMappingURL=main.css.map */
