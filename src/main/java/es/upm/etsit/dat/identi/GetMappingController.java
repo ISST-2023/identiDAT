@@ -10,4 +10,14 @@ public class GetMappingController {
     public String register(Model model) {
       return "register";
     }
+
+    @GetMapping("/admin/census")
+    public String census(Model model) {
+      return "census";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model) {
+      return "profile";
+    }
 }
