@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+	<title>identiDAT - Admin</title>
+</head>
+
+<body>
+
+	<div
+		class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
+			<div class="col-12 col-md-10 col-lg-10 col-xl-12">
+				<div class="card" style="border-radius: 15px;">
+					<div class="card-body p-5 text-center">
+						<a href="/admin/census" class="btn btn-outline-secondary btn-lg">Censo</a>
+                        <a href="/admin/jd" class="btn btn-outline-secondary btn-lg">JD</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script th:src="@{js/jquery-3.6.3.min.js}"></script>
+	<script th:src="@{js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
