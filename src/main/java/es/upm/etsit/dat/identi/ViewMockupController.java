@@ -23,8 +23,13 @@ public class ViewMockupController {
       return "census";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
-      return "profile";
+    @GetMapping("/admin/jd")
+    public String jd(Model model) {
+      return "jd";
+    }
+
+    @GetMapping("/admin/assistance")
+    public String assistance(Model model) {
+      return "assistance_jd";
     }
 }

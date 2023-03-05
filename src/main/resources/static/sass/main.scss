@@ -6,6 +6,10 @@ body {
     background-color: rgb(255, 255, 255);
 }
 
+.form-control-lg {
+    font-size: 1.1rem;
+}
+
 .global-margin-top{
     margin-top: 50px;
 }
@@ -19,9 +23,10 @@ body {
     color:rgb(255, 255, 255) !important; 
 }
 
-#logo_identiDAT {
-    width: 100%;
+#logo {
+    width: 400px!important;
     margin-bottom: 50px;
+    justify-self: center;
 }
 
 .logo_smaller{
