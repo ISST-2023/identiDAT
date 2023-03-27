@@ -10,7 +10,6 @@ public class IdentidatApplication {
 
 	public static void main(String[] args) {
 		SpringApplication identidat = new SpringApplication(IdentidatApplication.class);
-		identidat.setDefaultProperties(Collections.singletonMap("server.port", "25565"));
 		identidat.run(args);
 	}
 }
