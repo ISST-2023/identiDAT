@@ -35,4 +35,87 @@ public class CDMember {
 
     @Column(nullable = false)
     private Boolean head;
+
+    public CDMember() {
+    }
+
+    public CDMember(CensusMember censusId, Departament departamentId, Integer year, Boolean head) {
+        this.censusId = censusId;
+        this.departamentId = departamentId;
+        this.year = year;
+        this.head = head;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CensusMember getCensusId() {
+        return censusId;
+    }
+
+    public void setCensusId(CensusMember censusId) {
+        this.censusId = censusId;
+    }
+
+    public Departament getDepartamentId() {
+        return departamentId;
+    }
+
+    public void setDepartamentId(Departament departamentId) {
+        this.departamentId = departamentId;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Boolean getHead() {
+        return head;
+    }
+
+    public void setHead(Boolean head) {
+        this.head = head;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CDMember other = (CDMember) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "CDMember [id=" + id + ", censusId=" + censusId + ", departamentId=" + departamentId + ", year=" + year
+                + ", head=" + head + "]";
+    }
+
+    
 }

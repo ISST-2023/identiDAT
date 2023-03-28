@@ -1,6 +1,7 @@
 package es.upm.etsit.dat.identi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,11 @@ public class CensusMemberRepositoryTest {
 
         repo.flush();
 
-        System.out.println(repo.findAll());
+        assertNotNull(alvaro);
+        assertNotNull(alvaro.getId());
+
+        assertEquals("Álvaro", alvaro.getName());
+        
         assertEquals(2, repo.findAll().size());
 
     }
