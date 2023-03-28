@@ -1,12 +1,14 @@
-package es.upm.etsit.dat.identi.model;
+package es.upm.etsit.dat.identi.persistence.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "CensusMembers")
 public class CensusMembers {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,22 +30,17 @@ public class CensusMembers {
     private Integer degree;
 
     @Column(nullable = false)
-    private Integer group;
-
-    @Column(nullable = false)
     private Boolean admin;
 
     public CensusMembers() {
     }
 
-    public CensusMembers(String name, String surname, String email, String phone, Integer degree, Integer group,
-            Boolean admin) {
+    public CensusMembers(String name, String surname, String email, String phone, Integer degree, Boolean admin) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
         this.degree = degree;
-        this.group = group;
         this.admin = admin;
     }
 
@@ -95,14 +92,6 @@ public class CensusMembers {
         this.degree = degree;
     }
 
-    public Integer getGroup() {
-        return group;
-    }
-
-    public void setGroup(Integer group) {
-        this.group = group;
-    }
-
     public Boolean getAdmin() {
         return admin;
     }
@@ -139,9 +128,6 @@ public class CensusMembers {
     @Override
     public String toString() {
         return "CensusMembers [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", phone="
-                + phone + ", degree=" + degree + ", group=" + group + ", admin=" + admin + "]";
+                + phone + ", degree=" + degree + ", admin=" + admin + "]";
     }
-
-
-    
 }
