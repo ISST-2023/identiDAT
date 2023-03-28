@@ -8,20 +8,20 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import es.upm.etsit.dat.identi.persistence.model.CensusMembers;
-import es.upm.etsit.dat.identi.persistence.repository.CensusMembersRepository;
+import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class CensusMembersRepositoryTest {
+public class CensusMemberRepositoryTest {
 
     @Autowired
-    private CensusMembersRepository repo;
+    private CensusMemberRepository repo;
 
     @Test
-    public void saveCensusMembers() {
-        CensusMembers alvaro = new CensusMembers("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "666666666", 1, true);
-        CensusMembers perico = new CensusMembers("Perico", "Pérez", "perico@alumnos.upm.es", "777777777", 2, false);
+    public void saveCensusMember() {
+        CensusMember alvaro = new CensusMember("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "666666666", 1, true);
+        CensusMember perico = new CensusMember("Perico", "Pérez", "perico@alumnos.upm.es", "777777777", 2, false);
 
         repo.save(alvaro);
         repo.save(perico);

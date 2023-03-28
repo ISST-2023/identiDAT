@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CensusMembers")
-public class CensusMembers {
+public class CensusMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,10 +32,10 @@ public class CensusMembers {
     @Column(nullable = false)
     private Boolean admin;
 
-    public CensusMembers() {
+    public CensusMember() {
     }
 
-    public CensusMembers(String name, String surname, String email, String phone, Integer degree, Boolean admin) {
+    public CensusMember(String name, String surname, String email, String phone, Integer degree, Boolean admin) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -116,7 +116,7 @@ public class CensusMembers {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CensusMembers other = (CensusMembers) obj;
+        CensusMember other = (CensusMember) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
