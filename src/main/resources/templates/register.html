@@ -27,13 +27,14 @@
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" id="name" class="form-control form-control-lg" value="Rosa" />
+								<input type="text" id="name" class="form-control form-control-lg" disabled
+								th:value="${given_name}"  />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="surname">Apellidos:</label>
 								<input type="text" id="surname" class="form-control form-control-lg"
-									value="González González" />
+								disabled th:value="${family_name}"  />
 							</div>
 
 							<div class="form-outline mb-3">

@@ -1,5 +1,7 @@
 package es.upm.etsit.dat.identi;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +16,14 @@ public class ViewMockupController {
 
   @GetMapping("/")
   public String index(Model model) {
-    return "index";
+    return "redirect:/register";
   }
 
   @GetMapping("/register")
-  public String register(
-      @RequestParam(name = "email", required = false, defaultValue = "r.ggonzalez@alumnos.upm.es") String email,
-      Model model) {
-    model.addAttribute("email", email);
+  public String register(@AuthenticationPrincipal OAuth2User principal, /*@RequestParam(name = "email", required = false, defaultValue = "r.ggonzalez@alumnos.upm.es") String email,*/ Model model) {
+    model.addAttribute("email", principal.getAttribute("email"));
+    model.addAttribute("given_name", principal.getAttribute("given_name"));
+    model.addAttribute("family_name", principal.getAttribute("family_name"));
     return "register";
   }
 
