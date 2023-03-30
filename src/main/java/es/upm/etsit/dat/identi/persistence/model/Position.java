@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 @Table(name = "Positions")
 public class Position {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(length = 200, nullable = false)
@@ -20,7 +19,8 @@ public class Position {
     public Position() {
     }
 
-    public Position(String position) {
+    public Position(Long id, String position) {
+        this.id = id;
         this.position = position;
     }
 

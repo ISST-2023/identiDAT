@@ -28,7 +28,7 @@ public class Delegate {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="positionId")
-    private CensusMember positionId;
+    private Position positionId;
     
     @Column(nullable = false)
     private Integer year;
@@ -36,7 +36,7 @@ public class Delegate {
     public Delegate() {
     }
 
-    public Delegate(CensusMember censusId, CensusMember positionId, Integer year) {
+    public Delegate(CensusMember censusId, Position positionId, Integer year) {
         this.censusId = censusId;
         this.positionId = positionId;
         this.year = year;
@@ -58,11 +58,11 @@ public class Delegate {
         this.censusId = censusId;
     }
 
-    public CensusMember getPositionId() {
+    public Position getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(CensusMember positionId) {
+    public void setPositionId(Position positionId) {
         this.positionId = positionId;
     }
 

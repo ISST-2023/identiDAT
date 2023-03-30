@@ -28,7 +28,7 @@ public class CommissionMember {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="commissionId")
-    private CensusMember commissionId;
+    private Commission commissionId;
     
     @Column(nullable = false)
     private Integer year;
@@ -36,7 +36,7 @@ public class CommissionMember {
     public CommissionMember() {
     }
 
-    public CommissionMember(CensusMember censusId, CensusMember commissionId, Integer year) {
+    public CommissionMember(CensusMember censusId, Commission commissionId, Integer year) {
         this.censusId = censusId;
         this.commissionId = commissionId;
         this.year = year;
@@ -58,11 +58,11 @@ public class CommissionMember {
         this.censusId = censusId;
     }
 
-    public CensusMember getCommissionId() {
+    public Commission getCommissionId() {
         return commissionId;
     }
 
-    public void setCommissionId(CensusMember commissionId) {
+    public void setCommissionId(Commission commissionId) {
         this.commissionId = commissionId;
     }
 

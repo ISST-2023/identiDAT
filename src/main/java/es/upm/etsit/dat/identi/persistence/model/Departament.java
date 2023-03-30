@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 @Table(name = "Departaments")
 public class Departament {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 200, nullable = false, unique = true)
     private String acronym;
 
     @Column(length = 200, nullable = false)
@@ -23,7 +23,8 @@ public class Departament {
     public Departament() {
     }
 
-    public Departament(String acronym, String name) {
+    public Departament(Long id, String acronym, String name) {
+        this.id = id;
         this.acronym = acronym;
         this.name = name;
     }
