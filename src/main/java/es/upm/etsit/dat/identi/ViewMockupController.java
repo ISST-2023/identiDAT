@@ -46,6 +46,11 @@ public class ViewMockupController {
     return "redirect:/oauth2/authorization/ssodat";
   }
 
+  @GetMapping("/profile")
+  public String profile(Model model) {
+    return "profileview";
+  }
+  
   @GetMapping("/admin")
   public String admin(Model model) {
     return "admin";
@@ -59,6 +64,11 @@ public class ViewMockupController {
   @GetMapping("/admin/jd")
   public String jd(Model model) {
     return "jd";
+  }
+
+  @GetMapping("/admin/profiles")
+  public String list(Model model) {
+    return "profiles";
   }
 
   @GetMapping("/admin/assistance")
