@@ -18,7 +18,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((authz) -> authz
                                 .requestMatchers("/js", "/css", "/fonts", "/img").permitAll()
-                                .anyRequest().anonymous()
+                                .anyRequest().permitAll()
                 )
                 .exceptionHandling(e -> e
                                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

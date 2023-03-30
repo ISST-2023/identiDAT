@@ -22,28 +22,28 @@ public class ViewMockupController {
   public String register(@AuthenticationPrincipal OAuth2User principal, /*@RequestParam(name = "email", required = false, defaultValue = "r.ggonzalez@alumnos.upm.es") String email,*/ Model model) {
     String email;
     String given_name;
-    String familiy_name;
+    String family_name;
     try {
       email = principal.getAttribute("email");
       given_name = principal.getAttribute("given_name");
-      familiy_name = principal.getAttribute("familiy_name");
+      family_name = principal.getAttribute("family_name");
     } catch (Exception e) {
       System.out.println("No hay ningún usuario logueado.");
-      email = "r.ggonzalez@alumnos.upm.es";
-      given_name = "Rosa";
-      familiy_name = "González González";
+      email = "";
+      given_name = "";
+      family_name = "";
     }
 
     model.addAttribute("email", email);
     model.addAttribute("given_name", given_name);
-    model.addAttribute("family_name", familiy_name);
+    model.addAttribute("family_name", family_name);
 
     return "register";
   }
 
   @GetMapping("/login")
   public String login(Model model) {
-    return "login";
+    return "redirect:/oauth2/authorization/ssodat";
   }
 
   @GetMapping("/admin")
