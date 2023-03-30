@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+	<title>identiDAT - Perfil</title>
+</head>
+
+<body>
+	<div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
+	<div class="container h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
+		</div>
+		<div style="margin:40px">
+			<div class="mask d-flex align-items-center h-100 global-margin-bottom" style="float:left; margin:40px">
+				<form>
+					<div class="form-outline mb-3">
+						<label class="form-label" for="name">Nombre:</label>
+						<input type="text" id="name" class="form-control form-control-lg" readonly
+							value="Pepito"/>
+					</div>
+					<div class="form-outline mb-3">
+						<label class="form-label" for="surname">Apellidos:</label>
+						<input type="text" id="surname" class="form-control form-control-lg" readonly
+							value="De Los Palotes" />
+					</div>
+
+					<div class="form-outline mb-3">
+						<label class="form-label" for="email">Email:</label>
+						<input type="email" id="email" class="form-control form-control-lg" disable
+							th:value="${email}" readonly/>
+					</div>
+
+					<div class="form-outline mb-3">
+						<label class="form-label" for="phone">Teléfono:</label>
+						<input type="text" id="phone" class="form-control form-control-lg" readonly 
+							th:value="${phone}"/>
+					</div>
+
+					<div class="form-outline mb-3">
+						<label class="form-label" for="degree">Titulación:</label>
+						<input type="text" id="degree" class="form-control form-control-lg" disable
+						th:value="${degree}" readonly/>
+					</div>
+				</form>
+			</div>
+			<div class="mask d-flex align-items-center h-100 global-margin-bottom" style="float:left; margin:40px">
+				<form>
+					<div class="form-outline mb-3">
+						<label class="form-label" for="degree">Cargo:</label>
+						<input type="text" id="position" class="form-control form-control-lg" disable
+						th:value="${position}" readonly/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
