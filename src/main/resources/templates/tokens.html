@@ -22,7 +22,33 @@
 		</div>
 		<div class="row d-flex justify-content-center align-items-center h-100">
 			<div class="col-12 col-md-10 col-lg-8 col-xl-8">
-
+                <p>Que token deseas crear hoy:</p>
+                <p>
+                    <select name="degree" id="grado">
+                        <option value="GITST">GITST</option>
+                        <option value="GIB">GIB</option>
+                        <option value="MUIT">MUIT</option>
+                    </select>
+                    <select name="year" id="año">
+                        <option value="All">All</option>
+                        <option value="1">Primero</option>
+                        <option value="2">Segundo</option>
+                        <option value="3">Tercero</option>
+                        <option value="4">Cuarto</option>
+                    </select>
+                    <select name="group" id="grupo">
+                        <option value="All">All</option>
+                        <option value="1">Grupo 1</option>
+                        <option value="2">Grupo 2</option>
+                        <option value="3">Grupo 3</option>
+                        <option value="4">Grupo 4</option>
+                        <option value="5">Grupo 5</option>
+                    </select>
+                </p>
+                <div class="text-center">
+                    <!--<input type="text" name="inputP" placeholder="Prueba para creación de tokens" id="pruebaT">-->
+                    <button id="bToken" class="btn btn-outline-secondary btn-lg" onclick="changeString()">Tokens</button>
+                </div>
 				<table id="Tokens" class="table table-striped table-hover" style="width:100%">
 					<thead>
 						<tr>
@@ -35,34 +61,29 @@
 					<tbody>
 						<tr id="">
 							<td>
-								<p id="algo" class="token">algo</p>
+								<p id="algo" class="token">a97l108g103o111</p>
 							</td>
 							<td>
-								<p class="degree">GISTS</p>
+								<p id="degree">GITST</p>
 							</td>
 							<td>
-								<p class="year">4</p>
+								<p id="year">4</p>
 							</td>
 							<td>
-								<p class="group">42</p>
+								<p id="group">2</p>
 							</td>
 						</tr>
-
 					</tbody>
 				</table>
-                <div class="text-center">
-                    <input type="text" name="inputP" placeholder="Prueba para creación de tokens" id="pruebaT">
-                    <button id="bToken" class="btn btn-outline-secondary btn-lg">Tokens</button>
-                </div>
             </div>
 		</div>
 	</div>
 	
     </div>
 
-    <!--<script th:src="@{/js/genToken.js}"></script>-->
+    <script th:src="@{/js/genToken.js}"></script>
     <script>
-        document.getElementById("bToken").addEventListener("click", ()=>{
+        /*document.getElementById("bToken").addEventListener("click", ()=>{
             var codeText = document.getElementById("pruebaT");
             const splittedWord = codeText.value.toLowerCase().split("");
             const codes = splittedWord.map((letter) => `${letter}${String(letter).charCodeAt(0)}`);           
@@ -70,7 +91,7 @@
             codeText.value = "";
             //alert("El valor del hash es:" + hash);
             document.getElementById("algo").innerHTML = hash;
-        });
+        });*/
     </script>
     <script th:src="@{js/jquery-3.6.3.min.js}"></script>
 	<script th:src="@{js/bootstrap.bundle.min.js}"></script>

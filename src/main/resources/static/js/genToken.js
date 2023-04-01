@@ -1,81 +1,59 @@
-var boton = document.getElementById("bToken");
-boton.addEventListener("click",genToken(boton.value));
+//Variables globales
+var token;
+var years = ["1","2","3","4"];
+var groups = ["1","2","3","4","5"];
 
+//Función generadora de hash apartir de un string dado
 function genToken(key){
     const splittedWord = key.toLowerCase().split("");
-    const codes = splittedWord.map((letter) => `${letter}${String(letter).charCodeAt(0)}`);
-    //return codes.join("");
-    document.getElementById("algo").innerHTML = codes.join("");
-    //console.log(codes.join(""))
+    const codes = splittedWord.map((letter) => `${letter}${String(letter).charCodeAt(0)}`);           
+    let hash = codes.join("");
+    document.getElementById("algo").innerHTML = hash;
+    return hash;
 }
 
-
-var token;
-var degree = document.getElementById(degree);
-var year = document.getElementById(year);
-var group = document.getElementById(group);
-var years = ["1","2","3","4"];
-var groups1 = ["11","12","13","14","15"];
-var groups2 = ["21","22","23","24","25"];
-var groups3 = ["31","32","33","34","35"];
-var groups4 = ["41","42","43","44","45"];
-
+//Función que crea el string para genToken(key) a partir de los valores de los select para la creación de los tokens
 function changeString(){
+    var degree = document.getElementById("grado").value;
+    var year = document.getElementById("año").value;
+    var group = document.getElementById("grupo").value;
+    let key;
+    
     if (degree == "GITST") {
-        
         if (year == "All") {
 
-            years.forEach(element => {
-                if (element == "1"){
-                    groups1.forEach(item => {
-                        key = degree + element + item;
+            if (group == "All") {
+
+                years.forEach(elementY => {
+                    groups.forEach(itemG => {
+                        key = degree + elementY + itemG;
                         token = genToken(key);
                     });
-                } else if (element == "2") {
-                    groups2.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                } else if (element == "3") {
-                    groups3.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                } else if (element == "4") {
-                    groups4.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                }
-            }); 
-            
+                });
+
+            } else {
+
+                years.forEach(elementY => {
+                    key = degree + elementY + group;
+                    token = genToken(key);
+                });
+
+            }
+
         } else {
             
             if (group == "All") {
-                if (year == "1"){
-                    groups1.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                } else if (year == "2") {
-                    groups2.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                } else if (year == "3") {
-                    groups3.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                } else if (year == "4") {
-                    groups4.forEach(item => {
-                        key = degree + element + item;
-                        token = genToken(key);
-                    });
-                }
+
+                groups.forEach(itemG => {
+                    key = degree + year + itemG;
+                    token = genToken(key);
+                });
+
             } else {
+
                 key = degree + year + group;
                 token = genToken(key);
+                
             }
 
         }
@@ -87,4 +65,5 @@ function changeString(){
     } else {
         //preguntar a Pablo por datos
     }
+
 }
