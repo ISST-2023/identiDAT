@@ -66,6 +66,11 @@ public class ViewMockupController {
     return "jd";
   }
 
+  @GetMapping("/admin/tokens")
+  public String tokens(Model model) {
+    return "tokens";
+  }
+
   @GetMapping("/admin/profiles")
   public String list(Model model) {
     return "profiles";
