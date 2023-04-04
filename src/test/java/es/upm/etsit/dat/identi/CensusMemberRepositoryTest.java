@@ -17,24 +17,24 @@ import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 public class CensusMemberRepositoryTest {
 
     @Autowired
-    private CensusMemberRepository repo;
+    private CensusMemberRepository cenMemRepo;
 
     @Test
     public void saveCensusMember() {
         CensusMember alvaro = new CensusMember("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "666666666", 1, true);
         CensusMember perico = new CensusMember("Perico", "Pérez", "perico@alumnos.upm.es", "777777777", 2, false);
 
-        repo.save(alvaro);
-        repo.save(perico);
+        cenMemRepo.save(alvaro);
+        cenMemRepo.save(perico);
 
-        repo.flush();
+        cenMemRepo.flush();
 
         assertNotNull(alvaro);
         assertNotNull(alvaro.getId());
 
         assertEquals("Álvaro", alvaro.getName());
         
-        assertEquals(2, repo.findAll().size());
+        assertEquals(2, cenMemRepo.findAll().size());
 
     }
 

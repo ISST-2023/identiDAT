@@ -1,7 +1,5 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +21,7 @@ public class JD {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     @NonNull

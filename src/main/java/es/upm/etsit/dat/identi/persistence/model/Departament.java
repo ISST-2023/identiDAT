@@ -20,7 +20,7 @@ public class Departament {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     @NonNull
-    private Integer id;
+    private Long id;
 
     @Column(length = 200, nullable = false, unique = true)
     @NonNull

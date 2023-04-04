@@ -21,7 +21,7 @@ public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
-    private Integer id;
+    private Long id;
 
     @Column(length = 200, nullable = false)
     @NonNull

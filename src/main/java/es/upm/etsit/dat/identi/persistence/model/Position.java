@@ -19,7 +19,7 @@ public class Position {
     @Id
     @EqualsAndHashCode.Include
     @NonNull
-    private Integer id;
+    private Long id;
     
     @Column(length = 200, nullable = false)
     @NonNull
