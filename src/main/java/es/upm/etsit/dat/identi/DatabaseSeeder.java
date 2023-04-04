@@ -16,28 +16,28 @@ public class DatabaseSeeder implements CommandLineRunner {
     private DepartamentRepository departamentRepository;
 
     public void seedDepartments() {
-        Departament dit = new Departament(Long.valueOf(1), "DIT", "Departamento de Ingeniería de Sistemas Telemáticos");
+        Departament dit = new Departament(1, "DIT", "Departamento de Ingeniería de Sistemas Telemáticos");
         departamentRepository.save(dit);
 
-        Departament ssr = new Departament(Long.valueOf(2), "SSR", "Señales, Sistemas y Radiocomunicaciones");
+        Departament ssr = new Departament(2, "SSR", "Señales, Sistemas y Radiocomunicaciones");
         departamentRepository.save(ssr);
 
-        Departament die = new Departament(Long.valueOf(3), "DIE", "Departamento de Ingeniería Electrónica");
+        Departament die = new Departament(3, "DIE", "Departamento de Ingeniería Electrónica");
         departamentRepository.save(die);
 
-        Departament elf = new Departament(Long.valueOf(4), "ELF", "Departamento de Electrónica Física");
+        Departament elf = new Departament(4, "ELF", "Departamento de Electrónica Física");
         departamentRepository.save(elf);
 
-        Departament mat = new Departament(Long.valueOf(5), "MAT", "Matemática aplicada a las tecnologías de la información y las comunicaciones");
+        Departament mat = new Departament(5, "MAT", "Matemática aplicada a las tecnologías de la información y las comunicaciones");
         departamentRepository.save(mat);
 
-        Departament tfb = new Departament(Long.valueOf(6), "TFB", "Departamento de Tecnología Fotónica y Bioingeniería");
+        Departament tfb = new Departament(6, "TFB", "Departamento de Tecnología Fotónica y Bioingeniería");
         departamentRepository.save(tfb);
 
-        Departament ior = new Departament(Long.valueOf(7), "IOR", "Ingeniería de Organización, Administración de Empresas y Estadística");
+        Departament ior = new Departament(7, "IOR", "Ingeniería de Organización, Administración de Empresas y Estadística");
         departamentRepository.save(ior);
 
-        Departament lia = new Departament(Long.valueOf(8), "LIA", "Lingüística aplicada a la ciencia y la tecnología");
+        Departament lia = new Departament(8, "LIA", "Lingüística aplicada a la ciencia y la tecnología");
         departamentRepository.save(lia);
     }
 
@@ -45,34 +45,34 @@ public class DatabaseSeeder implements CommandLineRunner {
     private PositionRepository positionRepository;
 
     public void seedPositions() {
-        Position deleClase = new Position(Long.valueOf(1), "Delegado/a de clase");
+        Position deleClase = new Position(1, "Delegado/a de clase");
         positionRepository.save(deleClase);
 
-        Position subClase = new Position(Long.valueOf(2), "Subdelegado/a de clase");
+        Position subClase = new Position(2, "Subdelegado/a de clase");
         positionRepository.save(subClase);       
         
-        Position deleCurso = new Position(Long.valueOf(3), "Delegado/a de curso");
+        Position deleCurso = new Position(3, "Delegado/a de curso");
         positionRepository.save(deleCurso);
 
-        Position subCurso = new Position(Long.valueOf(4), "Subdelegado/a de curso");
+        Position subCurso = new Position(4, "Subdelegado/a de curso");
         positionRepository.save(subCurso);
 
-        Position deleTitulacion = new Position(Long.valueOf(5), "Delegado/a de titulación");
+        Position deleTitulacion = new Position(5, "Delegado/a de titulación");
         positionRepository.save(deleTitulacion);
 
-        Position subTitulacion = new Position(Long.valueOf(6), "Subdelegado/a de titulación");
+        Position subTitulacion = new Position(6, "Subdelegado/a de titulación");
         positionRepository.save(subTitulacion);
 
-        Position deleEscuela = new Position(Long.valueOf(7), "Delegado/a de Escuela");
+        Position deleEscuela = new Position(7, "Delegado/a de Escuela");
         positionRepository.save(deleEscuela);
 
-        Position subEscuela = new Position(Long.valueOf(8), "Subdelegado/a de Escuela");
+        Position subEscuela = new Position(8, "Subdelegado/a de Escuela");
         positionRepository.save(subEscuela);
 
-        Position secretario = new Position(Long.valueOf(9), "Secretario/a");
+        Position secretario = new Position(9, "Secretario/a");
         positionRepository.save(secretario);
 
-        Position tesorero = new Position(Long.valueOf(10), "Tesorero/a");
+        Position tesorero = new Position(10, "Tesorero/a");
         positionRepository.save(tesorero);        
     }
 
