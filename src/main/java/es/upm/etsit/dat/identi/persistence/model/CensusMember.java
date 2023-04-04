@@ -43,7 +43,7 @@ public class CensusMember {
     @NonNull
     private Integer degree;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     @NonNull
     private Boolean admin;
 

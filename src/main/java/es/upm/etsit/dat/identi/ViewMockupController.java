@@ -1,13 +1,24 @@
 package es.upm.etsit.dat.identi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import es.upm.etsit.dat.identi.form.CensusMemberForm;
+import es.upm.etsit.dat.identi.service.CensusMemberService;
 
 @Controller
 public class ViewMockupController {
+
+  @Autowired
+  CensusMemberService cenMemService;
+
+
+
   @GetMapping("favicon.ico")
   String favicon() {
     return "forward:/favicon.svg";
@@ -38,8 +49,17 @@ public class ViewMockupController {
     model.addAttribute("given_name", given_name);
     model.addAttribute("family_name", family_name);
 
+    model.addAttribute("censusMemberForm", new CensusMemberForm());
+
     return "register";
   }
+
+  @PostMapping("/register")
+  public String createCensusMember(CensusMemberForm censusMember){
+    cenMemService.create(censusMember.getCensusMember());
+    return "redirect:profile";
+  }
+
 
   @GetMapping("/login")
   public String login(Model model) {
