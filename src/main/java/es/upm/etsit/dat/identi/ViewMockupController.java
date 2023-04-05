@@ -6,8 +6,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.form.CensusMemberForm;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 
@@ -55,8 +57,9 @@ public class ViewMockupController {
   }
 
   @PostMapping("/register")
-  public String createCensusMember(CensusMemberForm censusMember){
-    cenMemService.create(censusMember.getCensusMember());
+  public String createCensusMember(@ModelAttribute CensusMemberForm censusMember){
+    System.out.println(censusMember.getDegree());
+    cenMemService.create(new CensusMemberDto(censusMember.getName(), censusMember.getSurname(), censusMember.getEmail(), censusMember.getPhone(), censusMember.getDegree(), false));
     return "redirect:profile";
   }
 

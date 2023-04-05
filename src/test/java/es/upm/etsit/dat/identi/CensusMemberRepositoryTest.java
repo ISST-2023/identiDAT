@@ -21,8 +21,8 @@ public class CensusMemberRepositoryTest {
 
     @Test
     public void saveCensusMember() {
-        CensusMember alvaro = new CensusMember("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "666666666", 1, true);
-        CensusMember perico = new CensusMember("Perico", "Pérez", "perico@alumnos.upm.es", "777777777", 2, false);
+        CensusMember alvaro = new CensusMember("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "666666666", "GITST", true);
+        CensusMember perico = new CensusMember("Perico", "Pérez", "perico@alumnos.upm.es", "777777777", "BIO", false);
 
         cenMemRepo.save(alvaro);
         cenMemRepo.save(perico);

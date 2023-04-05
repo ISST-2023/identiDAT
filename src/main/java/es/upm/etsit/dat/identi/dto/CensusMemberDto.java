@@ -42,7 +42,7 @@ public class CensusMemberDto {
 
     @NonNull
     @NotNull
-    private Integer degree;
+    private String degree;
 
     @NonNull
     private Boolean admin;

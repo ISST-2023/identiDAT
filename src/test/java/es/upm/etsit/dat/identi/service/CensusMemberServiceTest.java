@@ -26,13 +26,13 @@ public class CensusMemberServiceTest {
 
     @Test
     public void constraintsValidationExceptionTest() {
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "666666666", 1, true));});
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "777777777", 2, false));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "666666666", "DATOS", true));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "777777777", "BIO", false));});
     }
 
     @Test
     public void saveCensusMemberOk() {
-        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "666666666", 1, true));
+        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "666666666", "GITST", true));
         assertNotNull(cenMemDto);
         assertEquals("Álvaro", cenMemDto.getName());
         assertNotNull(cenMemDto.getId());

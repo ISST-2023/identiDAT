@@ -41,7 +41,7 @@ public class CensusMember {
 
     @Column(nullable = false)
     @NonNull
-    private Integer degree;
+    private String degree;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     @NonNull

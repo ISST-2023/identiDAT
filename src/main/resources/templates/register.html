@@ -23,36 +23,35 @@
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-						<form id="form" th:action="@{/register}" method="POST" th:object="${censusMemberForm}">
-							<input type="hidden" th:field="*{censusMember.id}" />
+						<form id="form" th:action="@{/register}" method="POST">
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" th:field="*{censusMember.name}" class="form-control form-control-lg" disabled
+								<input type="text" name="name" class="form-control form-control-lg" 
 								th:value="${given_name}"  />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="surname">Apellidos:</label>
-								<input type="text" th:field="*{censusMember.surname}" class="form-control form-control-lg"
-								disabled th:value="${family_name}"  />
+								<input type="text" name="surname" class="form-control form-control-lg"
+								 th:value="${family_name}"  />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="email">Email:</label>
-								<input type="email" th:field="*{censusMember.email}" class="form-control form-control-lg" disabled
+								<input type="email" name="email" class="form-control form-control-lg" 
 									th:value="${email}" />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="phone">Teléfono:</label>
-								<input type="text" th:field="*{censusMember.phone}" class="form-control form-control-lg" />
+								<input type="text" name="phone" class="form-control form-control-lg" />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="degree">Titulación:</label>
-								<input type="number" th:field="*{censusMember.degree}" class="form-control form-control-lg" disabled
-									value=1 />
+								<input type="text" name="degree" class="form-control form-control-lg" 
+									value="GITST" />
 							</div>
 
 							<div class="form-outline mb-3">
