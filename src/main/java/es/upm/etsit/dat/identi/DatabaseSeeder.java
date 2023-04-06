@@ -45,11 +45,11 @@ public class DatabaseSeeder implements CommandLineRunner {
     private PositionRepository positionRepository;
 
     public void seedPositions() {
-        Position deleClase = new Position(Long.valueOf(1), "Delegado/a de clase");
-        positionRepository.save(deleClase);
+        Position deleGrupo = new Position(Long.valueOf(1), "Delegado/a de grupo");
+        positionRepository.save(deleGrupo);
 
-        Position subClase = new Position(Long.valueOf(2), "Subdelegado/a de clase");
-        positionRepository.save(subClase);       
+        Position subGrupo = new Position(Long.valueOf(2), "Subdelegado/a de grupo");
+        positionRepository.save(subGrupo);       
         
         Position deleCurso = new Position(Long.valueOf(3), "Delegado/a de curso");
         positionRepository.save(deleCurso);
