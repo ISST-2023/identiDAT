@@ -17,8 +17,8 @@ function changeString(){
     var degree = document.getElementById("grado").value;
     var year = document.getElementById("año").value;
     var group = document.getElementById("grupo").value;
-    let key;
-    
+    let concat;
+
     if (degree == "GITST") {
         if (year == "All") {
 
@@ -26,16 +26,16 @@ function changeString(){
 
                 years.forEach(elementY => {
                     groups.forEach(itemG => {
-                        key = degree + elementY + itemG;
-                        token = genToken(key);
+                        concat = degree + elementY + itemG;
+                        token = genToken(concat);
                     });
                 });
 
             } else {
 
                 years.forEach(elementY => {
-                    key = degree + elementY + group;
-                    token = genToken(key);
+                    concat = degree + elementY + group;
+                    token = genToken(concat);
                 });
 
             }
@@ -45,14 +45,14 @@ function changeString(){
             if (group == "All") {
 
                 groups.forEach(itemG => {
-                    key = degree + year + itemG;
-                    token = genToken(key);
+                    concat = degree + year + itemG;
+                    token = genToken(concat);
                 });
 
             } else {
 
-                key = degree + year + group;
-                token = genToken(key);
+                concat = degree + year + group;
+                token = genToken(concat);
                 
             }
 
@@ -62,7 +62,7 @@ function changeString(){
         //preguntar a Pablo por si hay casos especiales
     } else if (degree == "MUIT") {
         //preguntar a Pablo por si hay casos especiales
-    } else {
+    } else if (degree == "datos"){
         //preguntar a Pablo por datos
     }
 

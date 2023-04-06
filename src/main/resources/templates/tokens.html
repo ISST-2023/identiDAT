@@ -22,8 +22,8 @@
 		</div>
 		<div class="row d-flex justify-content-center align-items-center h-100">
 			<div class="col-12 col-md-10 col-lg-8 col-xl-8">
-                <p>Que token deseas crear hoy:</p>
-                <p>
+                <h2>Que token deseas crear hoy:</h2>
+                <form id="form" th:action="@{/saveToken}" method="POST">
                     <select name="degree" id="grado">
                         <option value="GITST">GITST</option>
                         <option value="GIB">GIB</option>
@@ -36,7 +36,7 @@
                         <option value="3">Tercero</option>
                         <option value="4">Cuarto</option>
                     </select>
-                    <select name="group" id="grupo">
+                    <select name="grupo" id="grupo">
                         <option value="All">All</option>
                         <option value="1">Grupo 1</option>
                         <option value="2">Grupo 2</option>
@@ -44,11 +44,16 @@
                         <option value="4">Grupo 4</option>
                         <option value="5">Grupo 5</option>
                     </select>
-                </p>
-                <div class="text-center">
-                    <!--<input type="text" name="inputP" placeholder="Prueba para creación de tokens" id="pruebaT">-->
-                    <button id="bToken" class="btn btn-outline-secondary btn-lg" onclick="changeString()">Tokens</button>
-                </div>
+					<select name="position" id="position">
+                        <option value="All">Ambos</option>
+                        <option value="delegado">Delegado</option>
+                        <option value="subdelegado">Subdelegado</option>
+                    </select>
+
+                    <div class="text-center">
+                        <input type="submit" id="bToken" class="btn btn-outline-secondary btn-lg"> <!--onclick="changeString()"-->
+                    </div>
+                </form>
 				<table id="Tokens" class="table table-striped table-hover" style="width:100%">
 					<thead>
 						<tr>
