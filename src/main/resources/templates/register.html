@@ -14,63 +14,62 @@
 
 <body>
 
-	<div
-		class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
+	<div class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
 		<div class="row d-flex align-items-center justify-content-center h-100">
 			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
 			<div class="col-12 col-md-10 col-lg-10 col-xl-10">
-				<div class="card" style="border-radius: 15px;">
+				<div class="card scale-less" style="border-radius: 15px;">
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-						<form:form modelAttribute="censusMember" action="/register" method="POST">
+						<form th:action="@{/register}" method="POST">
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="name">Nombre:</form:form:label>
-								<form:input type="text" id="name" name="name" class="form-control form-control-lg" disabled
-								th:value="${given_name}" required/>
+								<label class="form-label" for="name">Nombre:</label>
+								<input type="text" id="name" name="name" class="form-control form-control-lg" 
+								th:value="${given_name}" required readonly="true"/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="surname">Apellidos:</form:label>
-								<form:input type="text" id="surname" name="surname" class="form-control form-control-lg"
-								disabled th:value="${family_name}" required/>
+								<label class="form-label" for="surname">Apellidos:</label>
+								<input type="text" id="surname" name="surname" class="form-control form-control-lg"
+								 th:value="${family_name}" required readonly="true"/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="email">Email:</form:label>
-								<form:input type="email" id="email" name="email" class="form-control form-control-lg" disabled
-									th:value="${email}" required/>
+								<label class="form-label" for="email">Email:</label>
+								<input type="email" id="email" name="email" class="form-control form-control-lg" 
+									th:value="${email}" required readonly="true"/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="personalID">DNI/NIE/Pasaporte:</form:label>
-								<form:input type="text" id="personalID" name="personalID" class="form-control form-control-lg" required/>
+								<label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
+								<input type="text" id="personalID" name="personalID" class="form-control form-control-lg" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="phone">Teléfono:</form:label>
-								<form:input type="number" id="phone" name="phone" class="form-control form-control-lg" required/>
+								<label class="form-label" for="phone">Teléfono:</label>
+								<input type="number" id="phone" name="phone" class="form-control form-control-lg" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="degree">Titulación:</form:label>
-								<form:input type="text" id="degree" name="degree" class="form-control form-control-lg" disabled
+								<label class="form-label" for="degree">Titulación:</label>
+								<input type="text" id="degree" name="degree" class="form-control form-control-lg" readonly="true"
 									value="GITST" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<form:label class="form-label" for="position">Cargo:</form:label>
-								<form:input type="text" id="position" name="position" class="form-control form-control-lg" disabled
+								<label class="form-label" for="position">Cargo:</label>
+								<input type="text" id="position" name="position" class="form-control form-control-lg" readonly="true"
 									value="Delegado/a del grupo 34" required/>
 							</div>
 
 							<div class="form-check d-flex justify-content-center mb-5">
-								<form:input class="form-check-input me-2" type="checkbox" value="" id="agreement" name="agreement" required/>
-								<form:label class="form-check-label" for="form2Example3g">
-									Estoy de acuerdo con los <a href="#!" class="text-body"><u>Términos y
+								<input class="form-check-input me-2" type="checkbox" value="" id="agreement" name="agreement" required/>
+								<label class="form-check-label" for="form2Example3g">
+									Estoy de acuerdo con los <a href="#" class="text-body"><u>Términos y
 											Condiciones</u></a> de servicio
-								</form:label>
+								</label>
 							</div>
 
 							<div class="d-flex justify-content-center">
@@ -78,7 +77,7 @@
 									class="btn btn-danger btn-dat btn-block btn-lg text-body" value="Registrarse"></input>
 							</div>
 
-						</form:form>
+						</form>
 
 					</div>
 				</div>
