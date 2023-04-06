@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-
 @NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class CensusMemberDto {
     @EqualsAndHashCode.Include
@@ -38,13 +37,18 @@ public class CensusMemberDto {
     @NonNull
     @NotBlank
     @Size(max = 200)
-    private String phone;
+    private String personalID;
+
+    @NonNull
+    @NotBlank
+    @Size(max = 200)
+    private Integer phone;
 
     @NonNull
     @NotNull
     private String degree;
 
     @NonNull
-    private Boolean admin;
+    private Boolean admin = false;
 
 }

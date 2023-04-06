@@ -23,49 +23,54 @@
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-						<form id="form" th:action="@{/register}" method="POST">
+						<form:form modelAttribute="censusMember" action="/register" method="POST">
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" name="name" class="form-control form-control-lg" 
-								th:value="${given_name}"  />
+								<form:label class="form-label" for="name">Nombre:</form:form:label>
+								<form:input type="text" id="name" name="name" class="form-control form-control-lg" disabled
+								th:value="${given_name}" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="surname">Apellidos:</label>
-								<input type="text" name="surname" class="form-control form-control-lg"
-								 th:value="${family_name}"  />
+								<form:label class="form-label" for="surname">Apellidos:</form:label>
+								<form:input type="text" id="surname" name="surname" class="form-control form-control-lg"
+								disabled th:value="${family_name}" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="email">Email:</label>
-								<input type="email" name="email" class="form-control form-control-lg" 
-									th:value="${email}" />
+								<form:label class="form-label" for="email">Email:</form:label>
+								<form:input type="email" id="email" name="email" class="form-control form-control-lg" disabled
+									th:value="${email}" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="phone">Teléfono:</label>
-								<input type="text" name="phone" class="form-control form-control-lg" />
+								<form:label class="form-label" for="personalID">DNI/NIE/Pasaporte:</form:label>
+								<form:input type="text" id="personalID" name="personalID" class="form-control form-control-lg" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="degree">Titulación:</label>
-								<input type="text" name="degree" class="form-control form-control-lg" 
-									value="GITST" />
+								<form:label class="form-label" for="phone">Teléfono:</form:label>
+								<form:input type="number" id="phone" name="phone" class="form-control form-control-lg" required/>
 							</div>
 
 							<div class="form-outline mb-3">
-								<label class="form-label" for="position">Cargo:</label>
-								<input type="text" id="position" class="form-control form-control-lg" disabled
-									value="Delegado/a del grupo 34" />
+								<form:label class="form-label" for="degree">Titulación:</form:label>
+								<form:input type="text" id="degree" name="degree" class="form-control form-control-lg" disabled
+									value="GITST" required/>
+							</div>
+
+							<div class="form-outline mb-3">
+								<form:label class="form-label" for="position">Cargo:</form:label>
+								<form:input type="text" id="position" name="position" class="form-control form-control-lg" disabled
+									value="Delegado/a del grupo 34" required/>
 							</div>
 
 							<div class="form-check d-flex justify-content-center mb-5">
-								<input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-								<label class="form-check-label" for="form2Example3g">
+								<form:input class="form-check-input me-2" type="checkbox" value="" id="agreement" name="agreement" required/>
+								<form:label class="form-check-label" for="form2Example3g">
 									Estoy de acuerdo con los <a href="#!" class="text-body"><u>Términos y
 											Condiciones</u></a> de servicio
-								</label>
+								</form:label>
 							</div>
 
 							<div class="d-flex justify-content-center">
@@ -73,7 +78,7 @@
 									class="btn btn-danger btn-dat btn-block btn-lg text-body" value="Registrarse"></input>
 							</div>
 
-						</form>
+						</form:form>
 
 					</div>
 				</div>
@@ -84,6 +89,7 @@
 
 	<script th:src="@{/js/jquery-3.6.3.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/functions.js}"></script>
 </body>
 
 </html>

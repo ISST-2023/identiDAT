@@ -8,6 +8,7 @@ public class CensusMemberForm {
     private String name;
     private String surname;
     private String email;
-    private String phone;
+    private String personalID;
+    private Integer phone;
     private String degree;
 }
