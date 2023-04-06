@@ -64,7 +64,7 @@ public class ViewMockupController {
 
   @PostMapping("/register")
   public String createCensusMember(@ModelAttribute CensusMemberForm censusMember){
-    cenMemService.create(new CensusMemberDto(censusMember.getName(), censusMember.getSurname(), censusMember.getEmail(), censusMember.getPhone(), censusMember.getDegree(), false));
+    cenMemService.create(new CensusMemberDto(censusMember.getName(), censusMember.getSurname(), censusMember.getEmail(), censusMember.getPersonalID(), censusMember.getPhone(), censusMember.getDegree()));
     return "redirect:profile";
   }
 

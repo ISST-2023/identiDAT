@@ -37,11 +37,11 @@ public class CensusMemberDto {
     @NonNull
     @NotBlank
     @Size(max = 200)
+    @NotNull
     private String personalID;
 
     @NonNull
-    @NotBlank
-    @Size(max = 200)
+    @NotNull
     private Integer phone;
 
     @NonNull
