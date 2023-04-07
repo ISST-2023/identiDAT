@@ -82,15 +82,16 @@ public class DatabaseSeeder implements CommandLineRunner {
     private DegreeRepository degreeRepository;
 
     public void seedDegrees() {
-        degreeRepository.save(new Degree("Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
-        degreeRepository.save(new Degree("Grado en Ingeniería Biomédica", "09IB", "GIB"));
-        degreeRepository.save(new Degree("Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
-        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
-        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Redes y Servicios Telemáticos", "09AS", "MUIRST"));
-        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
-        degreeRepository.save(new Degree("Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
-        degreeRepository.save(new Degree("Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
-        degreeRepository.save(new Degree("Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
+        if (degreeRepository.findByCode("09DA") == null) degreeRepository.save(new Degree("Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
+        if (degreeRepository.findByCode("09TT") == null) degreeRepository.save(new Degree("Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
+        if (degreeRepository.findByCode("09IB") == null) degreeRepository.save(new Degree("Grado en Ingeniería Biomédica", "09IB", "GIB"));
+        if (degreeRepository.findByCode("09ID") == null) degreeRepository.save(new Degree("Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
+        if (degreeRepository.findByCode("09AQ") == null) degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
+        if (degreeRepository.findByCode("09AS") == null) degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Redes y Servicios Telemáticos", "09AS", "MUIRST"));
+        if (degreeRepository.findByCode("09AZ") == null) degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
+        if (degreeRepository.findByCode("09AT") == null) degreeRepository.save(new Degree("Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
+        if (degreeRepository.findByCode("09AX") == null) degreeRepository.save(new Degree("Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
+        if (degreeRepository.findByCode("09AU") == null) degreeRepository.save(new Degree("Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
     }
 
     @Override
