@@ -15,3 +15,9 @@ $(document).ready(function () {
         },
     });
 });
+
+$('.selector > input').click(function() {
+    if ($(this).is(':checked')) {
+        $(this).siblings('fieldset').show();
+    } else $(this).siblings('fieldset').hide();
+});
