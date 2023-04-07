@@ -76,124 +76,126 @@ public class ViewMockupController {
     String[] groups = {"1","2","3","4","5"};
     String[] positions = {"delegado","subdelegado"};
 
+    //variable ssacadas del formulario
     String degree = token.getDegree();
     String year = token.getYear();
     String group = token.getGrupo();
     String position = token.getPosition();
+
+    //varibale auxiliar
     String concat = "";
-    //tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + group), position));
-    
+    /*
     if (degree.equals("GITST")) {
-      if (year.equals("All")) {
-
-        if (group.equals("All")) {
-          
-          if (position.equals("All")) {
-
-            for(int i = 0; i < years.length; i++){
-              for(int j = 0; j < groups.length; j++){
-                for(int k = 0; k < positions.length; k ++){
-                  concat = degree + years[i] + years[i] + groups[j] + positions[k];
-                  unToken = genToken(concat);
-                  tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + groups[j]), positions[k]));
-                }
-              }
-            }
-
-          } else {
-
-            for(int i = 0; i < years.length; i++){
-              for(int j = 0; j < groups.length; j++){
-                concat = degree + years[i] + years[i] + groups[j] + position;
-                unToken = genToken(concat);
-                tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + groups[j]), position));             
-              }
-            }
-
-          }
-
-        } else {
-
-          if (position.equals("All")) {
-
-            for(int i = 0; i < years.length; i++){             
-              for(int k = 0; k < positions.length; k ++){
-                concat = degree + years[i] + years[i] + group + positions[k];
-                unToken = genToken(concat);
-                tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + group), positions[k]));
-              }
-            }
-
-          } else {
-
-            for(int i = 0; i < years.length; i++){
-              concat = degree + years[i] + years[i] + group + position;
-              unToken = genToken(concat);
-              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + group), position));             
-            }
-
-          }
-
-        }
-
-      } else {
-          
-        if (group.equals("All")) {
-
-          if (position.equals("All")) {
-
-            for(int j = 0; j < groups.length; j++){
-              for(int k = 0; k < positions.length; k ++){
-                concat = degree + year + year + groups[j] + positions[k];
-                unToken = genToken(concat);
-                tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + groups[j]), positions[k]));
-              }
-            }
-            
-          } else {
-  
-            for(int j = 0; j < groups.length; j++){
-              concat = degree + year + year + groups[j] + position;
-              unToken = genToken(concat);
-              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + groups[j]), position));             
-            }
-          
-          }
-
-        } else {
-
-          if (position.equals("All")) {
-
-            for(int k = 0; k < positions.length; k ++){
-              concat = degree + year + year + group + positions[k];
-              unToken = genToken(concat);
-              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + group), positions[k]));
-            }
-            
-          } else {
-      
-            concat = degree + year + year + group + position;
-            unToken = genToken(concat);
-            tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + group), position));             
-            
-          }
-            
-        }
-
-      }
 
     } else if (degree.equals("GIB")) {
       //rellenar
     } else if (degree.equals("MUIT")) {
       //rellenar
-    } else if (degree.equals("datos")) {
+    } else if (degree.equals("GISD")) {
       //rellenar
     }
+    */
+    if (year.equals("All")) {
+
+      if (group.equals("All")) {
+        
+        if (position.equals("All")) {
+
+          for(int i = 0; i < years.length; i++){
+            for(int j = 0; j < groups.length; j++){
+              for(int k = 0; k < positions.length; k ++){
+                concat = degree + years[i] + years[i] + groups[j] + positions[k];
+                unToken = genToken(concat);
+                tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + groups[j]), positions[k]));
+              }
+            }
+          }
+
+        } else {
+
+          for(int i = 0; i < years.length; i++){
+            for(int j = 0; j < groups.length; j++){
+              concat = degree + years[i] + years[i] + groups[j] + position;
+              unToken = genToken(concat);
+              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + groups[j]), position));             
+            }
+          }
+
+        }
+
+      } else {
+
+        if (position.equals("All")) {
+
+          for(int i = 0; i < years.length; i++){             
+            for(int k = 0; k < positions.length; k ++){
+              concat = degree + years[i] + years[i] + group + positions[k];
+              unToken = genToken(concat);
+              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + group), positions[k]));
+            }
+          }
+
+        } else {
+
+          for(int i = 0; i < years.length; i++){
+            concat = degree + years[i] + years[i] + group + position;
+            unToken = genToken(concat);
+            tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]), Integer.parseInt(years[i] + group), position));             
+          }
+
+        }
+
+      }
+
+    } else {
+        
+      if (group.equals("All")) {
+
+        if (position.equals("All")) {
+
+          for(int j = 0; j < groups.length; j++){
+            for(int k = 0; k < positions.length; k ++){
+              concat = degree + year + year + groups[j] + positions[k];
+              unToken = genToken(concat);
+              tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + groups[j]), positions[k]));
+            }
+          }
+          
+        } else {
+
+          for(int j = 0; j < groups.length; j++){
+            concat = degree + year + year + groups[j] + position;
+            unToken = genToken(concat);
+            tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + groups[j]), position));             
+          }
+        
+        }
+
+      } else {
+
+        if (position.equals("All")) {
+
+          for(int k = 0; k < positions.length; k ++){
+            concat = degree + year + year + group + positions[k];
+            unToken = genToken(concat);
+            tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + group), positions[k]));
+          }
+          
+        } else {
     
+          concat = degree + year + year + group + position;
+          unToken = genToken(concat);
+          tokenService.create(new TokenDto(unToken, degree, Integer.parseInt(year), Integer.parseInt(year + group), position));             
+          
+        }
+          
+      }
+
+    }
     return "redirect:admin/tokens";
   }
 
-  //Función generadora de hash apartir de un string dado
+  //Método generador de hash apartir de un string dado
   public String genToken(String key) {
     char[] caracteres = key.toCharArray();
     String[] caracteresSeparados = new String[caracteres.length];
