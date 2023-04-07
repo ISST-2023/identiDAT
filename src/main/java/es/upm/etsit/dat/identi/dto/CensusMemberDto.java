@@ -41,7 +41,6 @@ public class CensusMemberDto {
     private String personalID;
 
     @NonNull
-    @NotNull
     private Integer phone;
 
     @NonNull

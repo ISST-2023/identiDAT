@@ -2,8 +2,9 @@ package es.upm.etsit.dat.identi.form;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class CensusMemberForm {
     private String name;
     private String surname;
@@ -11,4 +12,14 @@ public class CensusMemberForm {
     private String personalID;
     private Integer phone;
     private String degree;
+    private String position;
+    private Boolean agreement;
+
+    public CensusMemberForm (String name, String surname, String email, String degree, String position) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.degree = degree;
+        this.position = position;
+    }
 }

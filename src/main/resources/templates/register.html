@@ -22,59 +22,62 @@
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-						<form th:action="@{/register}" method="POST">
+						<form action="#" th:action="@{/register}" th:object="${censusMemberForm}" method="POST">
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" id="name" name="name" class="form-control form-control-lg" 
-								th:value="${given_name}" required readonly="true"/>
+								<input type="text" id="name" name="name" class="form-control form-control-lg" disabled
+									th:field="*{name}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="surname">Apellidos:</label>
 								<input type="text" id="surname" name="surname" class="form-control form-control-lg"
-								 th:value="${family_name}" required readonly="true"/>
+									disabled th:field="*{surname}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="email">Email:</label>
-								<input type="email" id="email" name="email" class="form-control form-control-lg" 
-									th:value="${email}" required readonly="true"/>
+								<input type="email" id="email" name="email" class="form-control form-control-lg"
+									disabled th:field="*{email}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
-								<input type="text" id="personalID" name="personalID" class="form-control form-control-lg" required/>
+								<input type="text" id="personalID" name="personalID"
+									class="form-control form-control-lg" th:field="*{personalID}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="phone">Teléfono:</label>
-								<input type="number" id="phone" name="phone" class="form-control form-control-lg" required/>
+								<input type="number" id="phone" name="phone" class="form-control form-control-lg"
+									th:field="*{phone}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="degree">Titulación:</label>
-								<input type="text" id="degree" name="degree" class="form-control form-control-lg" readonly="true"
-									value="GITST" required/>
+								<input type="text" id="degree" name="degree" class="form-control form-control-lg"
+									th:field="*{degree}" disabled value="GITST" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="position">Cargo:</label>
-								<input type="text" id="position" name="position" class="form-control form-control-lg" readonly="true"
-									value="Delegado/a del grupo 34" required/>
+								<input type="text" id="position" name="position" class="form-control form-control-lg"
+									th:field="*{position}" disabled required />
 							</div>
 
 							<div class="form-check d-flex justify-content-center mb-5">
-								<input class="form-check-input me-2" type="checkbox" value="" id="agreement" name="agreement" required/>
-								<label class="form-check-label" for="form2Example3g">
-									Estoy de acuerdo con los <a href="#" class="text-body"><u>Términos y
+								<input class="form-check-input me-2" type="checkbox" id="agreement" name="agreement"
+									th:field="*{agreement}" required />
+								<label class="form-check-label" for="agreement">
+									Estoy de acuerdo con los <a href="#!" class="text-body"><u>Términos y
 											Condiciones</u></a> de servicio
 								</label>
 							</div>
 
 							<div class="d-flex justify-content-center">
-								<input type="submit"
-									class="btn btn-danger btn-dat btn-block btn-lg text-body" value="Registrarse"></input>
+								<input type="submit" class="btn btn-danger btn-dat btn-block btn-lg text-body"
+									value="Registrarse"></input>
 							</div>
 
 						</form>
