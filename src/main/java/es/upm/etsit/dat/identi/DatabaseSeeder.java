@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Departament;
 import es.upm.etsit.dat.identi.persistence.model.Position;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 
@@ -76,10 +78,26 @@ public class DatabaseSeeder implements CommandLineRunner {
         positionRepository.save(tesorero);        
     }
 
+    @Autowired
+    private DegreeRepository degreeRepository;
+
+    public void seedDegrees() {
+        degreeRepository.save(new Degree("Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
+        degreeRepository.save(new Degree("Grado en Ingeniería Biomédica", "09IB", "GIB"));
+        degreeRepository.save(new Degree("Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
+        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
+        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Redes y Servicios Telemáticos", "09AS", "MUIRST"));
+        degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
+        degreeRepository.save(new Degree("Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
+        degreeRepository.save(new Degree("Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
+        degreeRepository.save(new Degree("Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
+    }
+
     @Override
     public void run(String... args) throws Exception {
         seedDepartments();
         seedPositions();
+        seedDegrees();
     }
 }
 
