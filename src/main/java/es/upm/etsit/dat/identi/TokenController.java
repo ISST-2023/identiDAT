@@ -1,5 +1,7 @@
 package es.upm.etsit.dat.identi;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.upm.etsit.dat.identi.dto.TokenDto;
-import es.upm.etsit.dat.identi.form.TokenForm;
+import es.upm.etsit.dat.identi.persistence.model.Degree;
+import es.upm.etsit.dat.identi.persistence.model.Position;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
+import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.service.TokenService;
 
 @Controller
@@ -16,14 +21,24 @@ public class TokenController {
     @Autowired
     private TokenService tknService;
 
-    @GetMapping("/admin/tokens")
-    public String tokens(Model model) {
-      return "tokens";
-    }
+    @Autowired
+    private DegreeRepository dgrRepository;
 
+    @Autowired
+    private PositionRepository pstnRepository;
+
+    @GetMapping("/admin/tokens")
+    public String tokenForm(Model model) {
+        List<Degree> degrees = dgrRepository.findAll();
+        List<Position> positions = pstnRepository.findAll();
+        model.addAttribute("degrees", degrees);
+        model.addAttribute("positions", positions);
+        return "tokens";
+    }
+    
     @PostMapping("/saveToken")
-    public String createToken(@ModelAttribute TokenForm token) {
-        // Variables globales para los tokens
+    public String createToken() {
+        /* // Variables globales para los tokens
         String unToken = "";
         String[] years = { "1", "2", "3", "4" };
         String[] groups = { "1", "2", "3", "4", "5" };
@@ -37,17 +52,7 @@ public class TokenController {
 
         // varibale auxiliar
         String concat = "";
-        /*
-         * if (degree.equals("GITST")) {
-         * 
-         * } else if (degree.equals("GIB")) {
-         * //rellenar
-         * } else if (degree.equals("MUIT")) {
-         * //rellenar
-         * } else if (degree.equals("GISD")) {
-         * //rellenar
-         * }
-         */
+
         if (year.equals("All")) {
 
             if (group.equals("All")) {
@@ -152,7 +157,7 @@ public class TokenController {
 
             }
 
-        }
+        } */
         return "redirect:admin/tokens";
     }
 

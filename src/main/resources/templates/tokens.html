@@ -23,25 +23,25 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-10 col-lg-8 col-xl-8">
                 <h2>Qué token deseas crear hoy?</h2>
-                <form id="form" th:action="@{/saveToken}" method="POST">
+                <form id="tokenRequest" th:action="@{/saveToken}" method="POST">
                     <span th:each="degree : ${degrees}" class="selector">
-                        <input type="checkbox" th:value="${degree.id}" th:text="${degree.acronym}" name="degree"
-                            id="degree"></input>
+                        <input type="checkbox" th:value="${degree.id}" th:text="${degree.acronym}"
+                            class="degree"></input>
                         <br />
                         <fieldset style="display:none">
                             <br />
                             <span th:if="${degree.acronym == 'DAT' && position.id >= 7}"
                                 th:each="position : ${positions}">
                                 <input type="checkbox" th:value="${position.id}" th:text="${position.position}"
-                                    name="position" id="position"></input>
+                                    class="position"></input>
                                 <br />
                             </span>
 
                             <span th:if="${degree.acronym != 'DAT' && position.id < 7}"
                                 th:each="position : ${positions}">
                                 <input type="checkbox" th:value="${position.id}" th:text="${position.position}"
-                                    name="position" id="position"></input>
-                                <input type="text"></input>
+                                    class="position"></input>
+                                <input type="text" class="groups"></input>
                                 <br />
                             </span>
                             <br />
@@ -120,7 +120,7 @@
     </script>
     <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/adminFunctions.js}"></script>
+    <script th:src="@{/js/admin/tokenFunctions.js}"></script>
 </body>
 
 </html>
