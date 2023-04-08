@@ -49,5 +49,4 @@ public class CensusMemberDto {
 
     @NonNull
     private Boolean admin = false;
-
 }
