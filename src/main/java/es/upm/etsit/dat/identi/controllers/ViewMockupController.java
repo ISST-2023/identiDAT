@@ -1,11 +1,19 @@
 package es.upm.etsit.dat.identi.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import es.upm.etsit.dat.identi.dto.CensusMemberDto;
+import es.upm.etsit.dat.identi.service.CensusMemberService;
+
 @Controller
 public class ViewMockupController {
+  @Autowired
+  private CensusMemberService cenMemService;
 
   @GetMapping("favicon.ico")
   String favicon() {
@@ -44,10 +52,8 @@ public class ViewMockupController {
 
   @GetMapping("/admin/profiles")
   public String list(Model model) {
-    
-
-
-
+    List<CensusMemberDto> censusMembers =  cenMemService.getAll();
+    model.addAttribute("censusMembers", censusMembers);
     return "profiles";
   }
 
