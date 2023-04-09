@@ -1,5 +1,8 @@
 package es.upm.etsit.dat.identi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +28,27 @@ public class CensusMemberServiceImpl implements CensusMemberService {
         cenMembEntity = cenMemRepo.save(cenMembEntity);
         return modelMapper.map(cenMembEntity, CensusMemberDto.class);
     }
+
+    @Override
+    public CensusMemberDto get(Long id) {
+        CensusMember cenMembEntity = cenMemRepo.getReferenceById(id);
+        CensusMemberDto cenMemDto = modelMapper.map(cenMembEntity, CensusMemberDto.class);
+        return cenMemDto;
+    }
+
+    @Override
+    public List<CensusMemberDto> getAll() {
+        List<CensusMember> listCenMembEntity = cenMemRepo.findAll();
+        List<CensusMemberDto> listCenMembDto = listCenMembEntity.stream().map(cenMemb -> modelMapper.map(cenMemb, CensusMemberDto.class)).collect(Collectors.toList());
+        return listCenMembDto;
+    }
     
+    @Override
+    public void delete(Long id) {
+        try {
+            cenMemRepo.deleteById(id);
+        } catch (Exception e) {
+            System.out.println("El miembro a borrar no existe");
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package es.upm.etsit.dat.identi;
+package es.upm.etsit.dat.identi.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +44,10 @@ public class ViewMockupController {
 
   @GetMapping("/admin/profiles")
   public String list(Model model) {
+    
+
+
+
     return "profiles";
   }
 

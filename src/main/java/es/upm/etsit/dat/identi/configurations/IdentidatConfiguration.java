@@ -1,4 +1,4 @@
-package es.upm.etsit.dat.identi;
+package es.upm.etsit.dat.identi.configurations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

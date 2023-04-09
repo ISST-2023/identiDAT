@@ -1,4 +1,4 @@
-package es.upm.etsit.dat.identi;
+package es.upm.etsit.dat.identi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
