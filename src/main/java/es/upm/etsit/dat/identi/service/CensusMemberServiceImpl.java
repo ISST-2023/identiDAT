@@ -37,6 +37,13 @@ public class CensusMemberServiceImpl implements CensusMemberService {
     }
 
     @Override
+    public CensusMemberDto get(String username) {
+        CensusMember cenMembEntity = cenMemRepo.findByUsername(username);
+        CensusMemberDto cenMemDto = modelMapper.map(cenMembEntity, CensusMemberDto.class);
+        return cenMemDto;
+    }
+
+    @Override
     public List<CensusMemberDto> getAll() {
         List<CensusMember> listCenMembEntity = cenMemRepo.findAll();
         List<CensusMemberDto> listCenMembDto = listCenMembEntity.stream().map(cenMemb -> modelMapper.map(cenMemb, CensusMemberDto.class)).collect(Collectors.toList());

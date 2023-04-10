@@ -7,5 +7,6 @@ import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 
 public interface CensusMemberRepository extends JpaRepository<CensusMember, Long> {
     CensusMember findByEmail(String email);
+    CensusMember findByUsername(String username);
 
 }

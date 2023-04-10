@@ -37,6 +37,11 @@ public class CensusMemberDto {
     @NonNull
     @NotBlank
     @Size(max = 200)
+    private String username;
+
+    @NonNull
+    @NotBlank
+    @Size(max = 200)
     @NotNull
     private String personalID;
 
@@ -49,5 +54,17 @@ public class CensusMemberDto {
 
     @NonNull
     private Boolean admin = false;
+
+
+    public CensusMemberDto(String name, String surname, String email, String personalID, Integer phone, String degree) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.username = email.split("@")[0];
+        this.personalID = personalID;
+        this.phone = phone;
+        this.degree = degree;
+        this.admin = false;
+    }
 
 }

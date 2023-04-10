@@ -41,8 +41,9 @@ public class RegistrationController {
             family_name = "Pérez Pérez";
         }
 
-        model.addAttribute("censusMemberForm",
-                new CensusMemberForm(given_name, family_name, email, "GITST", "Delegado/a del grupo 34"));
+        CensusMemberForm cenMemForm = new CensusMemberForm(given_name, family_name, email, "GITST", "Delegado/a del grupo 34");
+        
+        model.addAttribute("censusMemberForm", cenMemForm);
 
         return "register";
     }

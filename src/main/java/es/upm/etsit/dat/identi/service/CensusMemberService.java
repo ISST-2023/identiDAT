@@ -7,6 +7,7 @@ import java.util.List;
 public interface CensusMemberService {
     public CensusMemberDto create(@Valid CensusMemberDto member);
     public CensusMemberDto get(Long id);
+    public CensusMemberDto get(String username);
     public List<CensusMemberDto> getAll();
     public void delete(Long id);
 }

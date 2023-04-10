@@ -36,6 +36,9 @@ public class CensusMember {
     private String email;
 
     @Column(length = 200, nullable = false, unique=true)
+    private String username;
+
+    @Column(length = 200, nullable = false, unique=true)
     private String personalID;
 
     @Column(length = 200, nullable = false)
@@ -53,6 +56,7 @@ public class CensusMember {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.username = email.split("@")[0];
         this.personalID = personalID;
         this.phone = phone;
         this.degree = degree;
