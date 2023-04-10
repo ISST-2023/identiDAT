@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.upm.etsit.dat.identi.dto.TokenDto;
-import es.upm.etsit.dat.identi.form.TokenForm;
+import es.upm.etsit.dat.identi.forms.TokenForm;
 import es.upm.etsit.dat.identi.service.TokenService;
 
 @Controller

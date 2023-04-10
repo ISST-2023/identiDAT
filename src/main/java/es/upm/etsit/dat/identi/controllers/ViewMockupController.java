@@ -2,6 +2,7 @@ package es.upm.etsit.dat.identi.controllers;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
-import es.upm.etsit.dat.identi.form.CensusMemberForm;
+import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
@@ -72,6 +73,7 @@ public class ViewMockupController {
       var params = new HashMap<String, Object>();
       CensusMemberForm form = new CensusMemberForm();
       CensusMemberDto cenMem = cenMemService.get(id);
+      form.setId(cenMem.getId());
       form.setName(cenMem.getName());
       form.setSurname(cenMem.getSurname());
       form.setEmail(cenMem.getEmail());
@@ -85,25 +87,29 @@ public class ViewMockupController {
 
   @PostMapping("/admin/profiles/edit")
     public String register(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
-        CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
-        if (censusMember == null) {
-            cenMemService.create(new CensusMemberDto(cenMemForm.getName(), cenMemForm.getSurname(),
-                    cenMemForm.getEmail(), cenMemForm.getPersonalID(), cenMemForm.getPhone(),
-                    cenMemForm.getDegree()));
-        } else {
-            censusMember.setName(cenMemForm.getName());
-            censusMember.setSurname(cenMemForm.getSurname());
-            censusMember.setEmail(cenMemForm.getEmail());
-            censusMember.setPersonalID(cenMemForm.getPersonalID());
-            censusMember.setPhone(cenMemForm.getPhone());
-            censusMember.setDegree(cenMemForm.getDegree());
+        Optional<CensusMember> censusMember = cenMemRepo.findById(cenMemForm.getId());
 
-            cenMemRepo.save(censusMember);
-            cenMemRepo.flush();
-        }
+        if (censusMember.isPresent()) {
+          CensusMember member = censusMember.get();
+          member.setName(cenMemForm.getName());
+          member.setSurname(cenMemForm.getSurname());
+          member.setEmail(cenMemForm.getEmail());
+          member.setPersonalID(cenMemForm.getPersonalID());
+          member.setPhone(cenMemForm.getPhone());
+          member.setDegree(cenMemForm.getDegree());
+
+          cenMemRepo.save(member);
+          cenMemRepo.flush();
+        }     
 
         return "redirect:/admin/profiles";
     }
+
+  @GetMapping("/admin/profiles/delete/{id}")
+  public ModelAndView delete(@ModelAttribute("id") Long id) {
+    cenMemService.delete(id);
+    return new ModelAndView("redirect:/admin/profiles");
+  }
 
   @GetMapping("/admin/assistance")
   public String assistance(Model model) {

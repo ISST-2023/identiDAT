@@ -1,4 +1,4 @@
-package es.upm.etsit.dat.identi.form;
+package es.upm.etsit.dat.identi.forms;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +7,7 @@ import lombok.ToString;
 
 @Getter @Setter @ToString @NoArgsConstructor
 public class CensusMemberForm {
+    private Long id;
     private String name;
     private String surname;
     private String email;

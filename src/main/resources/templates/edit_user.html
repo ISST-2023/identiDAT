@@ -21,6 +21,8 @@
 
 						<form th:action="@{/admin/profiles/edit}" th:object="${form}" method="POST">
 
+							<input type="hidden" th:field="*{id}" id="id" name="id">
+
 							<div class="form-outline mb-3">
 								<label class="form-label" for="name">Nombre:</label>
 								<input type="text" id="name" name="name" class="form-control form-control-lg" 
@@ -60,7 +62,7 @@
 							<div class="d-flex justify-content-center">
 								<input type="submit" class="btn btn-primary btn-block btn-lg"
 									value="Editar"></input>&nbsp;&nbsp;
-                                <a href="" class="btn btn-danger btn-block btn-lg">Borrar</a>
+                                <a th:href="@{/admin/profiles/delete/} + ${form.id}" class="btn btn-danger btn-block btn-lg">Borrar</a>
                                 
 							</div>
 
