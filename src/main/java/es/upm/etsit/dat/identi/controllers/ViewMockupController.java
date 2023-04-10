@@ -1,7 +1,10 @@
 package es.upm.etsit.dat.identi.controllers;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ViewMockupController {
@@ -36,9 +40,17 @@ public class ViewMockupController {
     return "redirect:/register";
   }
 
-  @GetMapping("/login")
-  public String login (Model model) {
-    return "redirect:/oauth2/authorization/ssodat";
+  @GetMapping("/test")
+  public String test(HttpSession session, Model model) {
+    final Enumeration<String> attributeNames = session.getAttributeNames();
+    final Map<String, Object> attributes = new HashMap<String, Object> ();
+    do {
+      String attrib = attributeNames.nextElement();
+      attributes.put(attrib, session.getAttribute(attrib));
+    } while (attributeNames.hasMoreElements());
+    
+    model.addAttribute("attributes", attributes);
+    return "test";
   }
 
   @GetMapping("/profile")

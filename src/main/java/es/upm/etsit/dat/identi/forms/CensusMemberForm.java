@@ -1,12 +1,14 @@
 package es.upm.etsit.dat.identi.forms;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString @NoArgsConstructor
-public class CensusMemberForm {
+public class CensusMemberForm implements Serializable {
     private Long id;
     private String name;
     private String surname;
