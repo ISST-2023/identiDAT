@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#census').DataTable({
+    $('#Perfiles').DataTable({
         order: [[0, 'desc']],
         language: {
             lengthMenu: 'Elementos por página: _MENU_ ',
