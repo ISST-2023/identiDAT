@@ -17,7 +17,46 @@
 </div>
 
 
+<br><br>
 
+Se debe crear un archivo de configuración para la aplicación. Este se debe encontrar en la ruta `src/main/resources/application.yml`
+```yml
+server:
+    port: 3000
+
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:<Port>/<Database name>
+        username: <Username>
+        password: <Password>
+
+    session:
+        jdbc:
+            flush-mode: on-save
+            table-name: SPRING_SESSION
+            initialize-schema: always
+    
+    security:
+        oauth2:
+            client:
+                registration:
+                    ssodat:
+                        client-id: <ClientId>
+                        authorization-grant-type: authorization_code
+                        scope: openid
+
+                provider:
+                    ssodat:
+                        issuer-uri: https://sso.example.com/realms/exampleRealm
+                        user-name-attribute: preferred_username
+        
+            resourceserver:
+                jwt:
+                    issuer-uri: https://sso.example.com/realms/exampleRealm
+```
 
 
 
