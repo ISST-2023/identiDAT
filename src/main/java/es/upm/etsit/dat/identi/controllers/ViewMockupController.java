@@ -42,8 +42,16 @@ public class ViewMockupController {
   }
 
   @GetMapping("/")
-  public String index(Model model) {
-    return "redirect:/register";
+  public String index(@AuthenticationPrincipal OAuth2User principal, Model model) {
+    String email = (String)principal.getAttribute("email");
+    CensusMember userData = cenMemRepo.findByEmail(email);
+    if (userData == null) {
+      return "redirect:/register";
+    }
+    else {
+      return "redirect:/profile";
+    }
+    
   }
 
   @GetMapping("/test")
