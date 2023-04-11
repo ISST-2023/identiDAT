@@ -13,55 +13,91 @@
 </head>
 
 <body>
+
 	<div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
-	<div class="container h-100">
+	<div class="container">
+
 		<div class="row d-flex justify-content-center align-items-center h-100">
 			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
 		</div>
-		<div style="margin:40px">
-			<div class="mask d-flex align-items-center h-100 global-margin-bottom" style="float:left; margin:40px">
-				<form>
-					<div class="form-outline mb-3">
-						<label class="form-label" for="name">Nombre:</label>
-						<input type="text" id="name" class="form-control form-control-lg" readonly
-							th:value="${given_name}" />
+
+		<div class="main-body">
+
+			<div class="row gutters-sm">
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex flex-column align-items-center text-center">
+								<img th:src="@{/img/user_icon.png}" alt="Admin"
+									class="rounded-circle" width="150">
+								<div class="mt-3">
+									<h4 th:text="${censusMember.name} + ' ' + ${censusMember.surname}"></h4>
+									<p class="text-secondary mb-1" th:text="${censusMember.degree}"></p>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="form-outline mb-3">
-						<label class="form-label" for="surname">Apellidos:</label>
-						<input type="text" id="surname" class="form-control form-control-lg" readonly
-							th:value="${family_name}" />
+				</div>
+				<div class="col-md-8">
+					<div class="card mb-3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Nombre completo</h6>
+								</div>
+								<div class="col-sm-9 text-secondary"
+									th:text="${censusMember.name} + ' ' + ${censusMember.surname}">
+
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${censusMember.email}">
+
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Teléfono</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${censusMember.phone}">
+
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Titulación</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" th:text="${censusMember.degree}">
+
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Cargos</h6>
+								</div>
+								<div class="col-sm-9 text-secondary" >
+									Delegado de ... <br>
+									Consejo de departamento del ...	
+								</div>
+							</div>
+						</div>
 					</div>
 
-					<div class="form-outline mb-3">
-						<label class="form-label" for="email">Email:</label>
-						<input type="email" id="email" class="form-control form-control-lg" disable th:value="${email}"
-							readonly />
-					</div>
 
-					<div class="form-outline mb-3">
-						<label class="form-label" for="phone">Teléfono:</label>
-						<input type="text" id="phone" class="form-control form-control-lg" readonly
-							th:value="${phone}" />
-					</div>
 
-					<div class="form-outline mb-3">
-						<label class="form-label" for="degree">Titulación:</label>
-						<input type="text" id="degree" class="form-control form-control-lg" disable th:value="${degree}"
-							readonly />
-					</div>
-				</form>
+				</div>
 			</div>
-			<div class="mask d-flex align-items-center h-100 global-margin-bottom" style="float:left; margin:40px">
-				<form>
-					<div class="form-outline mb-3">
-						<label class="form-label" for="degree">Cargo:</label>
-						<input type="text" id="position" class="form-control form-control-lg" disable
-							th:value="${position}" readonly />
-					</div>
-				</form>
-			</div>
+
 		</div>
 	</div>
+
 	<script th:src="@{/js/jquery-3.6.3.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
