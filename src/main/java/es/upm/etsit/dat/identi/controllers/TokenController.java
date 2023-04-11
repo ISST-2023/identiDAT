@@ -59,8 +59,8 @@ public class TokenController {
                             for (int k = 0; k < positions.length; k++) {
                                 concat = degree + years[i] + years[i] + groups[j] + positions[k];
                                 unToken = genToken(concat);
-                                tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
-                                        Integer.parseInt(years[i] + groups[j]), positions[k]));
+                                //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
+                                //        Integer.parseInt(years[i] + groups[j]), positions[k]));
                             }
                         }
                     }
@@ -71,8 +71,8 @@ public class TokenController {
                         for (int j = 0; j < groups.length; j++) {
                             concat = degree + years[i] + years[i] + groups[j] + position;
                             unToken = genToken(concat);
-                            tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
-                                    Integer.parseInt(years[i] + groups[j]), position));
+                            //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
+                            //        Integer.parseInt(years[i] + groups[j]), position));
                         }
                     }
 
@@ -86,8 +86,8 @@ public class TokenController {
                         for (int k = 0; k < positions.length; k++) {
                             concat = degree + years[i] + years[i] + group + positions[k];
                             unToken = genToken(concat);
-                            tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
-                                    Integer.parseInt(years[i] + group), positions[k]));
+                            //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
+                            //        Integer.parseInt(years[i] + group), positions[k]));
                         }
                     }
 
@@ -96,8 +96,8 @@ public class TokenController {
                     for (int i = 0; i < years.length; i++) {
                         concat = degree + years[i] + years[i] + group + position;
                         unToken = genToken(concat);
-                        tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
-                                Integer.parseInt(years[i] + group), position));
+                        //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(years[i]),
+                        //        Integer.parseInt(years[i] + group), position));
                     }
 
                 }
@@ -114,8 +114,8 @@ public class TokenController {
                         for (int k = 0; k < positions.length; k++) {
                             concat = degree + year + year + groups[j] + positions[k];
                             unToken = genToken(concat);
-                            tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
-                                    Integer.parseInt(year + groups[j]), positions[k]));
+                            //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
+                            //        Integer.parseInt(year + groups[j]), positions[k]));
                         }
                     }
 
@@ -124,8 +124,8 @@ public class TokenController {
                     for (int j = 0; j < groups.length; j++) {
                         concat = degree + year + year + groups[j] + position;
                         unToken = genToken(concat);
-                        tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
-                                Integer.parseInt(year + groups[j]), position));
+                        //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
+                        //        Integer.parseInt(year + groups[j]), position));
                     }
 
                 }
@@ -137,16 +137,16 @@ public class TokenController {
                     for (int k = 0; k < positions.length; k++) {
                         concat = degree + year + year + group + positions[k];
                         unToken = genToken(concat);
-                        tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
-                                Integer.parseInt(year + group), positions[k]));
+                        //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
+                        //        Integer.parseInt(year + group), positions[k]));
                     }
 
                 } else {
 
                     concat = degree + year + year + group + position;
                     unToken = genToken(concat);
-                    tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
-                            Integer.parseInt(year + group), position));
+                    //tknService.create(new TokenDto(unToken, degree, Integer.parseInt(year),
+                    //        Integer.parseInt(year + group), position));
 
                 }
 

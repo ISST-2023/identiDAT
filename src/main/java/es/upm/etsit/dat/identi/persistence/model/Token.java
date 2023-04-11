@@ -1,10 +1,17 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +22,7 @@ import lombok.ToString;
 import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name = "Tokens")
+@Table(name = "Tokens", uniqueConstraints = {@UniqueConstraint(columnNames = {"degreeId", "diferentiator", "positionId"})})
 @NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class Token {
     @Id
@@ -27,20 +34,19 @@ public class Token {
     @NonNull
     private String token;
 
-    @Column(length = 200, nullable = false)
+    @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="degreeId")
     @NonNull
-    private String degree;
+    private Degree degreeId;
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="positionId")
     @NonNull
-    private Integer year;
+    private Position positionId;
 
-    @Column(nullable = false)
+    @Column(name = "diferentiator", nullable = true)
     @NonNull
-    private Integer grupo;
-
-    @Column(length = 200, nullable = false)
-    @NonNull
-    private String position;
-
+    private Integer diferentiator;
 }

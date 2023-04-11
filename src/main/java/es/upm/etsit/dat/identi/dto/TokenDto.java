@@ -23,20 +23,14 @@ public class TokenDto {
 
     @NonNull
     @NotBlank
-    @Size(max = 200)
-    private String degree;
+    private Long degree;
 
     @NonNull
     @NotNull
-    private Integer year;
-
-    @NonNull
-    @NotNull
-    private Integer grupo;
+    private Integer diferentiator;
 
     @NonNull
     @NotBlank
-    @Size(max = 200)
-    private String position;
+    private Long position;
 
 }
