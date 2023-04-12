@@ -3,7 +3,6 @@ package es.upm.etsit.dat.identi.persistence.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -38,13 +37,13 @@ public class Token {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="degreeId")
     @NonNull
-    private Degree degreeId;
+    private Degree degree;
 
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="positionId")
     @NonNull
-    private Position positionId;
+    private Position position;
 
     @Column(name = "diferentiator", nullable = true)
     @NonNull

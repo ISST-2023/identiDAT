@@ -129,19 +129,19 @@ public class DatabaseSeeder implements CommandLineRunner {
         try {
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleGrupo, 14));
         } catch (Exception e) {
-            System.out.println("Ya existe.");
+            System.out.println("Ya existe GITST.");
         }
 
         try {
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gib, deleCurso, 2));
         } catch (Exception e) {
-            System.out.println("Ya existe.");
+            System.out.println("Ya existe GIB.");
         }
 
         try {
-            tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, null));
+            tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, 0));
         } catch (Exception e) {
-            System.out.println("Ya existe.");
+            System.out.println("Excepción: " + e.getMessage());
         }
 
     }
