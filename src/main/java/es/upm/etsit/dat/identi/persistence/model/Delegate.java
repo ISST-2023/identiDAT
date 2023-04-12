@@ -40,6 +40,10 @@ public class Delegate {
     @JoinColumn(name="positionId")
     @NonNull
     private Position positionId;
+
+    @Column(nullable = false)
+    @NonNull
+    private Integer diferentiator;
     
     @Column(nullable = false)
     @NonNull

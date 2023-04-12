@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +32,9 @@ public class ViewMockupController {
 
   @Autowired
   private CensusMemberRepository cenMemRepo;
+
+  @Autowired
+  private DelegateRepository dlgRepo;
 
   @GetMapping("favicon.ico")
   String favicon() {
@@ -66,7 +71,9 @@ public class ViewMockupController {
   public String profile(@AuthenticationPrincipal OAuth2User principal, Model model) {
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
+    List<Delegate> userPositions = dlgRepo.findByCensusId(userData);
     model.addAttribute("censusMember", userData);
+    model.addAttribute("positions", userPositions);
     return "profileview";
   }
   

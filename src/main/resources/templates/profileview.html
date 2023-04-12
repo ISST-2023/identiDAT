@@ -2,104 +2,104 @@
 <html lang="es">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/main.css}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 
-	<title>identiDAT - Perfil</title>
+    <title>identiDAT - Perfil</title>
 </head>
 
 <body>
 
-	<div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
-	<div class="container">
+    <div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
+    <div class="container">
 
-		<div class="row d-flex justify-content-center align-items-center h-100">
-			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
-		</div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
+        </div>
 
-		<div class="main-body">
+        <div class="main-body">
 
-			<div class="row gutters-sm">
-				<div class="col-md-4 mb-3">
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex flex-column align-items-center text-center">
-								<img th:src="@{/img/user_icon.png}" alt="Admin"
-									class="rounded-circle" width="150">
-								<div class="mt-3">
-									<h4 th:text="${censusMember.name} + ' ' + ${censusMember.surname}"></h4>
-									<p class="text-secondary mb-1" th:text="${censusMember.degree}"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="card mb-3">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Nombre completo</h6>
-								</div>
-								<div class="col-sm-9 text-secondary"
-									th:text="${censusMember.name} + ' ' + ${censusMember.surname}">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img th:src="@{/img/user_icon.png}" alt="Admin" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4 th:text="${censusMember.name} + ' ' + ${censusMember.surname}"></h4>
+                                    <p class="text-secondary mb-1" th:text="${censusMember.degree}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Nombre completo</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" th:text="${censusMember.name} + ' ' + ${censusMember.surname}">
 
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Email</h6>
-								</div>
-								<div class="col-sm-9 text-secondary" th:text="${censusMember.email}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" th:text="${censusMember.email}">
 
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Teléfono</h6>
-								</div>
-								<div class="col-sm-9 text-secondary" th:text="${censusMember.phone}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Teléfono</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" th:text="${censusMember.phone}">
 
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Titulación</h6>
-								</div>
-								<div class="col-sm-9 text-secondary" th:text="${censusMember.degree}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Titulación</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" th:text="${censusMember.degree}">
 
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-sm-3">
-									<h6 class="mb-0">Cargos</h6>
-								</div>
-								<div class="col-sm-9 text-secondary" >
-									Delegado de ... <br>
-									Consejo de departamento del ...	
-								</div>
-							</div>
-						</div>
-					</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Cargos</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div th:each="position: ${positions}">
+                                        <p th:if="${position.diferentiator > 0}" th:text="${position.positionId.position + ' ' + position.diferentiator}"></p>
+                                        <p th:if="${position.diferentiator == 0}" th:text="${position.positionId.position}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
-				</div>
-			</div>
+                </div>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<script th:src="@{/js/jquery-3.6.3.min.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>

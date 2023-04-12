@@ -2,96 +2,96 @@
 <html lang="es">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/main.css}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 
-	<title>identiDAT - Registro</title>
+    <title>identiDAT - Registro</title>
 </head>
 
 <body>
 
-	<div class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
-		<div class="row d-flex align-items-center justify-content-center h-100">
-			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
-			<div class="col-12 col-md-10 col-lg-10 col-xl-10">
-				<div class="card scale-less" style="border-radius: 15px;">
-					<div class="card-body p-5">
-						<h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
+            <div class="col-12 col-md-10 col-lg-10 col-xl-10">
+                <div class="card scale-less" style="border-radius: 15px;">
+                    <div class="card-body p-5">
+                        <h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-						<form action="#" th:action="@{/register}" th:object="${censusMemberForm}" method="POST">
+                        <form action="#" th:action="@{/register}" th:object="${censusMemberForm}" method="POST">
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" id="name" name="name" class="form-control form-control-lg" disabled
-									th:field="*{name}" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="name">Nombre:</label>
+                                <input type="text" id="name" name="name" class="form-control form-control-lg" disabled th:field="*{name}" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="surname">Apellidos:</label>
-								<input type="text" id="surname" name="surname" class="form-control form-control-lg"
-									disabled th:field="*{surname}" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="surname">Apellidos:</label>
+                                <input type="text" id="surname" name="surname" class="form-control form-control-lg" disabled th:field="*{surname}" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="email">Email:</label>
-								<input type="email" id="email" name="email" class="form-control form-control-lg"
-									disabled th:field="*{email}" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="email">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control form-control-lg" disabled th:field="*{email}" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
-								<input type="text" id="personalID" name="personalID"
-									class="form-control form-control-lg" th:field="*{personalID}" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
+                                <input type="text" id="personalID" name="personalID" class="form-control form-control-lg" th:field="*{personalID}" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="phone">Teléfono:</label>
-								<input type="number" id="phone" name="phone" class="form-control form-control-lg"
-									th:field="*{phone}" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="phone">Teléfono:</label>
+                                <input type="number" id="phone" name="phone" class="form-control form-control-lg" th:field="*{phone}" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="degree">Titulación:</label>
-								<input type="text" id="degree" name="degree" class="form-control form-control-lg"
-									th:field="*{degree}" disabled value="GITST" required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="degree">Titulación:</label>
+                                <input type="text" id="degree" name="degree" class="form-control form-control-lg" th:field="*{degree}" disabled value="GITST" required />
+                            </div>
 
-							<div class="form-outline mb-3">
-								<label class="form-label" for="position">Cargo:</label>
-								<input type="text" id="position" name="position" class="form-control form-control-lg"
-									th:field="*{position}" disabled required />
-							</div>
+                            <div class="form-outline mb-3">
+                                <input type="hidden" id="token" name="token" class="form-control form-control-lg" th:value="*{token}" disabled required />
+                            </div>
 
-							<div class="form-check d-flex justify-content-center mb-5">
-								<input class="form-check-input me-2" type="checkbox" id="agreement" name="agreement"
-									th:field="*{agreement}" required />
-								<label class="form-check-label" for="agreement">
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="position">Cargo:</label>
+                                <input type="text" id="position" name="position" class="form-control form-control-lg" th:value="${position}" disabled />
+                            </div>
+
+                            <div th:if="${diferentiator > 0}" class="form-outline mb-3">
+                                <label class="form-label" for="diferentiator">Grupo/Curso:</label>
+                                <input type="text" id="diferentiator" name="diferentiator" class="form-control form-control-lg" th:value="${diferentiator}" disabled />
+                            </div>
+
+                            <div class="form-check d-flex justify-content-center mb-5">
+                                <input class="form-check-input me-2" type="checkbox" id="agreement" name="agreement" th:field="*{agreement}" required />
+                                <label class="form-check-label" for="agreement">
 									Estoy de acuerdo con los <a href="#!" class="text-body"><u>Términos y
 											Condiciones</u></a> de servicio
 								</label>
-							</div>
+                            </div>
 
-							<div class="d-flex justify-content-center">
-								<input type="submit" class="btn btn-danger btn-dat btn-block btn-lg text-body"
-									value="Registrarse"></input>
-							</div>
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" class="btn btn-danger btn-dat btn-block btn-lg text-body" value="Registrarse"></input>
+                            </div>
 
-						</form>
+                        </form>
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
-	<script th:src="@{/js/jquery-3.6.3.min.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/js/functions.js}"></script>
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/functions.js}"></script>
 </body>
 
 </html>
