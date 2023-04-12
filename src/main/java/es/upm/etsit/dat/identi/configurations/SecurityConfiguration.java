@@ -14,16 +14,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain configChain(HttpSecurity http, HttpServletRequest httpServletRequest) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                    .requestMatchers("/js", "/css", "/fonts", "/img").permitAll()
-                    .anyRequest().authenticated()                              
-                )
+                        .requestMatchers("/js", "/css", "/fonts", "/img").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2Login(login -> login
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/loginSuccess", true)
-                    .permitAll()
-                );
-
+                        .loginPage("/login")
+                        .permitAll());
         return http.build();
     }
 }
-
