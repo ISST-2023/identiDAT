@@ -38,7 +38,11 @@ public class RegistrationController {
     private DelegateRepository dlgRepo;
 
     @GetMapping("/register")
-    public String registerForm(@AuthenticationPrincipal OAuth2User principal, @RequestParam(name = "token") String token, Model model) {
+    public String registerForm(@AuthenticationPrincipal OAuth2User principal, @RequestParam(name = "token", required = false) String token, Model model) {
+        if (token == null) {
+            model.addAttribute("error", "No dispones de un token válido. Contacta con un administrador para continuar.");
+            return "error";
+        }
         Token positionToken = tknRepo.findByToken(token);
 
         if (positionToken == null) {

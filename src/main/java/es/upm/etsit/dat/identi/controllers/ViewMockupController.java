@@ -71,6 +71,9 @@ public class ViewMockupController {
   public String profile(@AuthenticationPrincipal OAuth2User principal, Model model) {
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
+    if (userData == null) {
+      return "redirect:/register";
+    }
     List<Delegate> userPositions = dlgRepo.findByCensusId(userData);
     model.addAttribute("censusMember", userData);
     model.addAttribute("positions", userPositions);
