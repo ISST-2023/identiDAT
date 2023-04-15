@@ -23,6 +23,7 @@ Se debe crear un archivo de configuración para la aplicación. Este se debe enc
 ```yml
 server:
     port: 3000
+    forward-headers-strategy: native
 
 spring:
     jpa:
@@ -50,12 +51,12 @@ spring:
 
                 provider:
                     ssodat:
-                        issuer-uri: https://sso.example.com/realms/exampleRealm
+                        issuer-uri: <https://sso.example.com/realms/exampleRealm>
                         user-name-attribute: preferred_username
         
             resourceserver:
                 jwt:
-                    issuer-uri: https://sso.example.com/realms/exampleRealm
+                    issuer-uri: <https://sso.example.com/realms/exampleRealm>
 ```
 
 
