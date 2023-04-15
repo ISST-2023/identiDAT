@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -19,10 +20,13 @@ public class CensusMemberRepositoryTest {
     @Autowired
     private CensusMemberRepository cenMemRepo;
 
+    @Autowired
+    private DegreeRepository dgrRepo;
+
     @Test
     public void saveCensusMember() {
-        CensusMember alvaro = new CensusMember("Álvaro", "Pérez", "alvaro@alumnos.upm.es", "00000000Z", 666666666, "GITST"/*, true*/);
-        CensusMember perico = new CensusMember("Perico", "Pérez", "perico@alumnos.upm.es", "00000000A", 777777777, "GIB"/*, false*/);
+        CensusMember alvaro = new CensusMember(Long.valueOf(1), "Álvaro", "Rosado", "alvaro@alumnos.upm.es", "alvaro", "00000000Z", 666666666, dgrRepo.findByCode("09DA"), false); 
+        CensusMember perico = new CensusMember(Long.valueOf(2), "Perico", "Pérez", "perico@alumnos.upm.es", "perico", "00000000A", 777777777, dgrRepo.findByCode("09DA"), true);
 
         cenMemRepo.save(alvaro);
         cenMemRepo.save(perico);
@@ -34,8 +38,7 @@ public class CensusMemberRepositoryTest {
 
         assertEquals("Álvaro", alvaro.getName());
         
-        assertEquals(2, cenMemRepo.findAll().size());
-
+        assertEquals(2, cenMemRepo.findByDegree(dgrRepo.findByCode("09DA")).size());
     }
 
 }

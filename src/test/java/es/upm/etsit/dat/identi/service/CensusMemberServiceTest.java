@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import jakarta.validation.ConstraintViolationException;
 
 @SpringBootTest
@@ -24,15 +25,18 @@ public class CensusMemberServiceTest {
     @Autowired
     private CensusMemberRepository cenMemRepo;
 
+    @Autowired
+    private DegreeRepository dgrRepo;
+
     @Test
     public void constraintsValidationExceptionTest() {
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "666666666A", 666666666, "GISD"));});
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "777777777B", 777777777, "GIB"));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "666666666A", 666666666, dgrRepo.findByCode("09ID")));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "777777777B", 777777777, dgrRepo.findByCode("09IB")));});
     }
 
     @Test
     public void saveCensusMemberOk() {
-        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "00000000Z", 666666666, "GITST"));
+        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "00000000Z", 666666666, dgrRepo.findByCode("09TT")));
         assertNotNull(cenMemDto);
         assertEquals("Álvaro", cenMemDto.getName());
         assertNotNull(cenMemDto.getId());
