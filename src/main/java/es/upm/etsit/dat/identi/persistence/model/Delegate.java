@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "Delegates")
-@NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@Table(name = "Delegates", uniqueConstraints = {@UniqueConstraint(columnNames = {"positionId", "degreeId", "diferentiator", "year"})})
+@NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class Delegate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +43,12 @@ public class Delegate {
     @NonNull
     private Position positionId;
 
+    @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="degreeId")
+    @NonNull
+    private Degree degree;
+
     @Column(nullable = false)
     @NonNull
     private Integer diferentiator;
@@ -48,5 +56,4 @@ public class Delegate {
     @Column(nullable = false)
     @NonNull
     private Integer year;
-
 }

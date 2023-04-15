@@ -89,29 +89,29 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     public void seedDegrees() {
         if (degreeRepository.findByCode("09DA") == null)
-            degreeRepository.save(new Degree("Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
+            degreeRepository.save(new Degree(Long.valueOf(1), "Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
         if (degreeRepository.findByCode("09TT") == null)
             degreeRepository.save(
-                    new Degree("Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
+                    new Degree(Long.valueOf(2), "Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
         if (degreeRepository.findByCode("09IB") == null)
-            degreeRepository.save(new Degree("Grado en Ingeniería Biomédica", "09IB", "GIB"));
+            degreeRepository.save(new Degree(Long.valueOf(3), "Grado en Ingeniería Biomédica", "09IB", "GIB"));
         if (degreeRepository.findByCode("09ID") == null)
-            degreeRepository.save(new Degree("Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
+            degreeRepository.save(new Degree(Long.valueOf(4), "Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
         if (degreeRepository.findByCode("09AQ") == null)
-            degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
+            degreeRepository.save(new Degree(Long.valueOf(5), "Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
         if (degreeRepository.findByCode("09AS") == null)
-            degreeRepository.save(new Degree("Máster Universitario en Ingeniería de Redes y Servicios Telemáticos",
+            degreeRepository.save(new Degree(Long.valueOf(6), "Máster Universitario en Ingeniería de Redes y Servicios Telemáticos",
                     "09AS", "MUIRST"));
         if (degreeRepository.findByCode("09AZ") == null)
             degreeRepository
-                    .save(new Degree("Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
+                    .save(new Degree(Long.valueOf(7), "Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
         if (degreeRepository.findByCode("09AT") == null)
             degreeRepository
-                    .save(new Degree("Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
+                    .save(new Degree(Long.valueOf(8), "Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
         if (degreeRepository.findByCode("09AX") == null)
-            degreeRepository.save(new Degree("Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
+            degreeRepository.save(new Degree(Long.valueOf(9), "Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
         if (degreeRepository.findByCode("09AU") == null)
-            degreeRepository.save(new Degree("Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
+            degreeRepository.save(new Degree(Long.valueOf(10), "Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
     }
 
     @Autowired
@@ -126,23 +126,17 @@ public class DatabaseSeeder implements CommandLineRunner {
         Position deleCurso = positionRepository.findByPosition("Delegado/a de curso");
         Position deleTitulacion = positionRepository.findByPosition("Delegado/a de titulación");
 
-        try {
+        if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gitst, deleGrupo, 14) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleGrupo, 14));
-        } catch (Exception e) {
-            System.out.println("Ya existe GITST.");
-        }
 
-        try {
+        if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gitst, deleTitulacion, 0) == null)
+            tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleTitulacion, 0));
+
+        if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gib, deleCurso, 2) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gib, deleCurso, 2));
-        } catch (Exception e) {
-            System.out.println("Ya existe GIB.");
-        }
 
-        try {
+        if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gisd, deleTitulacion, 0) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, 0));
-        } catch (Exception e) {
-            System.out.println("Excepción: " + e.getMessage());
-        }
 
     }
 

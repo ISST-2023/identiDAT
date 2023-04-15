@@ -24,6 +24,7 @@ public class CensusMemberServiceImpl implements CensusMemberService {
 
     @Override
     public CensusMemberDto create(CensusMemberDto member) {
+        member.setUsername(member.getEmail().split("@")[0]);
         CensusMember cenMembEntity = modelMapper.map(member, CensusMember.class);
         cenMembEntity = cenMemRepo.save(cenMembEntity);
         return modelMapper.map(cenMembEntity, CensusMemberDto.class);

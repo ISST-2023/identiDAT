@@ -1,9 +1,11 @@
 package es.upm.etsit.dat.identi.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import es.upm.etsit.dat.identi.persistence.model.Degree;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class CensusMemberDto {
     @EqualsAndHashCode.Include
     private Long id;
@@ -34,8 +36,6 @@ public class CensusMemberDto {
     @Email
     private String email;
 
-    @NonNull
-    @NotBlank
     @Size(max = 200)
     private String username;
 
@@ -50,21 +50,8 @@ public class CensusMemberDto {
 
     @NonNull
     @NotNull
-    private String degree;
+    private Degree degree;
 
     @NonNull
     private Boolean admin = false;
-
-
-    public CensusMemberDto(String name, String surname, String email, String personalID, Integer phone, String degree) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.username = email.split("@")[0];
-        this.personalID = personalID;
-        this.phone = phone;
-        this.degree = degree;
-        this.admin = false;
-    }
-
 }

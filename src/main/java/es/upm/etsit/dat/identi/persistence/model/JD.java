@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "JD")
-@NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class JD {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +26,7 @@ public class JD {
 
     @Column(nullable = false)
     @NonNull
-    private java.sql.Timestamp year;
+    private java.sql.Timestamp date;
 
     @Column(nullable = false)
     @NonNull
@@ -34,5 +35,4 @@ public class JD {
     @Column(length = 200, nullable = false)
     @NonNull
     private String place;
-    
 }

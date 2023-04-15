@@ -21,6 +21,7 @@ import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,9 @@ public class ViewMockupController {
 
   @Autowired
   private DelegateRepository dlgRepo;
+
+  @Autowired
+  private DegreeRepository dgrRepo;
 
   @GetMapping("favicon.ico")
   String favicon() {
@@ -113,7 +117,7 @@ public class ViewMockupController {
       form.setEmail(cenMem.getEmail());
       form.setPersonalID(cenMem.getPersonalID());
       form.setPhone(cenMem.getPhone());
-      form.setDegree(cenMem.getDegree());
+      form.setDegree(cenMem.getDegree().getAcronym());
 
       params.put("form", form);
       return new ModelAndView("edit_user", params);
@@ -130,7 +134,7 @@ public class ViewMockupController {
           member.setEmail(cenMemForm.getEmail());
           member.setPersonalID(cenMemForm.getPersonalID());
           member.setPhone(cenMemForm.getPhone());
-          member.setDegree(cenMemForm.getDegree());
+          member.setDegree(dgrRepo.findByAcronym(cenMemForm.getDegree()));
 
           cenMemRepo.save(member);
           cenMemRepo.flush();

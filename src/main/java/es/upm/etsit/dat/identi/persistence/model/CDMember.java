@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "CDMembers")
-@NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class CDMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +40,7 @@ public class CDMember {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="departamentId")
     @NonNull
-    private Departament departamentId;
+    private Departament departament;
 
     @Column(nullable = false)
     @NonNull
@@ -48,5 +49,4 @@ public class CDMember {
     @Column(nullable = false)
     @NonNull
     private Boolean head;
-    
 }

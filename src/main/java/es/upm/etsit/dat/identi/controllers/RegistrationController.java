@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
@@ -37,16 +39,23 @@ public class RegistrationController {
     @Autowired
     private DelegateRepository dlgRepo;
 
+    @Autowired
+    private DegreeRepository dgrRepo;
+
     @GetMapping("/register")
-    public String registerForm(@AuthenticationPrincipal OAuth2User principal, @RequestParam(name = "token", required = false) String token, Model model) {
+    public String registerForm(@AuthenticationPrincipal OAuth2User principal,
+            @RequestParam(name = "token", required = false) String token, Model model) {
         if (token == null) {
-            model.addAttribute("error", "No dispones de un token válido. Contacta con un administrador para continuar.");
+            model.addAttribute("error",
+                    "No dispones de un token válido. Contacta con un administrador para continuar.");
             return "error";
         }
+
         Token positionToken = tknRepo.findByToken(token);
 
         if (positionToken == null) {
-            model.addAttribute("error", "No dispones de un token válido. Contacta con un administrador para continuar.");
+            model.addAttribute("error",
+                    "No dispones de un token válido. Contacta con un administrador para continuar.");
             return "error";
         }
 
@@ -58,11 +67,13 @@ public class RegistrationController {
             given_name = principal.getAttribute("given_name");
             family_name = principal.getAttribute("family_name");
         } catch (Exception e) {
-            model.addAttribute("error", "No se han podido recuperar los datos del usuario. Inicia sesión e inténtalo de nuevo.");
+            model.addAttribute("error",
+                    "No se han podido recuperar los datos del usuario. Inicia sesión e inténtalo de nuevo.");
             return "error";
         }
 
-        CensusMemberForm cenMemForm = new CensusMemberForm(given_name, family_name, email, positionToken.getDegree().getAcronym(), positionToken.getToken());
+        CensusMemberForm cenMemForm = new CensusMemberForm(given_name, family_name, email,
+                positionToken.getDegree().getAcronym(), positionToken.getToken());
         model.addAttribute("censusMemberForm", cenMemForm);
 
         if (cenMemRepo.findByEmail(email) != null) {
@@ -85,17 +96,22 @@ public class RegistrationController {
 
         CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
         if (censusMember == null) {
-            cenMemService.create(new CensusMemberDto(cenMemForm.getName(), cenMemForm.getSurname(),
-                    cenMemForm.getEmail(), cenMemForm.getPersonalID(), cenMemForm.getPhone(),
-                    cenMemForm.getDegree()));
+            cenMemService.create(new CensusMemberDto(
+                    cenMemForm.getName(), 
+                    cenMemForm.getSurname(),
+                    cenMemForm.getEmail(), 
+                    cenMemForm.getPersonalID(),
+                    cenMemForm.getPhone(),
+                    dgrRepo.findByAcronym(cenMemForm.getDegree())));
         }
 
         censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
         Token token = tknRepo.findByToken(cenMemForm.getToken());
         Position position = token.getPosition();
+        Degree degree = token.getDegree();
         Integer diferentiator = token.getDiferentiator();
 
-        Delegate memberPosition = new Delegate(censusMember, position, diferentiator, 2023);
+        Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
         if (dlgRepo.findByPositionIdAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
             model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
             return "error";

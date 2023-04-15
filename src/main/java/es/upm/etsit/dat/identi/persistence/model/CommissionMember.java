@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "CommissionMembers")
-@NoArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class CommissionMember {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,16 +34,15 @@ public class CommissionMember {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="censusId")
     @NonNull
-    private CensusMember censusId;
+    private CensusMember censusMember;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="commissionId")
     @NonNull
-    private Commission commissionId;
+    private Commission commission;
     
     @Column(nullable = false)
     @NonNull
     private Integer year;
-    
 }
