@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import es.upm.etsit.dat.identi.persistence.model.Commission;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Departament;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
@@ -89,29 +91,79 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     public void seedDegrees() {
         if (degreeRepository.findByCode("09DA") == null)
-            degreeRepository.save(new Degree(Long.valueOf(1), "Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
+            degreeRepository
+                    .save(new Degree(Long.valueOf(1), "Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
+
         if (degreeRepository.findByCode("09TT") == null)
             degreeRepository.save(
-                    new Degree(Long.valueOf(2), "Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación", "09TT", "GITST"));
+                    new Degree(Long.valueOf(2), "Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación",
+                            "09TT", "GITST"));
+
         if (degreeRepository.findByCode("09IB") == null)
             degreeRepository.save(new Degree(Long.valueOf(3), "Grado en Ingeniería Biomédica", "09IB", "GIB"));
+
         if (degreeRepository.findByCode("09ID") == null)
-            degreeRepository.save(new Degree(Long.valueOf(4), "Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
+            degreeRepository
+                    .save(new Degree(Long.valueOf(4), "Grado en Ingeniería y Sistemas de Datos", "09ID", "GISD"));
+
         if (degreeRepository.findByCode("09AQ") == null)
-            degreeRepository.save(new Degree(Long.valueOf(5), "Máster Universitario en Ingeniería de Telecomunicación", "09AQ", "MUIT"));
+            degreeRepository.save(new Degree(Long.valueOf(5), "Máster Universitario en Ingeniería de Telecomunicación",
+                    "09AQ", "MUIT"));
+
         if (degreeRepository.findByCode("09AS") == null)
-            degreeRepository.save(new Degree(Long.valueOf(6), "Máster Universitario en Ingeniería de Redes y Servicios Telemáticos",
-                    "09AS", "MUIRST"));
+            degreeRepository.save(
+                    new Degree(Long.valueOf(6), "Máster Universitario en Ingeniería de Redes y Servicios Telemáticos",
+                            "09AS", "MUIRST"));
+
         if (degreeRepository.findByCode("09AZ") == null)
             degreeRepository
-                    .save(new Degree(Long.valueOf(7), "Máster Universitario en Ingeniería de Sistemas Electrónicos", "09AZ", "MUISE"));
+                    .save(new Degree(Long.valueOf(7), "Máster Universitario en Ingeniería de Sistemas Electrónicos",
+                            "09AZ", "MUISE"));
+
         if (degreeRepository.findByCode("09AT") == null)
             degreeRepository
-                    .save(new Degree(Long.valueOf(8), "Máster Universitario en Teoría de la Señal y Comunicaciones", "09AT", "MUTSC"));
+                    .save(new Degree(Long.valueOf(8), "Máster Universitario en Teoría de la Señal y Comunicaciones",
+                            "09AT", "MUTSC"));
+
         if (degreeRepository.findByCode("09AX") == null)
-            degreeRepository.save(new Degree(Long.valueOf(9), "Máster Universitario en Energía Solar Fotovoltaica", "09AX", "MUESFV"));
+            degreeRepository.save(new Degree(Long.valueOf(9), "Máster Universitario en Energía Solar Fotovoltaica",
+                    "09AX", "MUESFV"));
+
         if (degreeRepository.findByCode("09AU") == null)
-            degreeRepository.save(new Degree(Long.valueOf(10), "Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
+            degreeRepository
+                    .save(new Degree(Long.valueOf(10), "Máster Universitario en Ingeniería Biomédica", "09AU", "MUIB"));
+    }
+
+    @Autowired
+    private CommissionRepository cmmRepo;
+
+    public void seedCommissions() {
+        if (cmmRepo.findByName("Junta de Escuela") == null)
+            cmmRepo.save(new Commission(Long.valueOf(1), "Junta de Escuela"));
+
+        if (cmmRepo.findByName("Claustro Universitario") == null)
+            cmmRepo.save(new Commission(Long.valueOf(2), "Claustro Universitario"));
+
+        if (cmmRepo.findByName("Comisión de Gobierno") == null)
+            cmmRepo.save(new Commission(Long.valueOf(3), "Comisión de Gobierno"));
+
+        if (cmmRepo.findByName("Comisión Electoral de Centro") == null)
+            cmmRepo.save(new Commission(Long.valueOf(4), "Comisión Electoral de Centro"));
+
+        if (cmmRepo.findByName("Comisión de Ordenación Académica") == null)
+            cmmRepo.save(new Commission(Long.valueOf(5), "Comisión de Ordenación Académica"));
+
+        if (cmmRepo.findByName("Junta de Representantes UPM") == null)
+            cmmRepo.save(new Commission(Long.valueOf(6), "Junta de Representantes UPM"));
+
+        if (cmmRepo.findByName("Junta de Delegados UPM") == null)
+            cmmRepo.save(new Commission(Long.valueOf(7), "Junta de Delegados UPM"));
+
+        if (cmmRepo.findByName("Comisión Electoral Central") == null)
+            cmmRepo.save(new Commission(Long.valueOf(8), "Comisión Electoral Central"));
+
+        if (cmmRepo.findByName("Comisión de Calidad") == null)
+            cmmRepo.save(new Commission(Long.valueOf(9), "Comisión de Calidad"));
     }
 
     @Autowired
@@ -145,6 +197,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         seedDepartments();
         seedPositions();
         seedDegrees();
+        seedCommissions();
         seedTokens();
     }
 }
