@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,9 @@ public class ViewMockupController {
   @Autowired
   private DegreeRepository dgrRepo;
 
+  @Value("${spring.profiles.active}")
+  private String activeProfile;
+
   @GetMapping("favicon.ico")
   String favicon() {
     return "forward:/favicon.svg";
@@ -47,6 +51,7 @@ public class ViewMockupController {
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal OAuth2User principal, Model model) {
+    if (activeProfile.equals("dev")) return "redirect:/test";
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
     if (userData == null) {
@@ -62,6 +67,7 @@ public class ViewMockupController {
   public String test(HttpSession session, Model model) {
     final Enumeration<String> attributeNames = session.getAttributeNames();
     final Map<String, Object> attributes = new HashMap<String, Object> ();
+    attributes.put("Active Profile", activeProfile);
     do {
       String attrib = attributeNames.nextElement();
       attributes.put(attrib, session.getAttribute(attrib));
@@ -73,6 +79,8 @@ public class ViewMockupController {
 
   @GetMapping("/profile")
   public String profile(@AuthenticationPrincipal OAuth2User principal, Model model) {
+    if (activeProfile.equals("dev")) return "redirect:/test";
+
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
     if (userData == null) {

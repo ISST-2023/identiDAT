@@ -19,8 +19,16 @@
 
 <br><br>
 
-Se debe crear un archivo de configuración para la aplicación. Este se debe encontrar en la ruta `src/main/resources/application.yml`
+La aplicación está preparada para funcionar mediante uno o varios ficheros de configuración `.yml`. Como mínimo, el fichero debe contar con las siguientes opciones para el correcto funcionamiento de todas las funcionalidades:
 ```yml
+spring:
+    profiles:
+        active: <Profile name>
+
+logging:
+    file:
+        name: logs/identidat.log
+
 server:
     port: 3000
     forward-headers-strategy: native
@@ -59,7 +67,7 @@ spring:
                     issuer-uri: <https://sso.example.com/realms/exampleRealm>
 ```
 
-
+Es posible generar diferentes ficheros de configuración con el nombre `application-<Profile name>.yml` y aplicar sus parámetros manteniendo únicamente la opción `spring.profiles.name=<Profile name>` en el fichero principal `application.yml`.
 
 
 

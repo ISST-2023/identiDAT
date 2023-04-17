@@ -1,6 +1,7 @@
 package es.upm.etsit.dat.identi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -42,9 +43,12 @@ public class RegistrationController {
     @Autowired
     private DegreeRepository dgrRepo;
 
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     @GetMapping("/register")
     public String registerForm(@AuthenticationPrincipal OAuth2User principal,
-            @RequestParam(name = "token", required = false) String token, Model model) {
+            @RequestParam(name = "token", required = false) String token, Model model) {        
         if (token == null) {
             model.addAttribute("error",
                     "No dispones de un token válido. Contacta con un administrador para continuar.");
