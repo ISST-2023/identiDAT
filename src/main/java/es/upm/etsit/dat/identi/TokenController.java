@@ -27,13 +27,13 @@ public class TokenController {
     @Autowired
     private PositionRepository pstnRepository;
 
-    @GetMapping("/admin/tokens")
+    @GetMapping("/admin/tokens/generate")
     public String tokenForm(Model model) {
         List<Degree> degrees = dgrRepository.findAll();
         List<Position> positions = pstnRepository.findAll();
         model.addAttribute("degrees", degrees);
         model.addAttribute("positions", positions);
-        return "tokens";
+        return "generate_tokens";
     }
     
     @PostMapping("/saveToken")
