@@ -21,10 +21,6 @@
 
 La aplicación está preparada para funcionar mediante uno o varios ficheros de configuración `.yml`. Como mínimo, el fichero debe contar con las siguientes opciones para el correcto funcionamiento de todas las funcionalidades:
 ```yml
-spring:
-    profiles:
-        active: <Profile name>
-
 logging:
     file:
         name: logs/identidat.log
@@ -34,6 +30,8 @@ server:
     forward-headers-strategy: native
 
 spring:
+    profiles:
+        active: <Profile name>
     jpa:
         hibernate:
             ddl-auto: update
