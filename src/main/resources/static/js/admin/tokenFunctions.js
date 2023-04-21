@@ -41,3 +41,20 @@ function sendTokenRequest() {
     });
 
 }
+
+const submitToken = (event) => {
+    var datosFormulario = {};
+    var formulario = document.getElementById("tokenRequest");
+    console.log(formulario)
+    var elementosFormulario = formulario.elements;
+
+    for (var i = 0; i < elementosFormulario.length; i++) {
+        var elemento = elementosFormulario[i];
+        console.log(elemento)
+        datosFormulario[elemento.name] = elemento.value;
+    }
+
+    var datosJSON = JSON.stringify(datosFormulario);
+    console.log(datosJSON);
+}
+

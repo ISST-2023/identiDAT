@@ -23,25 +23,25 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-10 col-lg-8 col-xl-8">
                 <h2>Qué token deseas crear hoy?</h2>
-                <form id="tokenRequest" th:action="@{/saveToken}" method="POST">
+                <form id="tokenRequest" action="javascript:;" onsubmit="submitToken()">
                     <span th:each="degree : ${degrees}" class="selector">
-                        <input type="checkbox" th:value="${degree.id}" th:text="${degree.acronym}"
+                        <input type="checkbox" th:id="${degree.acronym}" th:value="${degree.id}" th:text="${degree.acronym}"
                             class="degree"></input>
                         <br />
                         <fieldset style="display:none">
                             <br />
                             <span th:if="${degree.acronym == 'DAT' && position.id >= 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:value="${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
                                     class="position"></input>
                                 <br />
                             </span>
 
                             <span th:if="${degree.acronym != 'DAT' && position.id < 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:value="${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
                                     class="position"></input>
-                                <input type="text" class="groups"></input>
+                                <input type="text" th:id="${degree.acronym} + ${position.id} + groups" class="groups"></input>
                                 <br />
                             </span>
                             <br />
