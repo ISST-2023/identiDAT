@@ -25,23 +25,23 @@
                 <h2>Qué token deseas crear hoy?</h2>
                 <form id="tokenRequest" action="javascript:;" onsubmit="submitToken()">
                     <span th:each="degree : ${degrees}" class="selector">
-                        <input type="checkbox" th:id="${degree.acronym}" th:value="${degree.id}" th:text="${degree.acronym}"
+                        <input type="checkbox" th:id="${degree.acronym}" th:name="${degree.acronym}"  th:text="${degree.acronym}"
                             class="degree"></input>
                         <br />
                         <fieldset style="display:none">
                             <br />
                             <span th:if="${degree.acronym == 'DAT' && position.id >= 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}"  th:name="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
                                     class="position"></input>
                                 <br />
                             </span>
 
                             <span th:if="${degree.acronym != 'DAT' && position.id < 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:name="${degree.acronym} + ${position.id}" th:text="${position.position}"
                                     class="position"></input>
-                                <input type="text" th:id="${degree.acronym} + ${position.id} + groups" class="groups"></input>
+                                <input type="text" th:id="${degree.acronym} + groups + ${position.id}" th:name="${degree.acronym} + groups + ${position.id}" class="groups"></input>
                                 <br />
                             </span>
                             <br />
@@ -68,7 +68,7 @@
                     </select>-->
 
                     <div class="text-center">
-                        <input type="submit" id="bToken" class="btn btn-outline-secondary btn-lg">
+                        <button type="submit" id="bToken" onclick="submitToken(event)" class="btn btn-outline-secondary btn-lg">Enviar</button>
                         <!--onclick="changeString()"-->
                     </div>
                 </form>
