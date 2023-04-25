@@ -1,6 +1,5 @@
 package es.upm.etsit.dat.identi.persistence.repository;
 
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;

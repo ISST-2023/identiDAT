@@ -25,8 +25,8 @@ public class CensusMemberRepositoryTest {
 
     @Test
     public void saveCensusMember() {
-        CensusMember alvaro = new CensusMember(Long.valueOf(1), "Álvaro", "Rosado", "alvaro@alumnos.upm.es", "alvaro", "00000000Z", 666666666, dgrRepo.findByCode("09DA"), false); 
-        CensusMember perico = new CensusMember(Long.valueOf(2), "Perico", "Pérez", "perico@alumnos.upm.es", "perico", "00000000A", 777777777, dgrRepo.findByCode("09DA"), true);
+        CensusMember alvaro = new CensusMember(Long.valueOf(66), "Álvaro", "Rosado", "alvaro@alumnos.upm.es", "alvaro", "00000000Z", 666666666, dgrRepo.findByCode("09DA"), null); 
+        CensusMember perico = new CensusMember(Long.valueOf(77), "Perico", "Pérez", "perico@alumnos.upm.es", "perico", "00000000A", 777777777, dgrRepo.findByCode("09DA"), null);
 
         cenMemRepo.save(alvaro);
         cenMemRepo.save(perico);

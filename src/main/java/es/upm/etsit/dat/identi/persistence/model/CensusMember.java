@@ -1,14 +1,19 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
+import java.util.Collection;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -45,7 +50,7 @@ public class CensusMember {
     @NonNull
     private String username;
 
-    @Column(length = 200, nullable = false, unique = true)
+    @Column(length = 200, nullable = true, unique = true)
     private String personalID;
 
     @Column(length = 200, nullable = false)
@@ -58,6 +63,12 @@ public class CensusMember {
     @NonNull
     private Degree degree;
 
-    @Column(nullable = false)
-    private Boolean admin;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable( 
+        name = "censusMembers_roles", 
+        joinColumns = @JoinColumn(
+          name = "censusmember_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "role_id", referencedColumnName = "id")) 
+    private Collection<Role> roles;
 }
