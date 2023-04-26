@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.Privilege;
 import es.upm.etsit.dat.identi.persistence.model.Role;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class SecurityConfiguration {
                                                 .requestMatchers("/js", "/css", "/fonts", "/img").permitAll()
                                                 //.anyRequest().permitAll()
                                                 .requestMatchers(new AntPathRequestMatcher("/admin/jd/**"))
-                                                .hasRole("SECRETARY")
+                                                .hasAuthority("CALL_PRIVILEGE")
                                                 .requestMatchers(new AntPathRequestMatcher("/admin/**"))
                                                 .hasRole("ADMIN")
                                                 .anyRequest().authenticated()
@@ -70,6 +71,11 @@ public class SecurityConfiguration {
                                                 for (Role role : roles)
                                                         mappedAuthorities.add(
                                                                         new SimpleGrantedAuthority(role.getName()));
+                                                                        
+                                                Set<Privilege> privileges = new HashSet<>(censusMember.getPrivileges());
+                                                for (Privilege privilege : privileges)
+                                                        mappedAuthorities.add(
+                                                                        new SimpleGrantedAuthority(privilege.getName()));
                                         }
                                 }
                         });

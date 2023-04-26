@@ -26,4 +26,7 @@ public class Privilege {
 
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;
+
+    @ManyToMany(mappedBy = "privileges")
+    private Collection<CensusMember> censusMembers;
 }

@@ -71,4 +71,13 @@ public class CensusMember {
         inverseJoinColumns = @JoinColumn(
           name = "role_id", referencedColumnName = "id")) 
     private Collection<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable( 
+        name = "censusMembers_privileges", 
+        joinColumns = @JoinColumn(
+          name = "censusmember_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "privilege_id", referencedColumnName = "id")) 
+    private Collection<Privilege> privileges;
 }
