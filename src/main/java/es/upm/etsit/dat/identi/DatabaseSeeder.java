@@ -5,12 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import es.upm.etsit.dat.identi.persistence.model.CDToken;
 import es.upm.etsit.dat.identi.persistence.model.Commission;
+import es.upm.etsit.dat.identi.persistence.model.CommissionToken;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
-import es.upm.etsit.dat.identi.persistence.model.Departament;
+import es.upm.etsit.dat.identi.persistence.model.Department;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
+import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
@@ -23,31 +27,31 @@ public class DatabaseSeeder implements CommandLineRunner {
     private DepartamentRepository departamentRepository;
 
     public void seedDepartments() {
-        Departament dit = new Departament(Long.valueOf(1), "DIT", "Departamento de Ingeniería de Sistemas Telemáticos");
+        Department dit = new Department(Long.valueOf(1), "DIT", "Departamento de Ingeniería de Sistemas Telemáticos");
         departamentRepository.save(dit);
 
-        Departament ssr = new Departament(Long.valueOf(2), "SSR", "Señales, Sistemas y Radiocomunicaciones");
+        Department ssr = new Department(Long.valueOf(2), "SSR", "Señales, Sistemas y Radiocomunicaciones");
         departamentRepository.save(ssr);
 
-        Departament die = new Departament(Long.valueOf(3), "DIE", "Departamento de Ingeniería Electrónica");
+        Department die = new Department(Long.valueOf(3), "DIE", "Departamento de Ingeniería Electrónica");
         departamentRepository.save(die);
 
-        Departament elf = new Departament(Long.valueOf(4), "ELF", "Departamento de Electrónica Física");
+        Department elf = new Department(Long.valueOf(4), "ELF", "Departamento de Electrónica Física");
         departamentRepository.save(elf);
 
-        Departament mat = new Departament(Long.valueOf(5), "MAT",
+        Department mat = new Department(Long.valueOf(5), "MAT",
                 "Matemática aplicada a las tecnologías de la información y las comunicaciones");
         departamentRepository.save(mat);
 
-        Departament tfb = new Departament(Long.valueOf(6), "TFB",
+        Department tfb = new Department(Long.valueOf(6), "TFB",
                 "Departamento de Tecnología Fotónica y Bioingeniería");
         departamentRepository.save(tfb);
 
-        Departament ior = new Departament(Long.valueOf(7), "IOR",
+        Department ior = new Department(Long.valueOf(7), "IOR",
                 "Ingeniería de Organización, Administración de Empresas y Estadística");
         departamentRepository.save(ior);
 
-        Departament lia = new Departament(Long.valueOf(8), "LIA", "Lingüística aplicada a la ciencia y la tecnología");
+        Department lia = new Department(Long.valueOf(8), "LIA", "Lingüística aplicada a la ciencia y la tecnología");
         departamentRepository.save(lia);
     }
 
@@ -169,6 +173,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     private TokenRepository tokenRepository;
 
+    @Autowired
+    private CDTokenRepository cdTokenRepository;
+
+    @Autowired
+    private CommissionTokenRepository commissionTokenRepository;
+
     public void seedTokens() {
         Degree gitst = degreeRepository.findByCode("09TT");
         Degree gib = degreeRepository.findByCode("09IB");
@@ -189,6 +199,24 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gisd, deleTitulacion, 0) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, 0));
+
+        Department dit = departamentRepository.findByAcronym("DIT");
+        Department ssr = departamentRepository.findByAcronym("SSR");
+
+        if (cdTokenRepository.findByDepartment(dit).size() == 0)
+            cdTokenRepository.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), dit));
+
+        if (cdTokenRepository.findByDepartment(ssr).size() == 0)
+            cdTokenRepository.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), ssr));
+
+        Commission je = cmmRepo.findByName("Junta de Escuela");
+        Commission coa = cmmRepo.findByName("Comisión de Ordenación Académica");
+
+        if (commissionTokenRepository.findByCommission(je).size() == 0)
+            commissionTokenRepository.save(new CommissionToken(RandomStringUtils.randomAlphanumeric(64), je));
+
+        if (commissionTokenRepository.findByCommission(coa).size() == 0)
+            commissionTokenRepository.save(new CommissionToken(RandomStringUtils.randomAlphanumeric(64), coa));
 
     }
 
