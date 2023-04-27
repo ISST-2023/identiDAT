@@ -2,6 +2,7 @@ package es.upm.etsit.dat.identi.forms;
 
 import java.io.Serializable;
 
+import es.upm.etsit.dat.identi.TokenType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,14 +17,18 @@ public class CensusMemberForm implements Serializable {
     private String personalID;
     private Integer phone;
     private String degree;
+    private TokenType tokenType;
     private String token;
     private Boolean agreement;
 
-    public CensusMemberForm (String name, String surname, String email, String degree, String token) {
+
+    public CensusMemberForm (String name, String surname, String email, String degree, TokenType tokenType, String token) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.degree = degree;
+        this.tokenType = tokenType;
         this.token = token;
+
     }
 }

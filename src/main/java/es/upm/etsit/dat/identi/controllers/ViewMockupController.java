@@ -51,7 +51,6 @@ public class ViewMockupController {
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    if (activeProfile.equals("dev")) return "redirect:/test";
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
     if (userData == null) {
@@ -79,8 +78,6 @@ public class ViewMockupController {
 
   @GetMapping("/profile")
   public String profile(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    if (activeProfile.equals("dev")) return "redirect:/test";
-
     String email = (String)principal.getAttribute("email");
     CensusMember userData = cenMemRepo.findByEmail(email);
     if (userData == null) {

@@ -36,7 +36,9 @@ public class CensusMemberDto {
     @Email
     private String email;
 
+    @NonNull
     @Size(max = 200)
+    @NotNull
     private String username;
 
     @NonNull

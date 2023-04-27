@@ -2,6 +2,10 @@ package es.upm.etsit.dat.identi.persistence.model;
 
 import java.util.Collection;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +31,7 @@ public class Privilege {
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<CensusMember> censusMembers;
 }

@@ -1,8 +1,10 @@
 package es.upm.etsit.dat.identi.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,22 +14,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import es.upm.etsit.dat.identi.TokenType;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
+import es.upm.etsit.dat.identi.persistence.model.CDMember;
+import es.upm.etsit.dat.identi.persistence.model.CDToken;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
+import es.upm.etsit.dat.identi.persistence.model.CommissionToken;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
+import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 
 @Controller
 @SessionAttributes("censusMemberForm")
 public class RegistrationController {
+
     @Autowired
     private CensusMemberService cenMemService;
 
@@ -43,21 +57,49 @@ public class RegistrationController {
     @Autowired
     private DegreeRepository dgrRepo;
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+    @Autowired
+    private DepartamentRepository dpmRepo;
+
+    @Autowired
+    private CDTokenRepository cdTknRepo;
+
+    @Autowired
+    private CDMemberRepository cdMemRepo;
+
+    @Autowired
+    private CommissionRepository cmmRepo;
+
+    @Autowired
+    private CommissionTokenRepository cmmTknRepo;
+
+    @Autowired
+    private CommissionMemberRepository cmmMemRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/register")
     public String registerForm(@AuthenticationPrincipal OAuth2User principal,
-            @RequestParam(name = "token", required = false) String token, Model model) {        
+            @RequestParam(name = "token", required = false) String token, Model model) {
         if (token == null) {
             model.addAttribute("error",
                     "No dispones de un token válido. Contacta con un administrador para continuar.");
             return "error";
         }
 
-        Token positionToken = tknRepo.findByToken(token);
+        TokenType tokenType;
 
-        if (positionToken == null) {
+        Token positionToken = tknRepo.findByToken(token);
+        CDToken cdToken = cdTknRepo.findByToken(token);
+        CommissionToken commissionToken = cmmTknRepo.findByToken(token);
+
+        if (positionToken != null)
+            tokenType = TokenType.POSITION;
+        else if (cdToken != null)
+            tokenType = TokenType.CD;
+        else if (commissionToken != null)
+            tokenType = TokenType.COMMISSION;
+        else {
             model.addAttribute("error",
                     "No dispones de un token válido. Contacta con un administrador para continuar.");
             return "error";
@@ -76,8 +118,10 @@ public class RegistrationController {
             return "error";
         }
 
+        String degree = principal.getAttribute("degree") == null ? "DAT" : principal.getAttribute("degree");
+
         CensusMemberForm cenMemForm = new CensusMemberForm(given_name, family_name, email,
-                positionToken.getDegree().getAcronym(), positionToken.getToken());
+                degree, tokenType, token);
         model.addAttribute("censusMemberForm", cenMemForm);
 
         if (cenMemRepo.findByEmail(email) != null) {
@@ -85,8 +129,18 @@ public class RegistrationController {
             return register(cenMemForm, model);
         }
 
-        model.addAttribute("position", positionToken.getPosition().getPosition());
-        model.addAttribute("diferentiator", positionToken.getDiferentiator());
+        switch (tokenType) {
+            case POSITION:
+                model.addAttribute("position", positionToken.getPosition().getPosition());
+                model.addAttribute("diferentiator", positionToken.getDiferentiator());
+                break;
+            case CD:
+                model.addAttribute("position", "Consejo de Departamento " + cdToken.getDepartment().getAcronym());
+                break;
+            case COMMISSION:
+                model.addAttribute("position", commissionToken.getCommission().getName());
+                break;
+        }
 
         return "register";
     }
@@ -98,30 +152,70 @@ public class RegistrationController {
             return "error";
         }
 
+        CensusMemberDto censusMemberDto = null;
+        TokenType tokenType = cenMemForm.getTokenType();
+
         CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
+
         if (censusMember == null) {
-            cenMemService.create(new CensusMemberDto(
-                    cenMemForm.getName(), 
+            OAuth2User principal = (OAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            censusMemberDto = new CensusMemberDto(
+                    cenMemForm.getName(),
                     cenMemForm.getSurname(),
-                    cenMemForm.getEmail(), 
+                    cenMemForm.getEmail(),
+                    principal.getName(),
                     cenMemForm.getPersonalID(),
                     cenMemForm.getPhone(),
-                    dgrRepo.findByAcronym(cenMemForm.getDegree())));
+                    dgrRepo.findByAcronym(cenMemForm.getDegree()));
+
+            censusMember = modelMapper.map(censusMemberDto, CensusMember.class);
         }
 
-        censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
-        Token token = tknRepo.findByToken(cenMemForm.getToken());
-        Position position = token.getPosition();
-        Degree degree = token.getDegree();
-        Integer diferentiator = token.getDiferentiator();
+        switch (tokenType) {
+            case POSITION:
+                Token token = tknRepo.findByToken(cenMemForm.getToken());
+                if (token == null) {
+                    model.addAttribute("error",
+                            "No dispones de un token válido. Contacta con un administrador para continuar.");
+                    return "error";
+                }
+                Position position = token.getPosition();
+                Degree degree = token.getDegree();
+                Integer diferentiator = token.getDiferentiator();
+                if (dlgRepo.findByPositionIdAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
+                    model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
+                    return "error";
+                }
+                if (censusMemberDto != null)
+                    censusMember = modelMapper.map(censusMemberDto, CensusMember.class);
+                Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
+                dlgRepo.save(memberPosition);
+                break;
 
-        Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
-        if (dlgRepo.findByPositionIdAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
-            model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
-            return "error";
+            case CD:
+                CDToken cdToken = cdTknRepo.findByToken(cenMemForm.getToken());
+                if (cdToken == null) {
+                    model.addAttribute("error",
+                            "No dispones de un token válido. Contacta con un administrador para continuar.");
+                    return "error";
+                }
+                CDMember cdMember = new CDMember(censusMember, cdToken.getDepartment(), 2023, false);
+                cdMemRepo.save(cdMember);
+                break;
+
+            case COMMISSION:
+                CommissionToken cmmToken = cmmTknRepo.findByToken(cenMemForm.getToken());
+                if (cmmToken == null) {
+                    model.addAttribute("error",
+                            "No dispones de un token válido. Contacta con un administrador para continuar.");
+                    return "error";
+                }
+                CommissionMember cmmMember = new CommissionMember(censusMember, cmmToken.getCommission(), 2023);
+                cmmMemRepo.save(cmmMember);
+                break;
         }
 
-        dlgRepo.save(memberPosition);
+        cenMemRepo.save(censusMember);
 
         return "redirect:profile";
     }
