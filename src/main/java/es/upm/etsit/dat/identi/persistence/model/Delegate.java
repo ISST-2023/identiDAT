@@ -41,7 +41,7 @@ public class Delegate {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="positionId")
     @NonNull
-    private Position positionId;
+    private Position position;
 
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

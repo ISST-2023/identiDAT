@@ -61,8 +61,8 @@ public class SetupDataLoader implements
 
         if (dgrRepo.findByCode("09DA") == null) dgrRepo.save(new Degree(Long.valueOf(1), "Delegación de Alumnos de Telecomunicación", "09DA", "DAT"));
 
-        cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(1), "Delegado de Alumnos", "ETSIT-UPM", "delegado.alumnos.etsit@upm.es", "delegado.alumnos.etsit", null, 636980510, dgrRepo.findByCode("09DA"), Arrays.asList(adminRole), Arrays.asList(callPrivilege)));
-        cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(2), "Secretaría de la Delegación de Alumnos", "ETSIT-UPM", "secretaria.dat.etsit@upm.es", "secretaria.dat.etsit", null, 910671919, dgrRepo.findByCode("09DA"), Arrays.asList(adminRole, secretaryRole), null));
+        cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(1), "Delegado de Alumnos", "ETSIT-UPM", "delegado.alumnos.etsit@upm.es", "delegado.alumnos.etsit", "00000000D", 636980510, dgrRepo.findByCode("09DA"), Arrays.asList(adminRole), Arrays.asList(callPrivilege)));
+        cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(2), "Secretaría de la Delegación de Alumnos", "ETSIT-UPM", "secretaria.dat.etsit@upm.es", "secretaria.dat.etsit", "00000000S", 910671919, dgrRepo.findByCode("09DA"), Arrays.asList(adminRole, secretaryRole), null));
 
         alreadySetup = true;
     }

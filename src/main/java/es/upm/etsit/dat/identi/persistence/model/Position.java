@@ -23,5 +23,5 @@ public class Position {
     
     @Column(length = 200, nullable = false)
     @NonNull
-    private String position;
+    private String name;
 }

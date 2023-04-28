@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import es.upm.etsit.dat.identi.forms.TokenForm;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Position;
+import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
@@ -23,7 +25,13 @@ public class TokenController {
     private TokenService tknService;
 
     @Autowired
-    TokenRepository tknRepo;
+    private TokenRepository tknRepo;
+
+    @Autowired
+    private CDTokenRepository cdTknRepo;
+
+    @Autowired
+    private CommissionTokenRepository cmmTknRepo;
 
     @Autowired
     private DegreeRepository dgrRepository;
@@ -33,8 +41,25 @@ public class TokenController {
 
     @GetMapping("/admin/tokens")
     public String tokens(Model model) {
-        model.addAttribute("tokens", tknRepo.findAll());
         return "tokens";
+    }
+
+    @GetMapping("/admin/tokens/delegates")
+    public String delegateTokens(Model model) {
+        model.addAttribute("tokens", tknRepo.findAll());
+        return "delegate_tokens";
+    }
+
+    @GetMapping("/admin/tokens/cds")
+    public String cdTokens(Model model) {
+        model.addAttribute("tokens", cdTknRepo.findAll());
+        return "cd_tokens";
+    }
+
+    @GetMapping("/admin/tokens/commissions")
+    public String commissionTokens(Model model) {
+        model.addAttribute("tokens", cmmTknRepo.findAll());
+        return "commission_tokens";
     }
 
     @GetMapping("/admin/tokens/generate")

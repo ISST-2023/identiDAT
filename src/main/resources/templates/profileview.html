@@ -31,7 +31,7 @@
                                 <img th:src="@{/img/user_icon.png}" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4 th:text="${censusMember.name} + ' ' + ${censusMember.surname}"></h4>
-                                    <p class="text-secondary mb-1" th:text="${censusMember.degree}"></p>
+                                    <p class="text-secondary mb-1" th:text="${censusMember.degree.acronym}"></p>
                                 </div>
                             </div>
                         </div>
@@ -71,19 +71,41 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Titulación</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary" th:text="${censusMember.degree}">
+                                <div class="col-sm-9 text-secondary" th:text="${censusMember.degree.acronym}">
 
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
+                            <hr th:if="${#lists.size(positions) > 0}">
+                            <div class="row" th:if="${#lists.size(positions) > 0}">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Cargos</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <div th:each="position: ${positions}">
-                                        <p th:if="${position.diferentiator > 0}" th:text="${position.positionId.position + ' ' + position.diferentiator}"></p>
-                                        <p th:if="${position.diferentiator == 0}" th:text="${position.positionId.position}"></p>
+                                        <p th:if="${position.diferentiator > 0}" th:text="${position.position.name + ' ' + position.diferentiator}"></p>
+                                        <p th:if="${position.diferentiator == 0}" th:text="${position.position.name} + ' - ' + ${position.degree.acronym}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr th:if="${#lists.size(cds) > 0}">
+                            <div class="row" th:if="${#lists.size(cds) > 0}">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Consejos de departamento</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div th:each="cd: ${cds}">
+                                        <p th:text="${cd.department.name} + ' - ' + ${cd.department.acronym}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr th:if="${#lists.size(commissions) > 0}">
+                            <div class="row" th:if="${#lists.size(commissions) > 0}">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Comisiones</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <div th:each="commission: ${commissions}">
+                                        <p th:text="${commission.commission.name}"></p>
                                     </div>
                                 </div>
                             </div>

@@ -131,7 +131,7 @@ public class RegistrationController {
 
         switch (tokenType) {
             case POSITION:
-                model.addAttribute("position", positionToken.getPosition().getPosition());
+                model.addAttribute("position", positionToken.getPosition().getName());
                 model.addAttribute("diferentiator", positionToken.getDiferentiator());
                 break;
             case CD:
@@ -182,7 +182,7 @@ public class RegistrationController {
                 Position position = token.getPosition();
                 Degree degree = token.getDegree();
                 Integer diferentiator = token.getDiferentiator();
-                if (dlgRepo.findByPositionIdAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
+                if (dlgRepo.findByPositionAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
                     model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
                     return "error";
                 }

@@ -184,9 +184,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         Degree gib = degreeRepository.findByCode("09IB");
         Degree gisd = degreeRepository.findByCode("09ID");
 
-        Position deleGrupo = positionRepository.findByPosition("Delegado/a de grupo");
-        Position deleCurso = positionRepository.findByPosition("Delegado/a de curso");
-        Position deleTitulacion = positionRepository.findByPosition("Delegado/a de titulación");
+        Position deleGrupo = positionRepository.findByName("Delegado/a de grupo");
+        Position deleCurso = positionRepository.findByName("Delegado/a de curso");
+        Position deleTitulacion = positionRepository.findByName("Delegado/a de titulación");
 
         if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gitst, deleGrupo, 14) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleGrupo, 14));

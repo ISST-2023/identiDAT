@@ -34,13 +34,13 @@ public class CDMember {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="censusId")
     @NonNull
-    private CensusMember censusId;
+    private CensusMember censusMember;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="departamentId")
     @NonNull
-    private Department departament;
+    private Department department;
 
     @Column(nullable = false)
     @NonNull

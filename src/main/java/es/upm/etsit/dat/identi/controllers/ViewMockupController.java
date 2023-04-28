@@ -19,9 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
+import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
+import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
@@ -40,6 +45,12 @@ public class ViewMockupController {
 
   @Autowired
   private DegreeRepository dgrRepo;
+
+  @Autowired
+  private CDMemberRepository cdMemRepo;
+
+  @Autowired
+  private CommissionMemberRepository cmmMemRepo;
 
   @Value("${spring.profiles.active}")
   private String activeProfile;
@@ -84,8 +95,13 @@ public class ViewMockupController {
       return "redirect:/register";
     }
     List<Delegate> userPositions = dlgRepo.findByCensusId(userData);
+    List<CDMember> userCDs = cdMemRepo.findByCensusMember(userData);
+    List<CommissionMember> userCommissions = cmmMemRepo.findByCensusMember(userData);
+
     model.addAttribute("censusMember", userData);
     model.addAttribute("positions", userPositions);
+    model.addAttribute("cds", userCDs);
+    model.addAttribute("commissions", userCommissions);
     return "profileview";
   }
   
