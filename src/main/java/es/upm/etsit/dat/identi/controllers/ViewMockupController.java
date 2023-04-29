@@ -75,19 +75,6 @@ public class ViewMockupController {
     return "forward:/favicon.svg";
   }
 
-  @GetMapping("/")
-  public String index(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    String email = (String)principal.getAttribute("email");
-    CensusMember userData = cenMemRepo.findByEmail(email);
-    if (userData == null) {
-      return "redirect:/register";
-    }
-    else {
-      return "redirect:/profile";
-    }
-    
-  }
-
   @GetMapping("/test")
   public String test(HttpSession session, Model model) {
     final Enumeration<String> attributeNames = session.getAttributeNames();
@@ -100,24 +87,6 @@ public class ViewMockupController {
     
     model.addAttribute("attributes", attributes);
     return "test";
-  }
-
-  @GetMapping("/profile")
-  public String profile(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    String email = (String)principal.getAttribute("email");
-    CensusMember userData = cenMemRepo.findByEmail(email);
-    if (userData == null) {
-      return "redirect:/register";
-    }
-    List<Delegate> userPositions = dlgRepo.findByCensusId(userData);
-    List<CDMember> userCDs = cdMemRepo.findByCensusMember(userData);
-    List<CommissionMember> userCommissions = cmmMemRepo.findByCensusMember(userData);
-
-    model.addAttribute("censusMember", userData);
-    model.addAttribute("positions", userPositions);
-    model.addAttribute("cds", userCDs);
-    model.addAttribute("commissions", userCommissions);
-    return "profileview";
   }
   
   @GetMapping("/admin")
