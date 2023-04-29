@@ -2,7 +2,6 @@ package es.upm.etsit.dat.identi.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -30,20 +29,14 @@ import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
-import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
-import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
-import es.upm.etsit.dat.identi.service.CensusMemberService;
 
 @Controller
 @SessionAttributes("censusMemberForm")
 public class RegistrationController {
-
-    @Autowired
-    private CensusMemberService cenMemService;
 
     @Autowired
     private CensusMemberRepository cenMemRepo;
@@ -58,16 +51,10 @@ public class RegistrationController {
     private DegreeRepository dgrRepo;
 
     @Autowired
-    private DepartamentRepository dpmRepo;
-
-    @Autowired
     private CDTokenRepository cdTknRepo;
 
     @Autowired
     private CDMemberRepository cdMemRepo;
-
-    @Autowired
-    private CommissionRepository cmmRepo;
 
     @Autowired
     private CommissionTokenRepository cmmTknRepo;
@@ -79,6 +66,7 @@ public class RegistrationController {
     private ModelMapper modelMapper;
 
     @GetMapping("/register")
+    @SuppressWarnings("null")
     public String registerForm(@AuthenticationPrincipal OAuth2User principal,
             @RequestParam(name = "token", required = false) String token, Model model) {
         if (token == null) {
@@ -131,7 +119,7 @@ public class RegistrationController {
 
         switch (tokenType) {
             case POSITION:
-                model.addAttribute("position", positionToken.getPosition().getName());
+                model.addAttribute("position", positionToken.getPosition().getName()); 
                 model.addAttribute("diferentiator", positionToken.getDiferentiator());
                 break;
             case CD:
