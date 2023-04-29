@@ -8,8 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,19 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.forms.PositionForm;
-import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
-import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
-import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Department;
 import es.upm.etsit.dat.identi.persistence.model.Commission;
-import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
-import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
-import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
@@ -47,16 +39,7 @@ public class ViewMockupController {
   private CensusMemberRepository cenMemRepo;
 
   @Autowired
-  private DelegateRepository dlgRepo;
-
-  @Autowired
   private DegreeRepository dgrRepo;
-
-  @Autowired
-  private CDMemberRepository cdMemRepo;
-
-  @Autowired
-  private CommissionMemberRepository cmmMemRepo;
 
   @Autowired
   private PositionRepository posRepo;
