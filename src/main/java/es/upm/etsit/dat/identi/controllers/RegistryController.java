@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import es.upm.etsit.dat.identi.FieldValidator;
 import es.upm.etsit.dat.identi.TokenType;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
@@ -36,7 +37,7 @@ import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 
 @Controller
 @SessionAttributes("censusMemberForm")
-public class RegistrationController {
+public class RegistryController {
 
     @Autowired
     private CensusMemberRepository cenMemRepo;
@@ -64,6 +65,9 @@ public class RegistrationController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FieldValidator fieldValidator;
 
     @GetMapping("/register")
     @SuppressWarnings("null")
@@ -106,11 +110,12 @@ public class RegistrationController {
             return "error";
         }
 
-        String degree = principal.getAttribute("degree") == null ? "DAT" : principal.getAttribute("degree");
+        String degreeCode = principal.getAttribute("degree") == null ? "09DA" : principal.getAttribute("degree");
 
         CensusMemberForm cenMemForm = new CensusMemberForm(given_name, family_name, email,
-                degree, tokenType, token);
-        model.addAttribute("censusMemberForm", cenMemForm);
+                degreeCode, tokenType, token);
+
+        cenMemForm.setDegreeAcronym(dgrRepo.findByCode(degreeCode).getAcronym());
 
         if (cenMemRepo.findByEmail(email) != null) {
             cenMemForm.setAgreement(true);
@@ -119,34 +124,72 @@ public class RegistrationController {
 
         switch (tokenType) {
             case POSITION:
-                model.addAttribute("position", positionToken.getPosition().getName()); 
-                model.addAttribute("diferentiator", positionToken.getDiferentiator());
+                cenMemForm.setPosition(positionToken.getPosition().getName());
+                cenMemForm.setDiferentiator(positionToken.getDiferentiator());
                 break;
             case CD:
-                model.addAttribute("position", "Consejo de Departamento " + cdToken.getDepartment().getAcronym());
+                cenMemForm.setPosition("Consejo de Departamento " + cdToken.getDepartment().getAcronym());
                 break;
             case COMMISSION:
-                model.addAttribute("position", commissionToken.getCommission().getName());
+                cenMemForm.setPosition(commissionToken.getCommission().getName());
                 break;
         }
 
+        model.addAttribute("censusMemberForm", cenMemForm);
         return "register";
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute("censusMemberForm") CensusMemberForm cenMemForm, Model model) {
-        if (!cenMemForm.getAgreement()) {
-            model.addAttribute("error", "No se ha aceptado el acuerdo de usuario.");
-            return "error";
-        }
-
         CensusMemberDto censusMemberDto = null;
         TokenType tokenType = cenMemForm.getTokenType();
+
+        Boolean errorFound = false;
+
+        if (!cenMemForm.getAgreement()) {
+            errorFound = true;
+            model.addAttribute("agreementError", "No se ha aceptado el acuerdo de usuario.");
+        }
+
+        if (!fieldValidator.validateEmail(cenMemForm.getEmail())) {
+            errorFound = true;
+            model.addAttribute("emailError", "No se ha introducido un email válido.");
+        }
+
+        if (fieldValidator.emailExists(cenMemForm.getEmail())) {
+            errorFound = true;
+            model.addAttribute("emailError", "Ya existe un usuario registrado con ese email.");
+        }
+
+        if (!fieldValidator.validatePhone(cenMemForm.getPhone())) {
+            errorFound = true;
+            model.addAttribute("phoneError", "No se ha introducido un número de teléfono válido.");
+        }
+
+        if (!fieldValidator.validateID(cenMemForm.getPersonalID())) {
+            errorFound = true;
+            model.addAttribute("personalIDError", "El DNI/NIE introducido no es válido.");
+        }
+
+        if (fieldValidator.IDExists(cenMemForm.getPersonalID())) {
+            errorFound = true;
+            model.addAttribute("personalIDError", "Un usuario con ese DNI/NIE ya está registrado.");
+        }
+
+        if (dgrRepo.findByCode(cenMemForm.getDegreeCode()) == null) {
+            errorFound = true;
+            model.addAttribute("degreeError", "La titulación especificada no se encuentra registrada.");
+        }
+
+        if (errorFound) {
+            model.addAttribute("censusMemberForm", cenMemForm);
+            return "register";
+        }
 
         CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
 
         if (censusMember == null) {
-            OAuth2User principal = (OAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             censusMemberDto = new CensusMemberDto(
                     cenMemForm.getName(),
                     cenMemForm.getSurname(),
@@ -154,7 +197,7 @@ public class RegistrationController {
                     principal.getName(),
                     cenMemForm.getPersonalID(),
                     cenMemForm.getPhone(),
-                    dgrRepo.findByAcronym(cenMemForm.getDegree()));
+                    dgrRepo.findByCode(cenMemForm.getDegreeCode()));
 
             censusMember = modelMapper.map(censusMemberDto, CensusMember.class);
         }
@@ -201,6 +244,11 @@ public class RegistrationController {
                 CommissionMember cmmMember = new CommissionMember(censusMember, cmmToken.getCommission(), 2023);
                 cmmMemRepo.save(cmmMember);
                 break;
+
+            default:
+                model.addAttribute("error",
+                        "No dispones de un token válido. Contacta con un administrador para continuar.");
+                return "error";
         }
 
         cenMemRepo.save(censusMember);

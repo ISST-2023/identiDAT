@@ -2,17 +2,19 @@ package es.upm.etsit.dat.identi.forms;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import es.upm.etsit.dat.identi.persistence.model.Position;
-import es.upm.etsit.dat.identi.persistence.model.Department;
-import es.upm.etsit.dat.identi.persistence.model.Commission;
+import es.upm.etsit.dat.identi.persistence.model.CDMember;
+import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
+import es.upm.etsit.dat.identi.persistence.model.Delegate;
 
-@Getter @Setter
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class PositionForm {
     private Long censusMemberId;
-    private List<Position> positions;
-    private List<Department> deparments;
-    private List<Commission> commissions;
+    private List<Delegate> positions;
+    private List<CDMember> deparments;
+    private List<CommissionMember> commissions;
 }

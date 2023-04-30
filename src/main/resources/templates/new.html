@@ -22,7 +22,7 @@
                     <div class="card-body p-5">
                         <h2 class="text-uppercase text-center mb-5">Registro en el censo de DAT</h2>
 
-                        <form action="#" th:action="@{/newRegister}" th:object="${censusMemberForm}" method="POST">
+                        <form action="#" th:action="@{/admin/profiles/new}" th:object="${censusMemberForm}" method="POST">
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="name">Nombre:</label>
@@ -37,24 +37,28 @@
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="email">Email:</label>
                                 <input type="email" id="email" name="email" class="form-control form-control-lg" th:field="*{email}" required />
+                                <span class="errorMessage" th:if="${emailError}" th:text="${emailError}"></span>
                             </div>
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
                                 <input type="text" id="personalID" name="personalID" class="form-control form-control-lg" th:field="*{personalID}" required />
+                                <span class="errorMessage" th:if="${personalIDError}" th:text="${personalIDError}"></span>
                             </div>
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="phone">Teléfono:</label>
-                                <input type="number" id="phone" name="phone" class="form-control form-control-lg" th:field="*{phone}" required />
+                                <input type="text" id="phone" name="phone" pattern="(\+[0-9]{3})?[0-9]{7,15}" class="form-control form-control-lg" th:field="*{phone}" required />
+                                <span class="errorMessage" th:if="${phoneError}" th:text="${phoneError}"></span>
                             </div>
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="degree">Titulación:</label>
-                                <select id="degree" name="degree" th:field="*{degree}" class="form-control form-control-lg" required>
-                                    <option th:each="degree : ${degrees}" th:value="${degree.code}" th:text="${degree.acronym}" 
-                                        class="degree"></option>
-                                </select>
+                                <select th:field="*{degreeCode}" class="form-select" required>
+									<option th:each="degree : ${degrees}" th:value="${degree.code}"
+										th:text="${degree.acronym}"></option>
+								</select>
+                                <span class="errorMessage" th:if="${degreeError}" th:text="${degreeError}"></span>
                             </div>
 
                             <div class="d-flex justify-content-center">

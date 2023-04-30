@@ -10,5 +10,6 @@ import es.upm.etsit.dat.identi.persistence.model.Degree;
 public interface CensusMemberRepository extends JpaRepository<CensusMember, Long> {
     CensusMember findByEmail(String email);
     CensusMember findByUsername(String username);
+    CensusMember findByPersonalID(String personalID);
     List<CensusMember> findByDegree(Degree degree);
 }

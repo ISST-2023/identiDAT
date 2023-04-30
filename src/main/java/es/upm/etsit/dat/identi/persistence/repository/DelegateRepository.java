@@ -10,5 +10,5 @@ import es.upm.etsit.dat.identi.persistence.model.Position;
 
 public interface DelegateRepository extends JpaRepository<Delegate, Long> {
     Delegate findByPositionAndDiferentiatorAndYear(Position position, Integer diferentiator, Integer year);
-    List<Delegate> findByCensusId(CensusMember censusMember);
+    List<Delegate> findByCensusMember(CensusMember censusMember);
 }

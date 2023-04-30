@@ -13,7 +13,8 @@
 </head>
 
 <body>
-    <div class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
+    <div
+        class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
         <div class="row d-flex align-items-center justify-content-center h-100">
             <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
             <div class="col-12 col-md-10 col-lg-10 col-xl-10">
@@ -23,35 +24,41 @@
 
                         <form th:action="@{/admin/profiles/edit}" th:object="${form}" method="POST">
 
-                            <input type="hidden" th:field="*{id}" id="id" name="id">                              
-                           
+                            <input type="hidden" th:field="*{censusMemberId}" id="censusMemberId" name="censusMemberId">
+
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="position">Position:</label>
-                                <select id="position" name="position" th:field="*{position}" class="form-control form-control-lg" required>
-                                    <option th:each="position : ${positions}" th:value="${position}" th:text="${position}" 
-                                        class="position"></option>
+                                <select id="position" name="position" th:field="*{position}"
+                                    class="form-control form-control-lg" required>
+                                    <option th:each="position : ${positions}" th:value="${position}"
+                                        th:text="${position}" class="position"></option>
                                 </select>
                             </div>
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="deparment">Departamento:</label>
-                                <select id="deparment" name="deparment" th:field="*{deparment}" class="form-control form-control-lg" required>
-                                    <option th:each="deparment : ${deparments}" th:value="${deparment.acronym}" th:text="${deparment.acronym}" 
-                                        class="deparment"></option>
+                                <select id="deparment" name="deparment" th:field="*{deparment}"
+                                    class="form-control form-control-lg" required>
+                                    <option th:each="deparment : ${deparments}" th:value="${deparment.acronym}"
+                                        th:text="${deparment.acronym}" class="deparment"></option>
                                 </select>
                             </div>
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="commission">Comisión:</label>
-                                <select id="commission" name="commission" th:field="*{commission}" class="form-control form-control-lg" required>
-                                    <option th:each="commission : ${commissions}" th:value="${commission}" th:text="${commission}" 
-                                        class="commission"></option>
+                                <select id="commission" name="commission" th:field="*{commission}"
+                                    class="form-control form-control-lg" required>
+                                    <option th:each="commission : ${commissions}" th:value="${commission}"
+                                        th:text="${commission}" class="commission"></option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Editar"></input>&nbsp;&nbsp;
-                                <a th:href="@{/admin/profiles/delete/} + ${form.id}" class="btn btn-danger btn-block btn-lg">Borrar</a>
+                                <input type="submit" class="btn btn-primary btn-block btn-lg"
+                                    value="Editar"></input>&nbsp;&nbsp;
+                                <input type="submit" class="btn btn-danger btn-block btn-lg"
+                                    th:formaction="@{/admin/profiles/delete/} + ${form.censusMemberId}"
+                                    formmethod="POST">Borrar</input type="submit">
 
                             </div>
 
