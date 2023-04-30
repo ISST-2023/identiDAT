@@ -1,6 +1,5 @@
 package es.upm.etsit.dat.identi.controllers.admin;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +19,8 @@ import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.forms.PositionForm;
 import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
-import es.upm.etsit.dat.identi.persistence.model.Commission;
 import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
-import es.upm.etsit.dat.identi.persistence.model.Department;
-import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
@@ -62,28 +58,28 @@ public class ProfilesController {
   @Autowired
   private FieldValidator fieldValidator;
 
-  @GetMapping("/admin/profiles")
-  public String profiles(Model model) {
+  @GetMapping("/admin/census")
+  public String census(Model model) {
     model.addAttribute("censusMembers", cenMemService.getAll());
-    return "profiles";
+    return "admin/census/index";
   }
 
-  @GetMapping("/admin/profiles/new")
+  @GetMapping("/admin/census/new")
   public String newForm(Model model) {
     CensusMemberForm cenMemForm = new CensusMemberForm();
     model.addAttribute("censusMemberForm", cenMemForm);
     model.addAttribute("degrees", dgrRepo.findAll());
-    return "new";
+    return "admin/census/new";
   }
 
-  @PostMapping("/admin/profiles/new")
+  @PostMapping("/admin/census/new")
   public String register(@ModelAttribute("censusMemberForm") CensusMemberForm cenMemForm, Model model) {
     CensusMemberDto censusMemberDto;
     CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
 
     if (censusMember != null) {
       model.addAttribute("error",
-          "Este usuario ya existe dentro de la base de datos, si desea modificar alguno de sus atributos por favor intentelo desde la página de profiles.");
+          "Este usuario ya existe dentro de la base de datos, si desea modificar alguno de sus atributos por favor intentelo desde la página del censo.");
       return "error";
     }
 
@@ -139,10 +135,10 @@ public class ProfilesController {
     }
 
     cenMemRepo.saveAndFlush(censusMember);
-    return "redirect:/admin/profiles";
+    return "redirect:/admin/census";
   }
 
-  @GetMapping("/admin/profiles/edit/{id}")
+  @GetMapping("/admin/census/edit/{id}")
   public ModelAndView editForm(@ModelAttribute("id") Long id) {
     var params = new HashMap<String, Object>();
     CensusMemberForm form = new CensusMemberForm();
@@ -158,10 +154,10 @@ public class ProfilesController {
     params.put("degrees", dgrRepo.findAll());
     params.put("form", form);
 
-    return new ModelAndView("edit_user", params);
+    return new ModelAndView("admin/census/edit", params);
   }
 
-  @PostMapping("/admin/profiles/edit")
+  @PostMapping("/admin/census/edit")
   public String edit(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
     Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(cenMemForm.getCensusMemberId());
     CensusMember censusMember;
@@ -203,7 +199,7 @@ public class ProfilesController {
       if (errorFound) {
         model.addAttribute("censusMemberForm", cenMemForm);
         model.addAttribute("degrees", dgrRepo.findAll());
-        return "edit_user";
+        return "admin/census/edit";
       }
 
       censusMember.setName(cenMemForm.getName());
@@ -220,13 +216,13 @@ public class ProfilesController {
       return "error";
     }
 
-    return "redirect:/admin/profiles";
+    return "redirect:/admin/census";
   }
 
-  @PostMapping("/admin/profiles/delete/{id}")
+  @PostMapping("/admin/census/delete/{id}")
   public ModelAndView delete(@ModelAttribute("id") Long id) {
     cenMemService.delete(id);
-    return new ModelAndView("redirect:/admin/profiles");
+    return new ModelAndView("redirect:/admin/census");
   }
 
   @Autowired
@@ -238,7 +234,7 @@ public class ProfilesController {
   @Autowired
   CommissionMemberRepository cmmMemRepo;
 
-  @GetMapping("/admin/profiles/positions/{id}")
+  @GetMapping("/admin/census/positions/{id}")
   public String editPositions(@ModelAttribute("id") Long id, Model model) {
     CensusMember censusMember;
     Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(id);
@@ -260,10 +256,10 @@ public class ProfilesController {
 
     model.addAttribute("form", form);
 
-    return "edit_positions";
+    return "admin/census/positions";
   }
 
-  @PostMapping("/admin/profiles/positions")
+  @PostMapping("/admin/census/positions")
   public String registerPositions(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
     Optional<CensusMember> censusMember = cenMemRepo.findById(cenMemForm.getCensusMemberId());
 
@@ -280,6 +276,6 @@ public class ProfilesController {
       cenMemRepo.flush();
     }
 
-    return "redirect:/admin/profiles";
+    return "redirect:/admin/census";
   }
 }

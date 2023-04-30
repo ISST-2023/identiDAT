@@ -22,7 +22,7 @@
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Editar Usuario</h2>
 
-						<form th:action="@{/admin/profiles/edit}" th:object="${form}" method="POST">
+						<form th:action="@{/admin/census/edit}" th:object="${form}" method="POST">
 
 							<input type="hidden" th:field="*{censusMemberId}" id="censusMemberId" name="censusMemberId">
 
@@ -74,7 +74,7 @@
 								<input type="submit" class="btn btn-primary btn-block btn-lg"
 									value="Editar"></input>&nbsp;&nbsp;
 								<input type="submit" class="btn btn-danger btn-block btn-lg"
-									th:formaction="@{/admin/profiles/delete/} + ${form.censusMemberId}"
+									th:formaction="@{/admin/census/delete/} + ${form.censusMemberId}"
 									formmethod="POST" value="Borrar"></input>
 							</div>
 						</form>

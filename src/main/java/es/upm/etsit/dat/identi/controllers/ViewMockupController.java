@@ -38,17 +38,12 @@ public class ViewMockupController {
   
   @GetMapping("/admin")
   public String admin(Model model) {
-    return "admin";
-  }
-
-  @GetMapping("/admin/census")
-  public String census(Model model) {
-    return "census";
+    return "admin/index";
   }
 
   @GetMapping("/admin/jd")
   public String jd(Model model) {
-    return "jd";
+    return "admin/jd/index";
   }
 
   @GetMapping("/admin/assistance")
