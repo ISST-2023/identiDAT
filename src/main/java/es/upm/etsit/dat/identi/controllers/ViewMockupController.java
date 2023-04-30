@@ -19,14 +19,14 @@ import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.forms.PositionForm;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
-import es.upm.etsit.dat.identi.persistence.model.Position;
-import es.upm.etsit.dat.identi.persistence.model.Department;
 import es.upm.etsit.dat.identi.persistence.model.Commission;
+import es.upm.etsit.dat.identi.persistence.model.Department;
+import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
-import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
+import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 import jakarta.servlet.http.HttpSession;
 
@@ -39,9 +39,6 @@ public class ViewMockupController {
   private CensusMemberRepository cenMemRepo;
 
   @Autowired
-  private DegreeRepository dgrRepo;
-
-  @Autowired
   private PositionRepository posRepo;
 
   @Autowired
@@ -50,6 +47,8 @@ public class ViewMockupController {
   @Autowired
   private CommissionRepository commRepo;
 
+  @Autowired
+  private DegreeRepository dgrRepo;
   @Value("${spring.profiles.active}")
   private String activeProfile;
 
