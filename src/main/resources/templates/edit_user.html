@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
 	<link rel="stylesheet" th:href="@{/css/main.css}" />
-    
-    <title>identiDAT - Editar Usuario</title>
+
+	<title>identiDAT - Editar Usuario</title>
 </head>
+
 <body>
-    <div class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
+	<div
+		class="mask d-flex align-items-center h-100 gradient-custom-3 global-margin-top global-margin-bottom justify-content-center">
 		<div class="row d-flex align-items-center justify-content-center h-100">
 			<img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto">
 			<div class="col-12 col-md-10 col-lg-10 col-xl-10">
@@ -19,53 +22,63 @@
 					<div class="card-body p-5">
 						<h2 class="text-uppercase text-center mb-5">Editar Usuario</h2>
 
-						<form th:action="@{/admin/profiles/edit}" th:object="${form}" method="POST">
+						<form th:action="@{/admin/profiles/edit}" th:object="${form}" method="PUT">
 
-							<input type="hidden" th:field="*{id}" id="id" name="id">
+							<input type="hidden" th:field="*{censusMemberId}" id="censusMemberId" name="censusMemberId">
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="name">Nombre:</label>
-								<input type="text" id="name" name="name" class="form-control form-control-lg" 
+								<input type="text" id="name" name="name" class="form-control form-control-lg"
 									th:field="*{name}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="surname">Apellidos:</label>
 								<input type="text" id="surname" name="surname" class="form-control form-control-lg"
-									 th:field="*{surname}" required />
+									th:field="*{surname}" required />
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="email">Email:</label>
 								<input type="email" id="email" name="email" class="form-control form-control-lg"
-									 th:field="*{email}" required />
+									th:field="*{email}" required />
+								<span class="errorMessage" th:if="${emailError}" th:text="${emailError}"></span>
+
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="personalID">DNI/NIE/Pasaporte:</label>
 								<input type="text" id="personalID" name="personalID"
 									class="form-control form-control-lg" th:field="*{personalID}" required />
+								<span class="errorMessage" th:if="${personalIDError}"
+									th:text="${personalIDError}"></span>
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="phone">Teléfono:</label>
-								<input type="number" id="phone" name="phone" class="form-control form-control-lg"
-									th:field="*{phone}" required />
+								<input type="text" id="phone" name="phone" pattern="(\+[0-9]{3})?[0-9]{7,15}"
+									class="form-control form-control-lg" th:field="*{phone}" required />
+								<span class="errorMessage" th:if="${phoneError}" th:text="${phoneError}"></span>
 							</div>
 
 							<div class="form-outline mb-3">
 								<label class="form-label" for="degree">Titulación:</label>
-								<input type="text" id="degree" name="degree" class="form-control form-control-lg"
-									th:field="*{degree}" value="GITST" required />
+								<select th:field="*{degreeCode}" class="form-select" required>
+									<option th:each="degree : ${degrees}" th:value="${degree.code}"
+										th:text="${degree.acronym}"></option>
+								</select>
+								<span class="errorMessage" th:if="${degreeError}" th:text="${degreeError}"></span>
 							</div>
 
 							<div class="d-flex justify-content-center">
 								<input type="submit" class="btn btn-primary btn-block btn-lg"
 									value="Editar"></input>&nbsp;&nbsp;
-                                <a th:href="@{/admin/profiles/delete/} + ${form.id}" class="btn btn-danger btn-block btn-lg">Borrar</a>
-                                
+								<a th:href="@{/admin/profiles/delete/} + ${form.censusMemberId}" data-method="DELETE"
+									class="btn btn-danger btn-block btn-lg">Borrar</a>
+
 							</div>
 
 						</form>
 </body>
+
 </html>

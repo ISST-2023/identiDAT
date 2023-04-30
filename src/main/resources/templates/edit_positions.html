@@ -21,7 +21,7 @@
                     <div class="card-body p-5">
                         <h2 class="text-uppercase text-center mb-5">Editar Usuario</h2>
 
-                        <form th:action="@{/admin/profiles/edit}" th:object="${form}" method="POST">
+                        <form th:action="@{/admin/profiles/edit}" th:object="${form}" method="PUT">
 
                             <input type="hidden" th:field="*{id}" id="id" name="id">                              
                            
@@ -51,7 +51,7 @@
 
                             <div class="d-flex justify-content-center">
                                 <input type="submit" class="btn btn-primary btn-block btn-lg" value="Editar"></input>&nbsp;&nbsp;
-                                <a th:href="@{/admin/profiles/delete/} + ${form.id}" class="btn btn-danger btn-block btn-lg">Borrar</a>
+                                <a th:href="@{/admin/profiles/delete/} + ${form.id}" data-method="DELETE" class="btn btn-danger btn-block btn-lg">Borrar</a>
 
                             </div>
 

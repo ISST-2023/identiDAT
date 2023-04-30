@@ -55,7 +55,7 @@ public class CensusMember {
 
     @Column(length = 200, nullable = false)
     @NonNull
-    private Integer phone;
+    private String phone;
 
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
