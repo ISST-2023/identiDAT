@@ -45,8 +45,30 @@ function sendTokenRequest() {
 const submitToken = (event) => {
     event.preventDefault();
     const data = new FormData(document.getElementById("tokenRequest"));
-    const value = Object.fromEntries(data.entries());
-    console.log({ value });
+    const values = Object.fromEntries(data.entries());
+    console.log( {values} );
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    $.ajax({
+        url  : "/admin/tokens/saveToken",
+        type : "POST",
+        data : JSON.stringify(values),
+        dataType : "text",
+        contentType: "application/json",
+
+        beforeSend: function( xhr ) {
+            xhr.setRequestHeader(header, token);
+        },
+
+        success: function (response) {
+            alert("Éxito:  "+ JSON.stringify(response));
+        },
+        error: function(response) {
+             alert("Error:  "+ JSON.stringify(response));
+        }
+    });
     
 }
 
