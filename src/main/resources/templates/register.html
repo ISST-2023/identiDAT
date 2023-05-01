@@ -49,6 +49,7 @@
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="phone">Teléfono:</label>
                                 <input type="text" id="phone" name="phone" pattern="(\+[0-9]{3})?[0-9]{7,15}" class="form-control form-control-lg" th:field="*{phone}" required />
+                                <small>Para números de teléfono que no sean de España, indicar el prefijo internacional precedido de + y sin espacios.</small><br/>
                                 <span class="errorMessage" th:if="${phoneError}" th:text="${phoneError}"></span>
                             </div>
 

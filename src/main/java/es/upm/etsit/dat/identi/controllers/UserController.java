@@ -52,7 +52,7 @@ public class UserController {
       if (userData == null) {
         return "redirect:/register";
       }
-      List<Delegate> userPositions = dlgRepo.findByCensusId(userData);
+      List<Delegate> userPositions = dlgRepo.findByCensusMember(userData);
       List<CDMember> userCDs = cdMemRepo.findByCensusMember(userData);
       List<CommissionMember> userCommissions = cmmMemRepo.findByCensusMember(userData);
   

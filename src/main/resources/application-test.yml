@@ -1,0 +1,36 @@
+server:
+    port: 25565
+    forward-headers-strategy: native
+
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DB}
+        username: ${MYSQL_USER}
+        password: ${MYSQL_PASSWORD}
+
+    session:
+        jdbc:
+            flush-mode: on-save
+            table-name: SPRING_SESSION
+            initialize-schema: always
+    
+    security:
+        oauth2:
+            client:
+                registration:
+                    ssodat:
+                        client-id: ${CLIENT_ID}
+                        authorization-grant-type: authorization_code
+                        scope: openid
+
+                provider:
+                    ssodat:
+                        issuer-uri: ${ISSUER_URI}
+                        user-name-attribute: preferred_username
+        
+            resourceserver:
+                jwt:
+                    issuer-uri: ${ISSUER_URI}

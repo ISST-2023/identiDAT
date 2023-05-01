@@ -35,7 +35,7 @@ public class Delegate {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="censusId")
     @NonNull
-    private CensusMember censusId;
+    private CensusMember censusMember;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)

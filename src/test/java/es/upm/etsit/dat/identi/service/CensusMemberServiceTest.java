@@ -30,13 +30,13 @@ public class CensusMemberServiceTest {
 
     @Test
     public void constraintsValidationExceptionTest() {
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "alvaro2", "666666666A", 666666666, dgrRepo.findByCode("09ID")));});
-        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "p.perez", "777777777B", 777777777, dgrRepo.findByCode("09IB")));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Álvaro", "", "alvaro2@alumnos.upm.es", "alvaro2", "666666666A", "666666666", dgrRepo.findByCode("09ID")));});
+        assertThrows(ConstraintViolationException.class, ()-> {cenMemService.create(new CensusMemberDto("Perico", "Pérez", "p.perez", "p.perez", "777777777B", "777777777", dgrRepo.findByCode("09IB")));});
     }
 
     @Test
     public void saveCensusMemberOk() {
-        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "alvaro3", "00000000Z", 666666666, dgrRepo.findByCode("09TT")));
+        CensusMemberDto cenMemDto = cenMemService.create(new CensusMemberDto("Álvaro", "Pérez", "alvaro3@alumnos.upm.es", "alvaro3", "00000000Z", "666666666", dgrRepo.findByCode("09TT")));
         assertNotNull(cenMemDto);
         assertEquals("Álvaro", cenMemDto.getName());
         assertNotNull(cenMemDto.getId());
