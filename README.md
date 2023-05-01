@@ -21,17 +21,11 @@
 
 La aplicación está preparada para funcionar mediante uno o varios ficheros de configuración `.yml`. Como mínimo, el fichero debe contar con las siguientes opciones para el correcto funcionamiento de todas las funcionalidades:
 ```yml
-logging:
-    file:
-        name: logs/identidat.log
-
 server:
-    port: 3000
+    port: 25565
     forward-headers-strategy: native
 
 spring:
-    profiles:
-        active: <Profile name>
     jpa:
         hibernate:
             ddl-auto: update
@@ -64,13 +58,19 @@ spring:
                 jwt:
                     issuer-uri: <https://sso.example.com/realms/exampleRealm>
 ```
+Es posible generar diferentes ficheros de configuración con el nombre `application-<Profile name>.yml` y aplicar sus parámetros manteniendo únicamente la opción `spring.profiles.name=<Profile name>` en el fichero principal `application.yml`, el cual solamente contiene la siguiete configuración:
 
-Es posible generar diferentes ficheros de configuración con el nombre `application-<Profile name>.yml` y aplicar sus parámetros manteniendo únicamente la opción `spring.profiles.name=<Profile name>` en el fichero principal `application.yml`.
+```yml
+logging:
+    file:
+        name: logs/identidat.log
+    
+spring:
+    profiles:
+        active: <Profile name>
+```
 
-
-
-
-
+Actualmente, el repositorio cuenta con los archivos `application.yml` y `application-test.yml` para poder realizar pruebas de integración cuando se generen nuevos commits. Para utilizar una configuración personalizada, basta con crear un nuevo fichero `application-dev.yml` que contenga las opciones básicas y activarlo indicando `dev` en `spring.profiles.active`. 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
