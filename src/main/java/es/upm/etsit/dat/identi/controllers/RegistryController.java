@@ -144,51 +144,46 @@ public class RegistryController {
         CensusMemberDto censusMemberDto = null;
         TokenType tokenType = cenMemForm.getTokenType();
 
-        Boolean errorFound = false;
-
-        if (!cenMemForm.getAgreement()) {
-            errorFound = true;
-            model.addAttribute("agreementError", "No se ha aceptado el acuerdo de usuario.");
-        }
-
-        if (!fieldValidator.validateEmail(cenMemForm.getEmail())) {
-            errorFound = true;
-            model.addAttribute("emailError", "No se ha introducido un email válido.");
-        }
-
-        if (fieldValidator.emailExists(cenMemForm.getEmail())) {
-            errorFound = true;
-            model.addAttribute("emailError", "Ya existe un usuario registrado con ese email.");
-        }
-
-        if (!fieldValidator.validatePhone(cenMemForm.getPhone())) {
-            errorFound = true;
-            model.addAttribute("phoneError", "No se ha introducido un número de teléfono válido.");
-        }
-
-        if (!fieldValidator.validateID(cenMemForm.getPersonalID())) {
-            errorFound = true;
-            model.addAttribute("personalIDError", "El DNI/NIE introducido no es válido.");
-        }
-
-        if (fieldValidator.IDExists(cenMemForm.getPersonalID())) {
-            errorFound = true;
-            model.addAttribute("personalIDError", "Un usuario con ese DNI/NIE ya está registrado.");
-        }
-
-        if (dgrRepo.findByCode(cenMemForm.getDegreeCode()) == null) {
-            errorFound = true;
-            model.addAttribute("degreeError", "La titulación especificada no se encuentra registrada.");
-        }
-
-        if (errorFound) {
-            model.addAttribute("censusMemberForm", cenMemForm);
-            return "register";
-        }
-
         CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
 
+        Boolean errorFound = false;        
+
         if (censusMember == null) {
+            if (!cenMemForm.getAgreement()) {
+                errorFound = true;
+                model.addAttribute("agreementError", "No se ha aceptado el acuerdo de usuario.");
+            }
+    
+            if (!fieldValidator.validateEmail(cenMemForm.getEmail())) {
+                errorFound = true;
+                model.addAttribute("emailError", "No se ha introducido un email válido.");
+            }
+    
+            if (!fieldValidator.validatePhone(cenMemForm.getPhone())) {
+                errorFound = true;
+                model.addAttribute("phoneError", "No se ha introducido un número de teléfono válido.");
+            }
+    
+            if (!fieldValidator.validateID(cenMemForm.getPersonalID())) {
+                errorFound = true;
+                model.addAttribute("personalIDError", "El DNI/NIE introducido no es válido.");
+            }
+    
+            if (!fieldValidator.emailExists(cenMemForm.getEmail()) && fieldValidator.IDExists(cenMemForm.getPersonalID())) {
+                errorFound = true;
+                model.addAttribute("personalIDError", "Un usuario con ese DNI/NIE ya está registrado.");
+            }
+    
+            if (dgrRepo.findByCode(cenMemForm.getDegreeCode()) == null) {
+                errorFound = true;
+                model.addAttribute("degreeError", "La titulación especificada no se encuentra registrada.");
+            }
+    
+            if (errorFound) {
+                model.addAttribute("censusMemberForm", cenMemForm);
+                return "register";
+            }
+            
             OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             censusMemberDto = new CensusMemberDto(
                     cenMemForm.getName(),
