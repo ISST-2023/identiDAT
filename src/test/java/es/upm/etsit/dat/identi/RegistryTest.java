@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -100,10 +101,10 @@ public class RegistryTest {
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 
-        when(principal.getName()).thenReturn(this.username);
-        when(principal.getAttribute("email")).thenReturn(this.email);
-        when(principal.getAttribute("given_name")).thenReturn(this.givenName);
-        when(principal.getAttribute("family_name")).thenReturn(this.familyName);
+        when(principal.getName()).thenReturn("p.perez");
+        when(principal.getAttribute("email")).thenReturn("p.perez@alumnos.upm.es");
+        when(principal.getAttribute("given_name")).thenReturn("Perico");
+        when(principal.getAttribute("family_name")).thenReturn("Pérez Pérez");
     }
 
     @Test

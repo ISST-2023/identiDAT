@@ -1,13 +1,18 @@
 package es.upm.etsit.dat.identi.controllers.admin;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
+import org.apache.commons.lang3.time.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.upm.etsit.dat.identi.forms.TokenForm;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
@@ -18,6 +23,8 @@ import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 import es.upm.etsit.dat.identi.service.TokenService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class TokenController {
@@ -63,17 +70,23 @@ public class TokenController {
     }
 
     @GetMapping("/admin/tokens/generate")
-    public String tokenForm(Model model) {
+    public String tokenForm(Model model, HttpServletRequest request) {
         List<Degree> degrees = dgrRepository.findAll();
         List<Position> positions = pstnRepository.findAll();
         model.addAttribute("degrees", degrees);
         model.addAttribute("positions", positions);
+        model.addAttribute("_csrf", request.getAttribute("_csrf"));
         return "admin/tokens/generate_tokens";
     }
     
-    @PostMapping("/saveToken")
-    public String createToken() {
-        return "redirect:admin/tokens";
+    @PostMapping("/admin/tokens/saveToken")
+    @ResponseBody
+    public String createToken(@RequestBody Object values, HttpServletResponse response) {
+        System.out.println(values.toString());
+
+        
+        response.setContentType("text/plain");
+        return "pericos";
     }
 
     // Método generador de hash apartir de un string dado

@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap5.min.css}" />
@@ -32,14 +34,14 @@
                             <br />
                             <span th:if="${degree.acronym == 'DAT' && position.id >= 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}"  th:name="${degree.acronym} + ${position.id}" th:value="${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}"  th:name="${degree.acronym} + ${position.id}" th:text="${position.name}"
                                     class="position"></input>
                                 <br />
                             </span>
 
                             <span th:if="${degree.acronym != 'DAT' && position.id < 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:name="${degree.acronym} + ${position.id}" th:text="${position.position}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:name="${degree.acronym} + ${position.id}" th:text="${position.name}"
                                     class="position"></input>
                                 <input type="text" th:id="${degree.acronym} + groups + ${position.id}" th:name="${degree.acronym} + groups + ${position.id}" class="groups"></input>
                                 <br />
@@ -106,6 +108,7 @@
 
     </div>
 
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
     <script th:src="@{/js/genToken.js}"></script>
     <script>
         /*document.getElementById("bToken").addEventListener("click", ()=>{
@@ -118,7 +121,6 @@
             document.getElementById("algo").innerHTML = hash;
         });*/
     </script>
-    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/admin/tokenFunctions.js}"></script>
 </body>
