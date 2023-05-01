@@ -118,7 +118,7 @@ public class ProfilesController {
     if (errorFound) {
       model.addAttribute("censusMemberForm", cenMemForm);
       model.addAttribute("degrees", dgrRepo.findAll());
-      return "new";
+      return "admin/census/new";
     }
 
     if (censusMember == null) {
