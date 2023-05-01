@@ -41,13 +41,13 @@
                         <td th:text="${censusMember.phone}">
                         <td th:text="${censusMember.degree}">
                         <td class="text-center">
-                            <a th:href="@{census/edit/} + ${censusMember.id}"><svg xmlns="http://www.w3.org/2000/svg"
+                            <a th:if="${censusMember.id} > 2" th:href="@{census/edit/} + ${censusMember.id}"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F65555"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 20h9"></path>
                                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                             </svg></a>
-                            <a th:href="@{census/positions/} + ${censusMember.id}">Profiles</a>
+                            <a th:href="@{census/positions/} + ${censusMember.id}">Cargos</a>
                         </td>
                     </tr>
                 </tbody>

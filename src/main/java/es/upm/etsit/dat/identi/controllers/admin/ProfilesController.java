@@ -140,6 +140,7 @@ public class ProfilesController {
 
   @GetMapping("/admin/census/edit/{id}")
   public ModelAndView editForm(@ModelAttribute("id") Long id) {
+    if (id == 1 || id == 2) return new ModelAndView("redirect:/admin/census");
     var params = new HashMap<String, Object>();
     CensusMemberForm form = new CensusMemberForm();
     CensusMemberDto cenMem = cenMemService.get(id);
@@ -159,6 +160,7 @@ public class ProfilesController {
 
   @PostMapping("/admin/census/edit")
   public String edit(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
+    if (cenMemForm.getCensusMemberId() == 1 || cenMemForm.getCensusMemberId() == 2) return "redirect:/admin/census";
     Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(cenMemForm.getCensusMemberId());
     CensusMember censusMember;
     boolean errorFound = false;
