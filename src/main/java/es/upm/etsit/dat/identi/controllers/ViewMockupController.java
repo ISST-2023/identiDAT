@@ -41,10 +41,6 @@ public class ViewMockupController {
     return "admin/index";
   }
 
-  @GetMapping("/admin/jd")
-  public String jd(Model model) {
-    return "admin/jd/index";
-  }
 
   @GetMapping("/admin/assistance")
   public String assistance(Model model) {
