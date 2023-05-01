@@ -1,10 +1,13 @@
 package es.upm.etsit.dat.identi.controllers;
 
+import java.net.http.HttpRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -146,44 +149,47 @@ public class RegistryController {
 
         CensusMember censusMember = cenMemRepo.findByEmail(cenMemForm.getEmail());
 
-        Boolean errorFound = false;        
+        Boolean alreadyRegistered = true;
+        Boolean errorFound = false;
 
         if (censusMember == null) {
+            alreadyRegistered = false;
             if (!cenMemForm.getAgreement()) {
                 errorFound = true;
                 model.addAttribute("agreementError", "No se ha aceptado el acuerdo de usuario.");
             }
-    
+
             if (!fieldValidator.validateEmail(cenMemForm.getEmail())) {
                 errorFound = true;
                 model.addAttribute("emailError", "No se ha introducido un email válido.");
             }
-    
+
             if (!fieldValidator.validatePhone(cenMemForm.getPhone())) {
                 errorFound = true;
                 model.addAttribute("phoneError", "No se ha introducido un número de teléfono válido.");
             }
-    
+
             if (!fieldValidator.validateID(cenMemForm.getPersonalID())) {
                 errorFound = true;
                 model.addAttribute("personalIDError", "El DNI/NIE introducido no es válido.");
             }
-    
-            if (!fieldValidator.emailExists(cenMemForm.getEmail()) && fieldValidator.IDExists(cenMemForm.getPersonalID())) {
+
+            if (!fieldValidator.emailExists(cenMemForm.getEmail())
+                    && fieldValidator.IDExists(cenMemForm.getPersonalID())) {
                 errorFound = true;
                 model.addAttribute("personalIDError", "Un usuario con ese DNI/NIE ya está registrado.");
             }
-    
+
             if (dgrRepo.findByCode(cenMemForm.getDegreeCode()) == null) {
                 errorFound = true;
                 model.addAttribute("degreeError", "La titulación especificada no se encuentra registrada.");
             }
-    
+
             if (errorFound) {
                 model.addAttribute("censusMemberForm", cenMemForm);
                 return "register";
             }
-            
+
             OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             censusMemberDto = new CensusMemberDto(
                     cenMemForm.getName(),
@@ -212,8 +218,6 @@ public class RegistryController {
                     model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
                     return "error";
                 }
-                if (censusMemberDto != null)
-                    censusMember = modelMapper.map(censusMemberDto, CensusMember.class);
                 Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
                 dlgRepo.save(memberPosition);
                 break;
@@ -246,7 +250,7 @@ public class RegistryController {
                 return "error";
         }
 
-        cenMemRepo.save(censusMember);
+        if (!alreadyRegistered) cenMemRepo.save(censusMember);
 
         return "redirect:profile";
     }
