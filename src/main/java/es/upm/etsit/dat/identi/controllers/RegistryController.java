@@ -1,13 +1,10 @@
 package es.upm.etsit.dat.identi.controllers;
 
-import java.net.http.HttpRequest;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -219,7 +216,7 @@ public class RegistryController {
                     return "error";
                 }
                 Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
-                dlgRepo.save(memberPosition);
+                dlgRepo.saveAndFlush(memberPosition);
                 break;
 
             case CD:
@@ -230,7 +227,7 @@ public class RegistryController {
                     return "error";
                 }
                 CDMember cdMember = new CDMember(censusMember, cdToken.getDepartment(), 2023, false);
-                cdMemRepo.save(cdMember);
+                cdMemRepo.saveAndFlush(cdMember);
                 break;
 
             case COMMISSION:
@@ -241,7 +238,7 @@ public class RegistryController {
                     return "error";
                 }
                 CommissionMember cmmMember = new CommissionMember(censusMember, cmmToken.getCommission(), 2023);
-                cmmMemRepo.save(cmmMember);
+                cmmMemRepo.saveAndFlush(cmmMember);
                 break;
 
             default:
@@ -250,7 +247,7 @@ public class RegistryController {
                 return "error";
         }
 
-        if (!alreadyRegistered) cenMemRepo.save(censusMember);
+        if (!alreadyRegistered) cenMemRepo.saveAndFlush(censusMember);
 
         return "redirect:profile";
     }

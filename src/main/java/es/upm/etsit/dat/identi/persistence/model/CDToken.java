@@ -35,7 +35,7 @@ public class CDToken {
 
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="deparmentId")
+    @JoinColumn(name="departmentId")
     @NonNull
     private Department department;
 }

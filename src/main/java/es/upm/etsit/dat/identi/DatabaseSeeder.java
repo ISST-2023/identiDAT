@@ -16,7 +16,7 @@ import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
-import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DepartmentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 
@@ -24,35 +24,35 @@ import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
-    private DepartamentRepository departamentRepository;
+    private DepartmentRepository departmentRepository;
 
     public void seedDepartments() {
         Department dit = new Department(Long.valueOf(1), "DIT", "Departamento de Ingeniería de Sistemas Telemáticos");
-        departamentRepository.save(dit);
+        departmentRepository.save(dit);
 
         Department ssr = new Department(Long.valueOf(2), "SSR", "Señales, Sistemas y Radiocomunicaciones");
-        departamentRepository.save(ssr);
+        departmentRepository.save(ssr);
 
         Department die = new Department(Long.valueOf(3), "DIE", "Departamento de Ingeniería Electrónica");
-        departamentRepository.save(die);
+        departmentRepository.save(die);
 
         Department elf = new Department(Long.valueOf(4), "ELF", "Departamento de Electrónica Física");
-        departamentRepository.save(elf);
+        departmentRepository.save(elf);
 
         Department mat = new Department(Long.valueOf(5), "MAT",
                 "Matemática aplicada a las tecnologías de la información y las comunicaciones");
-        departamentRepository.save(mat);
+        departmentRepository.save(mat);
 
         Department tfb = new Department(Long.valueOf(6), "TFB",
                 "Departamento de Tecnología Fotónica y Bioingeniería");
-        departamentRepository.save(tfb);
+        departmentRepository.save(tfb);
 
         Department ior = new Department(Long.valueOf(7), "IOR",
                 "Ingeniería de Organización, Administración de Empresas y Estadística");
-        departamentRepository.save(ior);
+        departmentRepository.save(ior);
 
         Department lia = new Department(Long.valueOf(8), "LIA", "Lingüística aplicada a la ciencia y la tecnología");
-        departamentRepository.save(lia);
+        departmentRepository.save(lia);
     }
 
     @Autowired
@@ -200,8 +200,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (tokenRepository.findByDegreeAndPositionAndDiferentiator(gisd, deleTitulacion, 0) == null)
             tokenRepository.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, 0));
 
-        Department dit = departamentRepository.findByAcronym("DIT");
-        Department ssr = departamentRepository.findByAcronym("SSR");
+        Department dit = departmentRepository.findByAcronym("DIT");
+        Department ssr = departmentRepository.findByAcronym("SSR");
 
         if (cdTokenRepository.findByDepartment(dit).size() == 0)
             cdTokenRepository.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), dit));

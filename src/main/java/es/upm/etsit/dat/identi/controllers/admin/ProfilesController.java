@@ -27,7 +27,7 @@ import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository
 import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
-import es.upm.etsit.dat.identi.persistence.repository.DepartamentRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DepartmentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
 
@@ -47,7 +47,7 @@ public class ProfilesController {
   private PositionRepository posRepo;
 
   @Autowired
-  private DepartamentRepository depRepo;
+  private DepartmentRepository depRepo;
 
   @Autowired
   private CommissionRepository commRepo;
