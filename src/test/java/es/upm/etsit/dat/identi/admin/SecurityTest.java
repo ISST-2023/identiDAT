@@ -1,4 +1,4 @@
-package es.upm.etsit.dat.identi;
+package es.upm.etsit.dat.identi.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

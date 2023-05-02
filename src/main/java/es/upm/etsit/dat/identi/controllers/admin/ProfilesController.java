@@ -153,13 +153,13 @@ public class ProfilesController {
     form.setDegreeCode(cenMem.getDegree().getCode());
 
     params.put("degrees", dgrRepo.findAll());
-    params.put("form", form);
+    params.put("censusMemberForm", form);
 
     return new ModelAndView("admin/census/edit", params);
   }
 
   @PostMapping("/admin/census/edit")
-  public String edit(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
+  public String edit(@ModelAttribute("censusMemberForm") CensusMemberForm cenMemForm, Model model) {
     if (cenMemForm.getCensusMemberId() == 1 || cenMemForm.getCensusMemberId() == 2) return "redirect:/admin/census";
     Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(cenMemForm.getCensusMemberId());
     CensusMember censusMember;
@@ -173,7 +173,7 @@ public class ProfilesController {
         model.addAttribute("emailError", "No se ha introducido un email válido.");
       }
 
-      if (!fieldValidator.emailBelongsToCensusMember(cenMemForm.getEmail(), censusMember)) {
+      if (fieldValidator.emailBelongsToCensusMember(cenMemForm.getEmail(), censusMember)) {
         errorFound = true;
         model.addAttribute("emailError", "Ya existe un usuario registrado con ese email.");
       }
@@ -212,7 +212,6 @@ public class ProfilesController {
       censusMember.setDegree(dgrRepo.findByCode(cenMemForm.getDegreeCode()));
 
       cenMemRepo.saveAndFlush(censusMember);
-      cenMemRepo.flush();
     } else {
       model.addAttribute("error", "El usuario que intentas editar no existe.");
       return "error";
