@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap5.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+    <title>identiDAT - Opciones</title>
+</head>
+
+<body>
+
+    <div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
+        </div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-8">
+
+                <table id="settings" class="table table-striped table-hover" style="width:100%; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Valor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="setting: ${settings}">
+                            <form th:if="${setting.id} > 2" th:object="${settingForm}" action="javascript:;" onsubmit='editSetting(this)' class="editForm">
+                                <input type="hidden" name="id" th:value="${setting.id}" required></input>
+                                <td>
+                                    <p th:text="${setting.settingName}"></p>
+                                </td>
+                                <td>
+                                    <input type="text" name="settingValue" th:value="${setting.settingValue}" required></input>
+                                </td>
+                                <td>
+                                    <input type="submit" value="Guardar"></input>
+                                </td>
+                            </form>
+                            <th:block th:unless="${setting.id} > 2">
+                                <td>
+                                    <p th:text="${setting.settingName}"></p>
+                                </td>
+                                <td>
+                                    <p th:value="${setting.settingValue}"></p>
+                                </td>
+                                <td>
+                                </td>
+                            </th:block>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
+    <script th:src="@{/js/admin/adminFunctions.js}"></script>
+    <script th:src="@{/js/admin/settingFunctions.js}"></script>
+</body>
+
+</html>

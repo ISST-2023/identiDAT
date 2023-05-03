@@ -49,9 +49,9 @@ public class FieldValidator {
         Matcher dniMatcher = dniPattern.matcher(personalID);
         Matcher nieMatcher = niePattern.matcher(personalID);
 
-        if (dniMatcher.find()) {
+        if (dniMatcher.matches()) {
             return validLetters.charAt(Integer.parseInt(personalID.substring(0, 8)) % 23) == personalID.charAt(8);
-        } else if (nieMatcher.find()) {
+        } else if (nieMatcher.matches()) {
             String nieCandidate = personalID.charAt(0) == 'X' ? "0"
                         : personalID.charAt(0) == 'Y' ? "1" : "2" + personalID.substring(1, 9);
             
