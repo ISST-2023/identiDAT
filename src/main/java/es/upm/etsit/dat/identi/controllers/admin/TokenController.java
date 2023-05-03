@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Position;
@@ -75,6 +77,15 @@ public class TokenController {
         model.addAttribute("positions", positions);
         model.addAttribute("_csrf", request.getAttribute("_csrf"));
         return "admin/tokens/generate_tokens";
+    }
+
+    @GetMapping("/admin/tokens/delete/{id}")
+    public ModelAndView deleteToken(@ModelAttribute("id") Long id) {
+        try {
+            tknRepo.deleteById(id);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/delegates");
     }
     
     @PostMapping("/admin/tokens/saveToken")
