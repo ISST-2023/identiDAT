@@ -21,6 +21,7 @@ public class JDController {
 
     @GetMapping("/admin/jd")
     public String jd(Model model) {
+        model.addAttribute("JDs", jdRepo.findAll());
         model.addAttribute("JDForm", new JDForm());
         return "admin/jd/index";
     }
@@ -33,7 +34,7 @@ public class JDController {
             Boolean.valueOf(jdForm.getOrdinary()),
             jdForm.getPlace());
         jdRepo.save(newJD);
-        return "admin/jd/index";
+        return "redirect:/admin/jd";
     }
 
 

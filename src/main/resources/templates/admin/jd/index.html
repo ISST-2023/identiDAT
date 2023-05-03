@@ -41,26 +41,14 @@
 				</div>
 			</div>
 			<div class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-sm-3">
+				<div class="col-sm-3" th:each="JD:${JDs}">
 					<div class="card" style="width: 18rem;">
 						<div class="card-body">
-							<h5 class="card-title">JD 10/10/2022</h5>
-							<h6 class="card-subtitle mb-2 text-muted">Ordinaria</h6>
-							<p class="card-text">Se trataron temas telativos a .....</p>
+							<h5 class="card-title">JD <td th:text="${#dates.format(JD.date, 'dd-MM-yyyy HH:mm')}"></td> </h5>
+							<h6 class="card-subtitle mb-2 text-muted"><td th:if="${JD.ordinary}">Ordnaria<td th:unless="${JD.ordinary}">Extraordinaria</td></h6>
+							<p class="card-text" th:text="${JD.place}"></p>
 							<a href="#" class="card-link">Acta</a>
 							<a href="#" class="card-link">Documentación</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="card" style="width: 18rem;">
-						<div class="card-body">
-							<h5 class="card-title">JD 06/03/2023</h5>
-							<h6 class="card-subtitle mb-2 text-muted">Extraordinaria</h6>
-							<p class="card-text">Se trataron temas relativos a .....</p>
-							<a href="#" class="card-link">Acta</a>
-							<a href="#" class="card-link">Documentación</a>
-							<a href="/admin/assistance" class="card-link">Asistencia</a>
 						</div>
 					</div>
 				</div>
@@ -84,7 +72,7 @@
 				<div class="modal-body">
 					<form action="#" th:action="@{/admin/jd}" th:object="${JDForm}" method="POST">
 						<div class="mb-3">
-							<label for="exampleFormControlInput1" class="form-label">Fecha 1ª Convocatoria:</label>
+							<label for="exampleFormControlInput1" class="form-label">Fecha:</label>
 							<input type="datetime-local" class="form-control" id="fechaJD" name="fechaJD" th:field="*{date}" required>
 						</div>
 
