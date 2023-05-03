@@ -3,6 +3,7 @@ package es.upm.etsit.dat.identi.controllers.admin;
 import java.net.http.HttpRequest;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import es.upm.etsit.dat.identi.forms.GenerateTokenForm;
 import es.upm.etsit.dat.identi.forms.TokenForm;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Position;
+import es.upm.etsit.dat.identi.persistence.model.Token;
 import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
@@ -82,9 +85,61 @@ public class TokenController {
     @PostMapping("/admin/tokens/saveToken")
     @ResponseBody
     public String createToken(@RequestBody Object values, HttpServletResponse response) {
-        System.out.println(values.toString());
-
         
+        Degree dat = dgrRepository.findByCode("09DA");
+        Degree gitst = dgrRepository.findByCode("09TT");
+        Degree gib = dgrRepository.findByCode("09IB");
+        Degree gisd = dgrRepository.findByCode("09ID");
+
+        Position deleEscuela = pstnRepository.findByName("Delegado/a de Escuela");
+        Position subEscuela = pstnRepository.findByName("Subdelegado/a de Escuela");
+        Position secretario = pstnRepository.findByName("Secretario/a");
+        Position tesorero = pstnRepository.findByName("Tesorero/a");
+        Position deleGrupo = pstnRepository.findByName("Delegado/a de grupo");
+        Position deleCurso = pstnRepository.findByName("Delegado/a de curso");
+        Position deleTitulacion = pstnRepository.findByName("Delegado/a de titulación");
+
+        String[] elements = values.toString().replace("{", "").replace("}", "").split(",");
+        Boolean datChecked = false;
+
+        for (String element : elements) {
+            String search = element.split("=")[0].trim();
+            try {
+                String value = element.split("=")[1];
+            }
+            catch (Exception e){
+                String value = null;
+            }
+            
+            System.out.println(search);
+            switch (search){
+                case "DAT":
+                    datChecked = true;
+                    break;
+
+                case "DAT7":
+                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, deleEscuela, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, deleEscuela, 0));
+                    break;  
+
+                case "DAT8":
+                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, subEscuela, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, subEscuela, 0));
+                    break;
+
+                case "DAT9":
+                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, secretario, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, secretario, 0));
+                    break;
+
+                case "DAT10":
+                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, tesorero, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, tesorero, 0));
+                    break;
+            }
+        }
+
+        tknRepo.flush();
         response.setContentType("text/plain");
         return "pericos";
     }

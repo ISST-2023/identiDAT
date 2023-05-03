@@ -27,14 +27,14 @@
                 <h2>Qué token deseas crear hoy?</h2>
                 <form id="tokenRequest" action="javascript:;" onsubmit="submitToken()">
                     <span th:each="degree : ${degrees}" class="selector">
-                        <input type="checkbox" th:id="${degree.acronym}" th:name="${degree.acronym}"  th:text="${degree.acronym}"
+                        <input type="checkbox" th:id="${degree.acronym}" th:name="${degree.acronym}"  th:text="${degree.acronym}" value="on"
                             class="degree"></input>
                         <br />
                         <fieldset style="display:none">
                             <br />
                             <span th:if="${degree.acronym == 'DAT' && position.id >= 7}"
                                 th:each="position : ${positions}">
-                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}"  th:name="${degree.acronym} + ${position.id}" th:text="${position.name}"
+                                <input type="checkbox" th:id="${degree.acronym} + ${position.id}"  th:name="${degree.acronym} + ${position.id}" th:text="${position.name}" value="on"
                                     class="position"></input>
                                 <br />
                             </span>
