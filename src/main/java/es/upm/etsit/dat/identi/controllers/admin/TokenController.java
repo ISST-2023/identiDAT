@@ -1,22 +1,17 @@
 package es.upm.etsit.dat.identi.controllers.admin;
 
-import java.net.http.HttpRequest;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.time.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import es.upm.etsit.dat.identi.forms.GenerateTokenForm;
-import es.upm.etsit.dat.identi.forms.TokenForm;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
@@ -90,25 +85,56 @@ public class TokenController {
         Degree gitst = dgrRepository.findByCode("09TT");
         Degree gib = dgrRepository.findByCode("09IB");
         Degree gisd = dgrRepository.findByCode("09ID");
+        Degree muit = dgrRepository.findByCode("09AQ");
+        Degree muirst = dgrRepository.findByCode("09AS");
+        Degree muise = dgrRepository.findByCode("09AZ");
+        Degree mutsc = dgrRepository.findByCode("09AT");
+        Degree muesfv = dgrRepository.findByCode("09AX");
+        Degree muib = dgrRepository.findByCode("09AU");
 
+        Position deleGrupo = pstnRepository.findByName("Delegado/a de grupo");
+        Position subDeleGrupo = pstnRepository.findByName("Subdelegado/a de grupo");
+        Position deleCurso = pstnRepository.findByName("Delegado/a de curso");
+        Position subDeleCurso = pstnRepository.findByName("Subdelegado/a de curso");
+        Position deleTitulacion = pstnRepository.findByName("Delegado/a de titulación");
+        Position subDeleTitulacion = pstnRepository.findByName("Subdelegado/a de titulación");
         Position deleEscuela = pstnRepository.findByName("Delegado/a de Escuela");
-        Position subEscuela = pstnRepository.findByName("Subdelegado/a de Escuela");
+        Position subDeleEscuela = pstnRepository.findByName("Subdelegado/a de Escuela");
         Position secretario = pstnRepository.findByName("Secretario/a");
         Position tesorero = pstnRepository.findByName("Tesorero/a");
-        Position deleGrupo = pstnRepository.findByName("Delegado/a de grupo");
-        Position deleCurso = pstnRepository.findByName("Delegado/a de curso");
-        Position deleTitulacion = pstnRepository.findByName("Delegado/a de titulación");
+        
 
         String[] elements = values.toString().replace("{", "").replace("}", "").split(",");
+        
+        String regexp = "/([1-4][1-6]-?)+/";
         Boolean datChecked = false;
+        Boolean[] gitstChecked = new Boolean[5];
+        Boolean[] gibChecked = new Boolean[5];
+        Boolean[] gisdChecked = new Boolean[5];
+        Boolean[] muitChecked = new Boolean[5];
+        Boolean[] muirstChecked = new Boolean[5];
+        Boolean[] muiseChecked = new Boolean[5];
+        Boolean[] mutscChecked = new Boolean[5];
+        Boolean[] muesfvChecked = new Boolean[5];
+        Boolean[] muibChecked = new Boolean[5];
+        Arrays.fill(gitstChecked, false);
+        Arrays.fill(gibChecked, false);
+        Arrays.fill(gisdChecked, false);
+        Arrays.fill(muitChecked, false);
+        Arrays.fill(muirstChecked, false);
+        Arrays.fill(muiseChecked, false);
+        Arrays.fill(mutscChecked, false);
+        Arrays.fill(muesfvChecked, false);
+        Arrays.fill(muibChecked, false);
 
         for (String element : elements) {
             String search = element.split("=")[0].trim();
+            String value;
             try {
-                String value = element.split("=")[1];
+                value = element.split("=")[1];
             }
-            catch (Exception e){
-                String value = null;
+            catch (Exception e) {
+                value = null;
             }
             
             System.out.println(search);
@@ -116,25 +142,57 @@ public class TokenController {
                 case "DAT":
                     datChecked = true;
                     break;
-
                 case "DAT7":
                     if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, deleEscuela, 0) == null)
                         tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, deleEscuela, 0));
                     break;  
-
                 case "DAT8":
-                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, subEscuela, 0) == null)
-                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, subEscuela, 0));
+                    if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, subDeleEscuela, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, subDeleEscuela, 0));
                     break;
-
                 case "DAT9":
                     if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, secretario, 0) == null)
                         tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, secretario, 0));
                     break;
-
                 case "DAT10":
                     if (datChecked && tknRepo.findByDegreeAndPositionAndDiferentiator(dat, tesorero, 0) == null)
                         tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dat, tesorero, 0));
+                    break;
+
+                case "GITST":
+                    gitstChecked[0] = true;
+                    break;
+                case "GITST1":
+                    gitstChecked[1] = true;
+                    break;
+                case "GITST2":
+                    gitstChecked[2] = true;
+                    break;
+                case "GITST3":
+                    gitstChecked[3] = true;
+                    break;
+                case "GITST4":
+                    gitstChecked[4] = true;
+                    break;
+                case "GITST5":
+                    if (tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleTitulacion, 0));
+                    break;
+                case "GITST6":
+                    if (tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, subDeleTitulacion, 0));
+                    break;
+                case "GITSTgroups1":
+                    groupTokenGen(gitstChecked[1], value, gitst, deleGrupo);
+                    break;
+                case "GITSTgroups2":
+                    groupTokenGen(gitstChecked[2], value, gitst, subDeleGrupo);
+                    break;
+                case "GITSTgroups3":
+                    groupTokenGen(gitstChecked[3], value, gitst, deleCurso);
+                    break;
+                case "GITSTgroups4":
+                    groupTokenGen(gitstChecked[4], value, gitst, subDeleCurso);
                     break;
             }
         }
@@ -144,24 +202,21 @@ public class TokenController {
         return "pericos";
     }
 
-    // Método generador de hash apartir de un string dado
-    public String genToken(String key) {
-        char[] caracteres = key.toCharArray();
-        String[] caracteresSeparados = new String[caracteres.length];
-        for (int i = 0; i < caracteres.length; i++) {
-            caracteresSeparados[i] = String.valueOf(caracteres[i]);
+    private void groupTokenGen(Boolean prevCheck, String value, Degree dgr, Position pst) {
+        if(prevCheck) {
+            String[] groups = value.split("-");
+            for (String group : groups){
+                Integer grupo;
+                try {
+                    grupo = Integer.valueOf(group);
+                }
+                catch (Exception e){
+                    continue;
+                }
+                if (tknRepo.findByDegreeAndPositionAndDiferentiator(dgr, pst, grupo) == null)
+                    tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), dgr, pst, grupo));
+            }
+            
         }
-
-        String[] codes = new String[caracteresSeparados.length];
-
-        for (int i = 0; i < caracteresSeparados.length; i++) {
-            codes[i] = caracteresSeparados[i] + caracteresSeparados[i].codePointAt(0);
-        }
-
-        String hash = "";
-        for (int i = 0; i < codes.length; i++) {
-            hash = hash + codes[i];
-        }
-        return hash;
     }
 }

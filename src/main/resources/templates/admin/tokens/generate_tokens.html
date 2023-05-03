@@ -43,7 +43,9 @@
                                 th:each="position : ${positions}">
                                 <input type="checkbox" th:id="${degree.acronym} + ${position.id}" th:name="${degree.acronym} + ${position.id}" th:text="${position.name}"
                                     class="position"></input>
-                                <input type="text" th:id="${degree.acronym} + groups + ${position.id}" th:name="${degree.acronym} + groups + ${position.id}" class="groups"></input>
+                                <span th:if="${position.id < 5}">
+                                    <input type="text" th:id="${degree.acronym} + groups + ${position.id}" th:name="${degree.acronym} + groups + ${position.id}" class="groups"></input>
+                                </span>
                                 <br />
                             </span>
                             <br />
@@ -53,55 +55,12 @@
 
 
 
-                    <!--<select name="year" id="año">
-                        <option value="All">All</option>
-                        <option value="1">Primero</option>
-                        <option value="2">Segundo</option>
-                        <option value="3">Tercero</option>
-                        <option value="4">Cuarto</option>
-                    </select>
-                    <select name="grupo" id="grupo">
-                        <option value="All">All</option>
-                        <option value="1">Grupo 1</option>
-                        <option value="2">Grupo 2</option>
-                        <option value="3">Grupo 3</option>
-                        <option value="4">Grupo 4</option>
-                        <option value="5">Grupo 5</option>
-                    </select>-->
-
                     <div class="text-center">
                         <button type="submit" id="bToken" onclick="submitToken(event)" class="btn btn-outline-secondary btn-lg">Enviar</button>
                         <!--onclick="changeString()"-->
                     </div>
                 </form>
-                <!--
-				<table id="Tokens" class="table table-striped table-hover" style="width:100%">
-					<thead>
-						<tr>
-							<th>Token</th>
-							<th>Degree</th>
-							<th>Year</th>
-							<th>Group</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr id="">
-							<td>
-								<p id="algo" class="token">a97l108g103o111</p>
-							</td>
-							<td>
-								<p id="degree">GITST</p>
-							</td>
-							<td>
-								<p id="year">4</p>
-							</td>
-							<td>
-								<p id="group">2</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-                -->
+                
             </div>
         </div>
     </div>
@@ -110,17 +69,6 @@
 
     <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
     <script th:src="@{/js/genToken.js}"></script>
-    <script>
-        /*document.getElementById("bToken").addEventListener("click", ()=>{
-            var codeText = document.getElementById("pruebaT");
-            const splittedWord = codeText.value.toLowerCase().split("");
-            const codes = splittedWord.map((letter) => `${letter}${String(letter).charCodeAt(0)}`);           
-            let hash = codes.join("");
-            codeText.value = "";
-            //alert("El valor del hash es:" + hash);
-            document.getElementById("algo").innerHTML = hash;
-        });*/
-    </script>
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/admin/tokenFunctions.js}"></script>
 </body>
