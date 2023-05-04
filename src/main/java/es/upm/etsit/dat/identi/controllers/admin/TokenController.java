@@ -183,14 +183,7 @@ public class TokenController {
         Position secretario = pstnRepository.findByName("Secretario/a");
         Position tesorero = pstnRepository.findByName("Tesorero/a");
 
-        Department dit = dptRepository.findByAcronym("DIT");
-        Department ssr = dptRepository.findByAcronym("SSR");
-        Department die = dptRepository.findByAcronym("DIE");
-        Department elf = dptRepository.findByAcronym("ELF");
-        Department mat = dptRepository.findByAcronym("MAT");
-        Department tfb = dptRepository.findByAcronym("TFB");
-        Department ior = dptRepository.findByAcronym("IOR");
-        Department lia = dptRepository.findByAcronym("LIA");       
+
 
         String[] elements = values.toString().replace("{", "").replace("}", "").split(",");
         
@@ -319,40 +312,115 @@ public class TokenController {
                     cdChecked[8] = true;
                     break;
                 case "DITnumber":
-                    cdGenToken(cdChecked[0], cdChecked[1], value, dit);
+                    Department dit = dptRepository.findByAcronym("DIT");
+                    cdComGenToken(cdChecked[0], cdChecked[1], value, dit, null, 0);
                     break;
                 case "SSRnumber":
-                    cdGenToken(cdChecked[0], cdChecked[2], value, ssr);
+                    Department ssr = dptRepository.findByAcronym("SSR");
+                    cdComGenToken(cdChecked[0], cdChecked[2], value, ssr, null, 0);
                     break;
                 case "DIEnumber":
-                    cdGenToken(cdChecked[0], cdChecked[3], value, die);
+                    Department die = dptRepository.findByAcronym("DIE");
+                    cdComGenToken(cdChecked[0], cdChecked[3], value, die, null, 0);
                     break;
                 case "ELFnumber":
-                    cdGenToken(cdChecked[0], cdChecked[4], value, elf);
+                    Department elf = dptRepository.findByAcronym("ELF");
+                    cdComGenToken(cdChecked[0], cdChecked[4], value, elf, null, 0);
                     break;
                 case "MATnumber":
-                    cdGenToken(cdChecked[0], cdChecked[5], value, mat);
+                    Department mat = dptRepository.findByAcronym("MAT");
+                    cdComGenToken(cdChecked[0], cdChecked[5], value, mat, null, 0);
                     break;
                 case "TFBnumber":
-                    cdGenToken(cdChecked[0], cdChecked[6], value, tfb);
+                    Department tfb = dptRepository.findByAcronym("TFB");
+                    cdComGenToken(cdChecked[0], cdChecked[6], value, tfb, null, 0);
                     break;
                 case "IORnumber":
-                    cdGenToken(cdChecked[0], cdChecked[7], value, ior);
+                    Department ior = dptRepository.findByAcronym("IOR");
+                    cdComGenToken(cdChecked[0], cdChecked[7], value, ior, null, 0);
                     break;
                 case "LIAnumber":
-                    cdGenToken(cdChecked[0], cdChecked[8], value, lia);
+                    Department lia = dptRepository.findByAcronym("LIA");
+                    cdComGenToken(cdChecked[0], cdChecked[8], value, lia, null, 0);
                     break;
-                
+
+                case "Comisiones":
+                    comisChecked[0] = true;
+                    break;
+                case "Claustro Universitario":
+                    comisChecked[1] = true;
+                    break;
+                case "Comisión de Calidad":
+                    comisChecked[2] = true;
+                    break;
+                case "Comisión de Gobierno":
+                    comisChecked[3] = true;
+                    break;
+                case "Comisión de Ordenación Académica":
+                    comisChecked[4] = true;
+                    break;
+                case "Comisión Electoral Central":
+                    comisChecked[5] = true;
+                    break;
+                case "Comisión Electoral de Centro":
+                    comisChecked[6] = true;
+                    break;
+                case "Junta de Delegados UPM":
+                    comisChecked[7] = true;
+                    break;
+                case "Junta de Escuela":
+                    comisChecked[8] = true;
+                    break;
+                case "Junta de Representantes UPM":
+                    comisChecked[9] = true;
+                    break;
+                case "Claustro Universitarionumber":
+                    Commission claustro = comsRepository.findByName("Claustro Universitario");
+                    cdComGenToken(comisChecked[0], comisChecked[1], value, null, claustro, 1);
+                    break;
+                case "Comisión de Calidadnumber":
+                    Commission calidad = comsRepository.findByName("Comisión de Calidad");
+                    cdComGenToken(comisChecked[0], comisChecked[2], value, null, calidad, 1);
+                    break;
+                case "Comisión de Gobiernonumber":
+                    Commission gobierno = comsRepository.findByName("Comisión de Gobierno");
+                    cdComGenToken(comisChecked[0], comisChecked[3], value, null, gobierno, 1);
+                    break;
+                case "Comisión de Ordenación Académicanumber":
+                    Commission coa = comsRepository.findByName("Comisión de Ordenación Académica");
+                    cdComGenToken(comisChecked[0], comisChecked[4], value, null, coa, 1);
+                    break;
+                case "Comisión Electoral Centralnumber":
+                    Commission cecentral = comsRepository.findByName("Comisión Electoral Central");
+                    cdComGenToken(comisChecked[0], comisChecked[5], value, null, cecentral, 1);
+                    break;
+                case "Comisión Electoral de Centronumber":
+                    Commission cecentro = comsRepository.findByName("Comisión Electoral de Centro");
+                    cdComGenToken(comisChecked[0], comisChecked[6], value, null, cecentro, 1);
+                    break;
+                case "Junta de Delegados UPMnumber":
+                    Commission jd = comsRepository.findByName("Junta de Delegados UPM");
+                    cdComGenToken(comisChecked[0], comisChecked[7], value, null, jd, 1);
+                    break;
+                case "Junta de Escuelanumber":
+                    Commission je = comsRepository.findByName("Junta de Escuela");
+                    cdComGenToken(comisChecked[0], comisChecked[8], value, null, je, 1);
+                    break;
+                case "Junta de Representantes UPMnumber":
+                    Commission jr = comsRepository.findByName("Junta de Representantes UPM");
+                    cdComGenToken(comisChecked[0], comisChecked[9], value, null, jr, 1);
+                    break;
             }
         }
 
         tknRepo.flush();
         cdTknRepo.flush();
+        cmmTknRepo.flush();
         response.setContentType("text/plain");
         return "pericos";
     }
 
-    private void cdGenToken(Boolean topCheck, Boolean prevCheck, String value, Department dpt) {
+    private void cdComGenToken(Boolean topCheck, Boolean prevCheck, String value, Department dpt, Commission cms, Integer diff) {
         if(value != null && topCheck && prevCheck) {
             Integer number;
             try {
@@ -362,7 +430,10 @@ public class TokenController {
                 return;
             }
             while(number > 0) {
-                cdTknRepo.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), dpt));
+                if (diff == 0)
+                    cdTknRepo.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), dpt));
+                else
+                    cmmTknRepo.save(new CommissionToken(RandomStringUtils.randomAlphanumeric(64), cms));
                 number--;
             }
         }
