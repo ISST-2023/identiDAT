@@ -45,7 +45,7 @@ public class CDMember {
 
     @Column(nullable = false)
     @NonNull
-    private Integer year;
+    private String year;
 
     @Column(nullable = false)
     @NonNull

@@ -33,11 +33,15 @@ import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository
 import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
+import es.upm.etsit.dat.identi.persistence.repository.SettingRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 
 @Controller
 @SessionAttributes("censusMemberForm")
 public class RegistryController {
+
+    @Autowired
+    private SettingRepository stngRepo;
 
     @Autowired
     private CensusMemberRepository cenMemRepo;
@@ -211,11 +215,11 @@ public class RegistryController {
                 Position position = token.getPosition();
                 Degree degree = token.getDegree();
                 Integer diferentiator = token.getDiferentiator();
-                if (dlgRepo.findByPositionAndDiferentiatorAndYear(position, diferentiator, 2023) != null) {
+                if (dlgRepo.findByPositionAndDiferentiatorAndYear(position, diferentiator, stngRepo.findBySettingKey("academicYear").getSettingValue()) != null) {
                     model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
                     return "error";
                 }
-                Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, 2023);
+                Delegate memberPosition = new Delegate(censusMember, position, degree, diferentiator, stngRepo.findBySettingKey("academicYear").getSettingValue());
                 dlgRepo.saveAndFlush(memberPosition);
                 break;
 
@@ -226,7 +230,7 @@ public class RegistryController {
                             "No dispones de un token válido. Contacta con un administrador para continuar.");
                     return "error";
                 }
-                CDMember cdMember = new CDMember(censusMember, cdToken.getDepartment(), 2023, false);
+                CDMember cdMember = new CDMember(censusMember, cdToken.getDepartment(), stngRepo.findBySettingKey("academicYear").getSettingValue(), false);
                 cdMemRepo.saveAndFlush(cdMember);
                 break;
 
@@ -237,7 +241,7 @@ public class RegistryController {
                             "No dispones de un token válido. Contacta con un administrador para continuar.");
                     return "error";
                 }
-                CommissionMember cmmMember = new CommissionMember(censusMember, cmmToken.getCommission(), 2023);
+                CommissionMember cmmMember = new CommissionMember(censusMember, cmmToken.getCommission(), stngRepo.findBySettingKey("academicYear").getSettingValue());
                 cmmMemRepo.saveAndFlush(cmmMember);
                 break;
 
