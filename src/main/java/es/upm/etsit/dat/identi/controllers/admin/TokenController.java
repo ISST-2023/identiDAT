@@ -279,9 +279,301 @@ public class TokenController {
                     groupTokenGen(gitstChecked[0], gitstChecked[4], value, gitst, subDeleCurso);
                     break;
 
-                //Añadir aquí el resto de grados a semejanza del gitst
 
 
+                case "GIB":
+                    gibChecked[0] = true;
+                    break;
+                case "GIB1":
+                    gibChecked[1] = true;
+                    break;
+                case "GIB2":
+                    gibChecked[2] = true;
+                    break;
+                case "GIB3":
+                    gibChecked[3] = true;
+                    break;
+                case "GIB4":
+                    gibChecked[4] = true;
+                    break;
+                case "GIB5":
+                    if (gibChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gib, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gib, deleTitulacion, 0));
+                    break;
+                case "GIB6":
+                    if (gibChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gib, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gib, subDeleTitulacion, 0));
+                    break;
+                case "GIBgroups1":
+                    groupTokenGen(gibChecked[0], gibChecked[1], value, gib, deleGrupo);
+                    break;
+                case "GIBgroups2":
+                    groupTokenGen(gibChecked[0], gibChecked[2], value, gib, subDeleGrupo);
+                    break;
+                case "GIBgroups3":
+                    groupTokenGen(gibChecked[0], gibChecked[3], value, gib, deleCurso);
+                    break;
+                case "GIBgroups4":
+                    groupTokenGen(gibChecked[0], gibChecked[4], value, gib, subDeleCurso);
+                    break;
+
+
+                case "GISD":
+                    gisdChecked[0] = true;
+                    break;
+                case "GISD1":
+                    gisdChecked[1] = true;
+                    break;
+                case "GISD2":
+                    gisdChecked[2] = true;
+                    break;
+                case "GISD3":
+                    gisdChecked[3] = true;
+                    break;
+                case "GISD4":
+                    gisdChecked[4] = true;
+                    break;
+                case "GISD5":
+                    if (gisdChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gisd, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, deleTitulacion, 0));
+                    break;
+                case "GISD6":
+                    if (gisdChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gisd, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gisd, subDeleTitulacion, 0));
+                    break;
+                case "GISDgroups1":
+                    groupTokenGen(gisdChecked[0], gisdChecked[1], value, gisd, deleGrupo);
+                    break;
+                case "GISDgroups2":
+                    groupTokenGen(gisdChecked[0], gisdChecked[2], value, gisd, subDeleGrupo);
+                    break;
+                case "GISDgroups3":
+                    groupTokenGen(gisdChecked[0], gisdChecked[3], value, gisd, deleCurso);
+                    break;
+                case "GISDgroups4":
+                    groupTokenGen(gisdChecked[0], gisdChecked[4], value, gisd, subDeleCurso);
+                    break;
+
+                
+                case "MUIT":
+                    muitChecked[0] = true;
+                    break;
+                case "MUIT1":
+                    muitChecked[1] = true;
+                    break;
+                case "MUIT2":
+                    muitChecked[2] = true;
+                    break;
+                case "MUIT3":
+                    muitChecked[3] = true;
+                    break;
+                case "MUIT4":
+                    muitChecked[4] = true;
+                    break;
+                case "MUIT5":
+                    if (muitChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muit, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muit, deleTitulacion, 0));
+                    break;
+                case "MUIT6":
+                    if (muitChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muit, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muit, subDeleTitulacion, 0));
+                    break;
+                case "MUITgroups1":
+                    groupTokenGen(muitChecked[0], muitChecked[1], value, muit, deleGrupo);
+                    break;
+                case "MUITgroups2":
+                    groupTokenGen(muitChecked[0], muitChecked[2], value, muit, subDeleGrupo);
+                    break;
+                case "MUITgroups3":
+                    groupTokenGen(muitChecked[0], muitChecked[3], value, muit, deleCurso);
+                    break;
+                case "MUITgroups4":
+                    groupTokenGen(muitChecked[0], muitChecked[4], value, muit, subDeleCurso);
+                    break;
+
+
+                case "MUIRST":
+                    muirstChecked[0] = true;
+                    break;
+                case "MUIRST1":
+                    muirstChecked[1] = true;
+                    break;
+                case "MUIRST2":
+                    muirstChecked[2] = true;
+                    break;
+                case "MUIRST3":
+                    muirstChecked[3] = true;
+                    break;
+                case "MUIRST4":
+                    muirstChecked[4] = true;
+                    break;
+                case "MUIRST5":
+                    if (muirstChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muirst, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muirst, deleTitulacion, 0));
+                    break;
+                case "MUIRST6":
+                    if (muirstChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muirst, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muirst, subDeleTitulacion, 0));
+                    break;
+                case "MUIRSTgroups1":
+                    groupTokenGen(muirstChecked[0], muirstChecked[1], value, muirst, deleGrupo);
+                    break;
+                case "MUIRSTgroups2":
+                    groupTokenGen(muirstChecked[0], muirstChecked[2], value, muirst, subDeleGrupo);
+                    break;
+                case "MUIRSTgroups3":
+                    groupTokenGen(muirstChecked[0], muirstChecked[3], value, muirst, deleCurso);
+                    break;
+                case "MUIRSTgroups4":
+                    groupTokenGen(muirstChecked[0], muirstChecked[4], value, muirst, subDeleCurso);
+                    break;
+
+                case "MUISE":
+                    muiseChecked[0] = true;
+                    break;
+                case "MUISE1":
+                    muiseChecked[1] = true;
+                    break;
+                case "MUISE2":
+                    muiseChecked[2] = true;
+                    break;
+                case "MUISE3":
+                    muiseChecked[3] = true;
+                    break;
+                case "MUISE4":
+                    muiseChecked[4] = true;
+                    break;
+                case "MUISE5":
+                    if (muiseChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muise, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muise, deleTitulacion, 0));
+                    break;
+                case "MUISE6":
+                    if (muiseChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muise, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muise, subDeleTitulacion, 0));
+                    break;
+                case "MUISEgroups1":
+                    groupTokenGen(muiseChecked[0], muiseChecked[1], value, muise, deleGrupo);
+                    break;
+                case "MUISEgroups2":
+                    groupTokenGen(muiseChecked[0], muiseChecked[2], value, muise, subDeleGrupo);
+                    break;
+                case "MUISEgroups3":
+                    groupTokenGen(muiseChecked[0], muiseChecked[3], value, muise, deleCurso);
+                    break;
+                case "MUISEgroups4":
+                    groupTokenGen(muiseChecked[0], muiseChecked[4], value, muise, subDeleCurso);
+                    break;
+                
+
+                case "MUTSC":
+                    mutscChecked[0] = true;
+                    break;
+                case "MUTSC1":
+                    mutscChecked[1] = true;
+                    break;
+                case "MUTSC2":
+                    mutscChecked[2] = true;
+                    break;
+                case "MUTSC3":
+                    mutscChecked[3] = true;
+                    break;
+                case "MUTSC4":
+                    mutscChecked[4] = true;
+                    break;
+                case "MUTSC5":
+                    if (mutscChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(mutsc, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), mutsc, deleTitulacion, 0));
+                    break;
+                case "MUTSC6":
+                    if (mutscChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(mutsc, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), mutsc, subDeleTitulacion, 0));
+                    break;
+                case "MUTSCgroups1":
+                    groupTokenGen(mutscChecked[0], mutscChecked[1], value, mutsc, deleGrupo);
+                    break;
+                case "MUTSCgroups2":
+                    groupTokenGen(mutscChecked[0], mutscChecked[2], value, mutsc, subDeleGrupo);
+                    break;
+                case "MUTSCgroups3":
+                    groupTokenGen(mutscChecked[0], mutscChecked[3], value, mutsc, deleCurso);
+                    break;
+                case "MUTSCgroups4":
+                    groupTokenGen(mutscChecked[0], mutscChecked[4], value, mutsc, subDeleCurso);
+                    break;
+                
+
+                case "MUESFV":
+                    muesfvChecked[0] = true;
+                    break;
+                case "MUESFV1":
+                    muesfvChecked[1] = true;
+                    break;
+                case "MUESFV2":
+                    muesfvChecked[2] = true;
+                    break;
+                case "MUESFV3":
+                    muesfvChecked[3] = true;
+                    break;
+                case "MUESFV4":
+                    muesfvChecked[4] = true;
+                    break;
+                case "MUESFV5":
+                    if (muesfvChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muesfv, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muesfv, deleTitulacion, 0));
+                    break;
+                case "MUESFV6":
+                    if (muesfvChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muesfv, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muesfv, subDeleTitulacion, 0));
+                    break;
+                case "MUESFVgroups1":
+                    groupTokenGen(muesfvChecked[0], muesfvChecked[1], value, muesfv, deleGrupo);
+                    break;
+                case "MUESFVgroups2":
+                    groupTokenGen(muesfvChecked[0], muesfvChecked[2], value, muesfv, subDeleGrupo);
+                    break;
+                case "MUESFVgroups3":
+                    groupTokenGen(muesfvChecked[0], muesfvChecked[3], value, muesfv, deleCurso);
+                    break;
+                case "MUESFVgroups4":
+                    groupTokenGen(muesfvChecked[0], muesfvChecked[4], value, muesfv, subDeleCurso);
+                    break;
+
+
+                case "MUIB":
+                    muibChecked[0] = true;
+                    break;
+                case "MUIB1":
+                    muibChecked[1] = true;
+                    break;
+                case "MUIB2":
+                    muibChecked[2] = true;
+                    break;
+                case "MUIB3":
+                    muibChecked[3] = true;
+                    break;
+                case "MUIB4":
+                    muibChecked[4] = true;
+                    break;
+                case "MUIB5":
+                    if (muibChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muib, deleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muib, deleTitulacion, 0));
+                    break;
+                case "MUIB6":
+                    if (muibChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(muib, subDeleTitulacion, 0) == null)
+                        tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), muib, subDeleTitulacion, 0));
+                    break;
+                case "MUIBgroups1":
+                    groupTokenGen(muibChecked[0], muibChecked[1], value, muib, deleGrupo);
+                    break;
+                case "MUIBgroups2":
+                    groupTokenGen(muibChecked[0], muibChecked[2], value, muib, subDeleGrupo);
+                    break;
+                case "MUIBgroups3":
+                    groupTokenGen(muibChecked[0], muibChecked[3], value, muib, deleCurso);
+                    break;
+                case "MUIBgroups4":
+                    groupTokenGen(muibChecked[0], muibChecked[4], value, muib, subDeleCurso);
+                    break;
 
 
                 case "CD":
