@@ -14,12 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.upm.etsit.dat.identi.persistence.model.CDToken;
+import es.upm.etsit.dat.identi.persistence.model.Commission;
+import es.upm.etsit.dat.identi.persistence.model.CommissionToken;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
+import es.upm.etsit.dat.identi.persistence.model.Department;
 import es.upm.etsit.dat.identi.persistence.model.Position;
 import es.upm.etsit.dat.identi.persistence.model.Token;
 import es.upm.etsit.dat.identi.persistence.repository.CDTokenRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionTokenRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DepartmentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
 import es.upm.etsit.dat.identi.service.TokenService;
@@ -45,6 +51,12 @@ public class TokenController {
 
     @Autowired
     private PositionRepository pstnRepository;
+
+    @Autowired
+    private DepartmentRepository dptRepository;
+
+    @Autowired
+    private CommissionRepository comsRepository;
 
     @GetMapping("/admin/tokens")
     public String tokens(Model model) {
@@ -73,8 +85,13 @@ public class TokenController {
     public String tokenForm(Model model, HttpServletRequest request) {
         List<Degree> degrees = dgrRepository.findAll();
         List<Position> positions = pstnRepository.findAll();
+        List<Department> departaments = dptRepository.findAll();
+        List<Commission> commissions = comsRepository.findAll();
         model.addAttribute("degrees", degrees);
         model.addAttribute("positions", positions);
+        model.addAttribute("departaments", departaments);
+        model.addAttribute("commissions", commissions);
+        
         model.addAttribute("_csrf", request.getAttribute("_csrf"));
         return "admin/tokens/generate_tokens";
     }
@@ -87,10 +104,62 @@ public class TokenController {
         }
         return new ModelAndView("redirect:/admin/tokens/delegates");
     }
+
+    @GetMapping("/admin/tokens/deletecd/{id}")
+    public ModelAndView deletecdToken(@ModelAttribute("id") Long id) {
+        try {
+            cdTknRepo.deleteById(id);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/cds");
+    }
+
+    @GetMapping("/admin/tokens/deletecom/{id}")
+    public ModelAndView deletecomToken(@ModelAttribute("id") Long id) {
+        try {
+            cmmTknRepo.deleteById(id);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/commissions");
+    }
+
+    @GetMapping("/admin/tokens/regenerate/{id}")
+    public ModelAndView regenerateToken(@ModelAttribute("id") Long id) {
+        try {
+            Token t = tknRepo.findById(id).get();
+            t.setToken(RandomStringUtils.randomAlphanumeric(64));
+            tknRepo.save(t);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/delegates");
+    }
+
+    @GetMapping("/admin/tokens/regeneratecd/{id}")
+    public ModelAndView regeneratecdToken(@ModelAttribute("id") Long id) {
+        try {
+            CDToken t = cdTknRepo.findById(id).get();
+            t.setToken(RandomStringUtils.randomAlphanumeric(64));
+            cdTknRepo.save(t);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/cds");
+    }
+
+    @GetMapping("/admin/tokens/regeneratecom/{id}")
+    public ModelAndView regeneratecomToken(@ModelAttribute("id") Long id) {
+        try {
+            CommissionToken t = cmmTknRepo.findById(id).get();
+            t.setToken(RandomStringUtils.randomAlphanumeric(64));
+            cmmTknRepo.save(t);
+        } catch (Exception e) {
+        }
+        return new ModelAndView("redirect:/admin/tokens/commissions");
+    }
     
     @PostMapping("/admin/tokens/saveToken")
     @ResponseBody
     public String createToken(@RequestBody Object values, HttpServletResponse response) {
+        System.out.println(values);
         
         Degree dat = dgrRepository.findByCode("09DA");
         Degree gitst = dgrRepository.findByCode("09TT");
@@ -113,12 +182,20 @@ public class TokenController {
         Position subDeleEscuela = pstnRepository.findByName("Subdelegado/a de Escuela");
         Position secretario = pstnRepository.findByName("Secretario/a");
         Position tesorero = pstnRepository.findByName("Tesorero/a");
-        
+
+        Department dit = dptRepository.findByAcronym("DIT");
+        Department ssr = dptRepository.findByAcronym("SSR");
+        Department die = dptRepository.findByAcronym("DIE");
+        Department elf = dptRepository.findByAcronym("ELF");
+        Department mat = dptRepository.findByAcronym("MAT");
+        Department tfb = dptRepository.findByAcronym("TFB");
+        Department ior = dptRepository.findByAcronym("IOR");
+        Department lia = dptRepository.findByAcronym("LIA");       
 
         String[] elements = values.toString().replace("{", "").replace("}", "").split(",");
         
         String regexp = "/([1-4][1-6]-?)+/";
-        Boolean datChecked = false;
+        Boolean datChecked = false; 
         Boolean[] gitstChecked = new Boolean[5];
         Boolean[] gibChecked = new Boolean[5];
         Boolean[] gisdChecked = new Boolean[5];
@@ -128,6 +205,8 @@ public class TokenController {
         Boolean[] mutscChecked = new Boolean[5];
         Boolean[] muesfvChecked = new Boolean[5];
         Boolean[] muibChecked = new Boolean[5];
+        Boolean[] cdChecked = new Boolean[9];
+        Boolean[] comisChecked = new Boolean[10]; 
         Arrays.fill(gitstChecked, false);
         Arrays.fill(gibChecked, false);
         Arrays.fill(gisdChecked, false);
@@ -137,6 +216,8 @@ public class TokenController {
         Arrays.fill(mutscChecked, false);
         Arrays.fill(muesfvChecked, false);
         Arrays.fill(muibChecked, false);
+        Arrays.fill(cdChecked, false);
+        Arrays.fill(comisChecked, false);
 
         for (String element : elements) {
             String search = element.split("=")[0].trim();
@@ -148,7 +229,6 @@ public class TokenController {
                 value = null;
             }
             
-            System.out.println(search);
             switch (search){
                 case "DAT":
                     datChecked = true;
@@ -186,35 +266,110 @@ public class TokenController {
                     gitstChecked[4] = true;
                     break;
                 case "GITST5":
-                    if (tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, deleTitulacion, 0) == null)
+                    if (gitstChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, deleTitulacion, 0) == null)
                         tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, deleTitulacion, 0));
                     break;
                 case "GITST6":
-                    if (tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, subDeleTitulacion, 0) == null)
+                    if (gitstChecked[0] && tknRepo.findByDegreeAndPositionAndDiferentiator(gitst, subDeleTitulacion, 0) == null)
                         tknRepo.save(new Token(RandomStringUtils.randomAlphanumeric(64), gitst, subDeleTitulacion, 0));
                     break;
                 case "GITSTgroups1":
-                    groupTokenGen(gitstChecked[1], value, gitst, deleGrupo);
+                    groupTokenGen(gitstChecked[0], gitstChecked[1], value, gitst, deleGrupo);
                     break;
                 case "GITSTgroups2":
-                    groupTokenGen(gitstChecked[2], value, gitst, subDeleGrupo);
+                    groupTokenGen(gitstChecked[0], gitstChecked[2], value, gitst, subDeleGrupo);
                     break;
                 case "GITSTgroups3":
-                    groupTokenGen(gitstChecked[3], value, gitst, deleCurso);
+                    groupTokenGen(gitstChecked[0], gitstChecked[3], value, gitst, deleCurso);
                     break;
                 case "GITSTgroups4":
-                    groupTokenGen(gitstChecked[4], value, gitst, subDeleCurso);
+                    groupTokenGen(gitstChecked[0], gitstChecked[4], value, gitst, subDeleCurso);
                     break;
+
+                //Añadir aquí el resto de grados a semejanza del gitst
+
+
+
+
+                case "CD":
+                    cdChecked[0] = true;
+                    break;
+                case "DIT":
+                    cdChecked[1] = true;
+                    break;
+                case "SSR":
+                    cdChecked[2] = true;
+                    break;
+                case "DIE":
+                    cdChecked[3] = true;
+                    break;
+                case "ELF":
+                    cdChecked[4] = true;
+                    break;
+                case "MAT":
+                    cdChecked[5] = true;
+                    break;
+                case "TFB":
+                    cdChecked[6] = true;
+                    break;
+                case "IOR":
+                    cdChecked[7] = true;
+                    break;
+                case "LIA":
+                    cdChecked[8] = true;
+                    break;
+                case "DITnumber":
+                    cdGenToken(cdChecked[0], cdChecked[1], value, dit);
+                    break;
+                case "SSRnumber":
+                    cdGenToken(cdChecked[0], cdChecked[2], value, ssr);
+                    break;
+                case "DIEnumber":
+                    cdGenToken(cdChecked[0], cdChecked[3], value, die);
+                    break;
+                case "ELFnumber":
+                    cdGenToken(cdChecked[0], cdChecked[4], value, elf);
+                    break;
+                case "MATnumber":
+                    cdGenToken(cdChecked[0], cdChecked[5], value, mat);
+                    break;
+                case "TFBnumber":
+                    cdGenToken(cdChecked[0], cdChecked[6], value, tfb);
+                    break;
+                case "IORnumber":
+                    cdGenToken(cdChecked[0], cdChecked[7], value, ior);
+                    break;
+                case "LIAnumber":
+                    cdGenToken(cdChecked[0], cdChecked[8], value, lia);
+                    break;
+                
             }
         }
 
         tknRepo.flush();
+        cdTknRepo.flush();
         response.setContentType("text/plain");
         return "pericos";
     }
 
-    private void groupTokenGen(Boolean prevCheck, String value, Degree dgr, Position pst) {
-        if(prevCheck) {
+    private void cdGenToken(Boolean topCheck, Boolean prevCheck, String value, Department dpt) {
+        if(value != null && topCheck && prevCheck) {
+            Integer number;
+            try {
+                number = Integer.valueOf(value);
+            }
+            catch (Exception e){
+                return;
+            }
+            while(number > 0) {
+                cdTknRepo.save(new CDToken(RandomStringUtils.randomAlphanumeric(64), dpt));
+                number--;
+            }
+        }
+    }
+
+    private void groupTokenGen(Boolean topCheck, Boolean prevCheck, String value, Degree dgr, Position pst) {
+        if(topCheck && prevCheck) {
             String[] groups = value.split("-");
             for (String group : groups){
                 Integer grupo;

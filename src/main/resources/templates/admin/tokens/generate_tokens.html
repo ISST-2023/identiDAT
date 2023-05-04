@@ -53,6 +53,38 @@
                         </fieldset>
                     </span>
 
+                    <br>
+
+                    <span class="selector">
+                        <input type="checkbox" id="CD" name="CD" text="CD" value="on"
+                                class="degree">Consejos de Departamento</input>
+                        <br>
+                        <fieldset style="display:none">
+                                
+                        <span th:each="departament : ${departaments}">
+                            <input type="checkbox" th:id="${departament.acronym}" th:name="${departament.acronym}"  th:text="${departament.acronym}" value="on"
+                                class="groups"></input>
+                            <input type="text" th:id="${departament.acronym} + number" th:name="${departament.acronym} + number" class="groups"></input>
+                            <br>
+                        </span>
+                        </fieldset>
+                    </span>
+
+                    <span class="selector">
+                        <input type="checkbox" id="Comisiones" name="Comisiones" text="Comisiones" value="on"
+                                class="degree">Comisiones</input>
+                        <br>
+                        <fieldset style="display:none">
+                                
+                        <span th:each="commission : ${commissions}">
+                            <input type="checkbox" th:id="${commission.name}" th:name="${commission.name}"  th:text="${commission.name}" value="on"
+                                class="groups"></input>
+                            <input type="text" th:id="${commission.name} + number" th:name="${commission.name} + number" class="groups"></input>
+                            <br>
+                        </span>
+                        </fieldset>
+                    </span>
+
 
 
                     <div class="text-center">
