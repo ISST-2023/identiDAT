@@ -47,8 +47,8 @@
 							<h5 class="card-title">JD <td th:text="${#dates.format(JD.date, 'dd-MM-yyyy HH:mm')}"></td> </h5>
 							<h6 class="card-subtitle mb-2 text-muted"><td th:if="${JD.ordinary}">Ordnaria<td th:unless="${JD.ordinary}">Extraordinaria</td></h6>
 							<p class="card-text" th:text="${JD.place}"></p>
+							<a th:href="'/admin/jd/' + ${JD.id} + '/files'" class="card-link">Documentación</a>
 							<a href="#" class="card-link">Acta</a>
-							<a href="#" class="card-link">Documentación</a>
 						</div>
 					</div>
 				</div>
@@ -62,32 +62,32 @@
 
 
 	<!-- Modal Frm Añadir JD -->
-	<div class="modal fade" id="newJD" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="newJD" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Nueva JD</h5>
+					<h5 class="modal-title">Nueva JD</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form action="#" th:action="@{/admin/jd}" th:object="${JDForm}" method="POST">
 						<div class="mb-3">
-							<label for="exampleFormControlInput1" class="form-label">Fecha:</label>
+							<label for="fechaJD" class="form-label">Fecha:</label>
 							<input type="datetime-local" class="form-control" id="fechaJD" name="fechaJD" th:field="*{date}" required>
 						</div>
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">Tipo de Junta:</label>
+								<label class="input-group-text" for="ordinary">Tipo de Junta:</label>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01" th:field="*{ordinary}" required>
+							<select class="custom-select" id="ordinary" name="ordinary" th:field="*{ordinary}" required>
 								<option th:value="true" >Ordinaria</option>
 								<option th:value="false" >Extraordinaria</option>
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="exampleFormControlInput1" class="form-label">Lugar de la JD:</label>
-							<input type="text" id="placeJD" name="placeJD" th:field="*{place}" required>
+							<label for="place" class="form-label">Lugar de la JD:</label>
+							<input type="text" id="place" name="place" th:field="*{place}" required>
 						</div>
 				</div>
 				<div class="modal-footer">

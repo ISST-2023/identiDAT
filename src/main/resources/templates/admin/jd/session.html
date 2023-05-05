@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap5.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+    <title th:text="'identiDAT - JD ' + ${#dates.format(jd.date, 'dd-MM-yyyy')}"></title>
+</head>
+
+<body>
+
+    <div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
+        </div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-8">
+
+                <table id="files" class="table table-striped table-hover" style="width:100%; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th>Archivo</th>
+                            <th>Subido</th>
+                            <th>Actualizado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="file: ${jd.files}" th:id="${file.id}">
+                            <td>
+                                <p th:text="${file.filename}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${#dates.format(file.uploaded, 'dd-MM-yyyy HH:mm')}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${#dates.format(file.updated, 'dd-MM-yyyy HH:mm')}"></p>
+                            </td>
+                            <td>
+                                <a th:href="'/admin/jd/' + ${jd.id} + '/files/' + ${file.id}" target="_blank" class="btn btn-primary">Abrir</a>
+                                <button type="submit" th:onclick="'javascript:deleteFile(' + ${jd.id} + ', ' + ${file.id} + ');'" class="btn btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <form th:object="${jdFileForm}" action="javascript:;" onsubmit='uploadFile(this)' enctype="multipart/form-data">
+                                <input type="hidden" name="jdId" id="jdId" th:value="${jd.id}" />
+                                <td>
+                                    <label for="name">Nombre del archivo:</label>
+                                    <input type="text" th:field="*{name}"/></td>
+                                <td>
+                                    <input type="file" id="file" name="file" accept=".doc,.docx,.pdf,.odt,.ods,.xls,.xlsx" />
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="submit" value="Subir" class="btn btn-primary">
+                                </td>
+                            </form>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
+    <script th:src="@{/js/admin/jdFunctions.js}"></script>
+</body>
+
+</html>

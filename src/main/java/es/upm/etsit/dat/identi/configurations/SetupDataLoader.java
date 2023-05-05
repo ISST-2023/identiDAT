@@ -69,7 +69,7 @@ public class SetupDataLoader implements
         cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(2), "Secretaría de la Delegación de Alumnos", "ETSIT-UPM", "secretaria.dat.etsit@upm.es", "secretaria.dat.etsit", "00000000S", "910671919", dgrRepo.findByCode("09DA"), Arrays.asList(adminRole, secretaryRole), null));
 
         stngRepo.saveAndFlush(new Setting(1, "alreadySetup", "Primera configuración completada", "true"));
-        stngRepo.saveAndFlush(new Setting(2, "filesPath", "Ruta para la subida de ficheros", "./uploads"));
+        stngRepo.saveAndFlush(new Setting(2, "filesPath", "Ruta para la subida de ficheros", "uploads"));
         stngRepo.saveAndFlush(new Setting(3, "academicYear", "Curso académico", "2022-23"));
 
     }
