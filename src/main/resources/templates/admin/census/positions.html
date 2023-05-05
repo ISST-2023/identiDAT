@@ -22,47 +22,119 @@
                     <div class="card-body p-5">
                         <h2 class="text-uppercase text-center mb-5">Editar Usuario</h2>
 
+                        <h4 class="text-uppercase text-center mb-5">Cargos actuales</h4>
+
                         <form th:action="@{/admin/census/edit}" th:object="${form}" method="POST">
 
-                            <input type="hidden" th:field="*{censusMemberId}" id="censusMemberId" name="censusMemberId">
+                            <input type="hidden" th:field="*{censusMemberId}">
 
-                            <div class="form-outline mb-3">
-                                <label class="form-label" for="position">Position:</label>
-                                <select id="position" name="position" th:field="*{position}"
-                                    class="form-control form-control-lg" required>
-                                    <option th:each="position : ${positions}" th:value="${position}"
-                                        th:text="${position}" class="position"></option>
-                                </select>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0"></h6>
+                                </div>
+                                <div th:each="position : ${positions}" class="col-sm-9 text-secondary" th:text="${position.name}"></div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0"></h6>
+                                </div>
+                                <div th:each="department : ${departments}" class="col-sm-9 text-secondary" th:text="${department.acronym}"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0"></h6>
+                                </div>
+                                <div th:each="commission : ${commissions}" class="col-sm-9 text-secondary" th:text="${commission.name}"></div>
+                            </div>
+                        </form>
+
+                        <h4 class="text-uppercase text-center mb-5">Añadir cargos</h4>
+
+                        <form th:action="@{newPosition}" th:object="${posForm}" method="POST">
+
+                            <!--<input type="checkbox" id="posForm" text="Posiciones" value="on"></input>-->
+
+                            <input type="checkbox" id="posForm" name="posForm" value="on">
+                                <label for="posForm">Posiciones</label>
+                            </input>
+
+                            <fieldset><!--style="display:none"-->
+
+                                <input type="hidden" th:field="*{cenMemberId}">
+                                
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="position">Position:</label>
+                                    <select id="positionId" name="position" th:field="*{positionId}"
+                                        class="form-control form-control-lg selector" required>
+                                        <option th:each="position : ${positionsL}" th:value="${position.id}"
+                                            th:text="${position.name}" class="position"></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="year">Año:</label>
+                                    <input type="number" id="year" name="year" class="form-control form-control-lg" th:value="*{year}" placeholder="Valor númerico del año"/>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <input type="submit" class="btn btn-primary btn-block btn-lg"
+                                        value="Guardar cambios"></input>&nbsp;&nbsp;
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                        <form th:action="@{/admin/census/edit}" th:object="${depForm}" method="POST">
+
+                            <!--<input type="checkbox" id="depForm" text="Departamentos" value="on"></input>-->
+                            <input type="checkbox" id="depForm" name="depForm" value="on">
+                                <label for="depForm">Departamentos</label>
+                            </input>
+
+                            <input type="hidden" th:field="*{censusMemId}">
 
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="deparment">Departamento:</label>
-                                <select id="deparment" name="deparment" th:field="*{deparment}"
+                                <select id="departmentId" name="department" th:field="*{departmetId}"
                                     class="form-control form-control-lg" required>
-                                    <option th:each="deparment : ${deparments}" th:value="${deparment.acronym}"
-                                        th:text="${deparment.acronym}" class="deparment"></option>
-                                </select>
-                            </div>
-
-                            <div class="form-outline mb-3">
-                                <label class="form-label" for="commission">Comisión:</label>
-                                <select id="commission" name="commission" th:field="*{commission}"
-                                    class="form-control form-control-lg" required>
-                                    <option th:each="commission : ${commissions}" th:value="${commission}"
-                                        th:text="${commission}" class="commission"></option>
+                                    <option th:each="department : ${departmentsL}" th:value="${department.id}"
+                                        th:text="${department.acronym}" class="department"></option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-center">
                                 <input type="submit" class="btn btn-primary btn-block btn-lg"
-                                    value="Editar"></input>&nbsp;&nbsp;
-                                <input type="submit" class="btn btn-danger btn-block btn-lg"
-                                    th:formaction="@{/admin/census/delete/} + ${form.censusMemberId}"
-                                    formmethod="POST">Borrar</input type="submit">
+                                    value="Guardar cambios"></input>&nbsp;&nbsp;
+                            </div>
+                        </form>
 
+                        <form id="comForm" th:action="@{/admin/census/edit}" th:object="${comForm}" method="POST">
+
+                            <input type="checkbox" id="comForm" name="comForm" value="on">
+                                <label for="comForm">Comisiones</label>
+                            </input>
+
+                            <input type="hidden" th:field="*{cenMemId}">
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="commission">Comisión:</label>
+                                <select id="commissionId" name="commission" th:field="*{commissionId}"
+                                    class="form-control form-control-lg" required>
+                                    <option th:each="commission : ${commissionsL}" th:value="${commission.id}"
+                                        th:text="${commission.name}" class="commission"></option>
+                                </select>
                             </div>
 
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" class="btn btn-primary btn-block btn-lg"
+                                    value="Guardar cambios"></input>&nbsp;&nbsp;
+                            </div>
                         </form>
+
+                        
+    <script th:src="@{/js/positions.js}"></script>
 </body>
 
 </html>

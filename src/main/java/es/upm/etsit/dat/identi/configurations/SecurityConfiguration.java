@@ -42,12 +42,12 @@ public class SecurityConfiguration {
                                                 .userAuthoritiesMapper(this.userAuthoritiesMapper()))
                                 .authorizeHttpRequests((authz) -> authz
                                                 .requestMatchers("/js", "/css", "/fonts", "/img").permitAll()
-                                                //.anyRequest().permitAll()
-                                                .requestMatchers(new AntPathRequestMatcher("/admin/jd/**"))
+                                                .anyRequest().permitAll()
+                                                /*.requestMatchers(new AntPathRequestMatcher("/admin/jd/**"))
                                                 .hasAuthority("CALL_PRIVILEGE")
                                                 .requestMatchers(new AntPathRequestMatcher("/admin/**"))
                                                 .hasRole("ADMIN")
-                                                .anyRequest().authenticated()
+                                                .anyRequest().authenticated()*/
                                                 );
 
                 return http.build();

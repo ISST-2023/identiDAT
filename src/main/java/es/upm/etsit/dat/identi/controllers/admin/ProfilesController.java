@@ -17,6 +17,9 @@ import es.upm.etsit.dat.identi.FieldValidator;
 import es.upm.etsit.dat.identi.dto.CensusMemberDto;
 import es.upm.etsit.dat.identi.forms.CensusMemberForm;
 import es.upm.etsit.dat.identi.forms.PositionForm;
+import es.upm.etsit.dat.identi.forms.PositionsForm;
+import es.upm.etsit.dat.identi.forms.DepartmentsForm;
+import es.upm.etsit.dat.identi.forms.CommissionsForm;
 import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
@@ -248,25 +251,41 @@ public class ProfilesController {
     List<CDMember> cds = cdMemRepo.findByCensusMember(censusMember);
     List<CommissionMember> commissions = cmmMemRepo.findByCensusMember(censusMember);
     
-    PositionForm form = new PositionForm(id, delegatePositions, cds, commissions);
+    PositionForm formP = new PositionForm(id, delegatePositions, cds, commissions);
+    PositionsForm posForm = new PositionsForm();
+    DepartmentsForm depForm = new DepartmentsForm();
+    CommissionsForm comForm = new CommissionsForm();
     CensusMemberDto cenMem = cenMemService.get(id);
-    form.setCensusMemberId(cenMem.getId());
-    model.addAttribute("positions", posRepo.findAll());
-    model.addAttribute("departments", depRepo.findAll());
-    model.addAttribute("commissions", commRepo.findAll());
 
-    model.addAttribute("form", form);
+    formP.setCensusMemberId(cenMem.getId());
+    posForm.setCenMemberId(cenMem.getId());
+    depForm.setCensusMemId(cenMem.getId());
+    comForm.setCenMemId(cenMem.getId());
+
+    model.addAttribute("positionsL", posRepo.findAll());
+    model.addAttribute("departmentsL", depRepo.findAll());
+    model.addAttribute("commissionsL", commRepo.findAll());
+
+    model.addAttribute("form", formP);
+    model.addAttribute("posForm", posForm);
+    model.addAttribute("depForm", depForm);
+    model.addAttribute("comForm", comForm);
 
     return "admin/census/positions";
   }
 
-  @PostMapping("/admin/census/positions")
-  public String registerPositions(@ModelAttribute("form") CensusMemberForm cenMemForm, Model model) {
-    Optional<CensusMember> censusMember = cenMemRepo.findById(cenMemForm.getCensusMemberId());
+  @PostMapping("newPosition")
+  public String registerPositions(@ModelAttribute("posForm") PositionsForm form, Model model) {
+    Optional<CensusMember> censusMember = cenMemRepo.findById(form.getCenMemberId());
 
-    if (censusMember.isPresent()) {
-      CensusMember member = censusMember.get();
-      member.setName(cenMemForm.getName());
+    /*if (censusMember.isPresent()) {
+      Delegate delegate = new Delegate(
+        censusMember,
+        posRepo.findById(form.getPositionId()),
+        censusMember.getDegree(),
+
+      );*/
+      /*member.setName(cenMemForm.getName());
       member.setSurname(cenMemForm.getSurname());
       member.setEmail(cenMemForm.getEmail());
       member.setPersonalID(cenMemForm.getPersonalID());
@@ -275,7 +294,7 @@ public class ProfilesController {
 
       cenMemRepo.saveAndFlush(member);
       cenMemRepo.flush();
-    }
+    }*/
 
     return "redirect:/admin/census";
   }

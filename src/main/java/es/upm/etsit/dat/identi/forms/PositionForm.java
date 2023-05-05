@@ -15,6 +15,6 @@ import es.upm.etsit.dat.identi.persistence.model.Delegate;
 public class PositionForm {
     private Long censusMemberId;
     private List<Delegate> positions;
-    private List<CDMember> deparments;
+    private List<CDMember> departments;
     private List<CommissionMember> commissions;
 }

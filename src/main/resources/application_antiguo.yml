@@ -1,0 +1,29 @@
+server:
+    port: 25565
+
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST:urbex.ga}:3306/identiDAT
+        username: identiDAT
+        password: perico
+    
+    security:
+        oauth2:
+            client:
+                registration:
+                    ssodat:
+                        client-id: identidat
+                        authorization-grant-type: authorization_code
+                        scope: openid
+
+                provider:
+                    ssodat:
+                        issuer-uri: https://sso.dat.etsit.upm.es/realms/DAT-ETSIT
+                        user-name-attribute: preferred_username
+        
+            resourceserver:
+                jwt:
+                    issuer-uri: https://sso.dat.etsit.upm.es/realms/DAT-ETSIT
