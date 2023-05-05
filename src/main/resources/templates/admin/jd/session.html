@@ -35,29 +35,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="file: ${jd.files}" th:id="${file.id}">
-                            <td>
-                                <p th:text="${file.filename}"></p>
-                            </td>
-                            <td>
-                                <p th:text="${#dates.format(file.uploaded, 'dd-MM-yyyy HH:mm')}"></p>
-                            </td>
-                            <td>
-                                <p th:text="${#dates.format(file.updated, 'dd-MM-yyyy HH:mm')}"></p>
-                            </td>
-                            <td>
-                                <a th:href="'/admin/jd/' + ${jd.id} + '/files/' + ${file.id}" target="_blank" class="btn btn-primary">Abrir</a>
-                                <button type="submit" th:onclick="'javascript:deleteFile(' + ${jd.id} + ', ' + ${file.id} + ');'" class="btn btn-danger">Eliminar</button>
+                        <tr th:each="file: ${jd.files}" th:id="'file_' + ${file.id}">
+                            <form th:object="${jdFileForm}" action="javascript:;" th:data-jd_id="${jd.id}"
+                                th:data-file_id="${file.id}" onsubmit="updateFile(this)" enctype="multipart/form-data">
+                                <td>
+                                    <p th:text="${file.filename}"></p>
+                                </td>
+                                <td class="fileUploaded">
+                                    <p th:text="${#dates.format(file.uploaded, 'dd-MM-yyyy HH:mm')}"></p>
+                                    <input type="file" name="file" accept=".doc,.docx,.pdf,.odt,.ods,.xls,.xlsx"
+                                        style="display:none" />
+                                </td>
+                                <td class="fileUpdated">
+                                    <p th:text="${#dates.format(file.updated, 'dd-MM-yyyy HH:mm')}"></p>
+                                </td>
+                                <td class="actionButtons">
+                                    <input type="submit" value="Actualizar" class="btn btn-primary editMode"
+                                        style="display:none" />
+                            </form>
+                            <button th:onclick="'javascript:editFile(' + ${file.id} + ', true);'"
+                                class="btn btn-danger editMode" style="display:none">Cancelar</button>
+
+                            <a th:href="'/admin/jd/' + ${jd.id} + '/files/' + ${file.id}" target="_blank"
+                                class="btn btn-primary mainMode">Abrir</a>
+                            <button th:onclick="'javascript:editFile(' + ${file.id} + ');'"
+                                class="btn btn-success mainMode">Editar</button>
+                            <button th:onclick="'javascript:deleteFile(' + ${jd.id} + ', ' + ${file.id} + ');'"
+                                class="btn btn-danger mainMode">Eliminar</button>
                             </td>
                         </tr>
                         <tr>
-                            <form th:object="${jdFileForm}" action="javascript:;" onsubmit='uploadFile(this)' enctype="multipart/form-data">
-                                <input type="hidden" name="jdId" id="jdId" th:value="${jd.id}" />
+                            <form th:object="${jdFileForm}" action="javascript:;" th:data-jd_id="${jd.id}"
+                                onsubmit="uploadFile(this)" enctype="multipart/form-data">
                                 <td>
                                     <label for="name">Nombre del archivo:</label>
-                                    <input type="text" th:field="*{name}"/></td>
+                                    <input type="text" th:field="*{name}" />
+                                </td>
                                 <td>
-                                    <input type="file" id="file" name="file" accept=".doc,.docx,.pdf,.odt,.ods,.xls,.xlsx" />
+                                    <input type="file" name="file" accept=".doc,.docx,.pdf,.odt,.ods,.xls,.xlsx" />
                                 </td>
                                 <td></td>
                                 <td>

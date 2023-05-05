@@ -105,10 +105,11 @@ public class JDController {
         }
 
         try {
-            fsRepo.save(jdFileForm.getFile().getBytes(), filePath);
-            jdFileRepo
-                    .saveAndFlush(new JDFile(jd, jdFileForm.getName(), filePath, jdFileForm.getFile().getContentType(),
-                            Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
+            if (fsRepo.save(jdFileForm.getFile().getBytes(), filePath))
+                jdFileRepo
+                        .saveAndFlush(new JDFile(jd, jdFileForm.getName(), filePath,
+                                jdFileForm.getFile().getContentType(),
+                                Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return "Ha ocurrido un error.";
@@ -183,9 +184,10 @@ public class JDController {
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
 
         try {
-            jdFileRepo.delete(jdFile);
-            fsRepo.delete(jdFile.getPath());
-            response.setStatus(HttpServletResponse.SC_OK);
+            if (fsRepo.delete(jdFile.getPath())) {
+                jdFileRepo.delete(jdFile);
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
@@ -195,6 +197,7 @@ public class JDController {
     @PostMapping("/admin/jd/{jdId}/files/{id}/update")
     @ResponseBody
     public String jdUpdateFile(@ModelAttribute("jdId") Long jdId, @ModelAttribute("id") Long id,
+            @ModelAttribute("jdFileForm") JDFileForm jdFileForm,
             Model model, HttpServletResponse response) {
         JD jd;
         Optional<JD> jdCandidate = jdRepo.findById(jdId);
@@ -217,15 +220,27 @@ public class JDController {
             return "";
         }
 
-        response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        String rootDir = stngRepo.findBySettingKey("filesPath").getSettingValue();
+        String academicYear = stngRepo.findBySettingKey("academicYear").getSettingValue();
+        String filePath = String.format("%s/%s/jd/%s/%s", rootDir, academicYear,
+                jd.getDate().toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm")),
+                jdFileForm.getFile().getOriginalFilename());
 
         try {
-            jdFileRepo.delete(jdFile);
-            fsRepo.delete(jdFile.getPath());
-            response.setStatus(HttpServletResponse.SC_OK);
+            if (fsRepo.delete(jdFile.getPath())) {
+                if (fsRepo.save(jdFileForm.getFile().getBytes(), filePath)) {
+                    jdFile.setPath(filePath);
+                    jdFile.setUpdated(Timestamp.valueOf(LocalDateTime.now()));
+                    jdFile.setContentType(jdFileForm.getFile().getContentType());
+                    jdFileRepo.saveAndFlush(jdFile);
+                }
+            }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return "Ha ocurrido un error.";
         }
+
+        response.setStatus(HttpServletResponse.SC_OK);
         return "";
     }
 }
