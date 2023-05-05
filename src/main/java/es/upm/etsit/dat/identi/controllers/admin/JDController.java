@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.upm.etsit.dat.identi.forms.JDFileForm;
@@ -50,7 +49,7 @@ public class JDController {
     }
 
     @PostMapping("/admin/jd")
-    public String saveJd(@ModelAttribute("JDForm") JDForm jdForm, Model model) {
+    public String saveJD(@ModelAttribute("JDForm") JDForm jdForm, Model model) {
         String goodDate = jdForm.getDate().replace('T', ' ') + ":00";
         JD newJD = new JD(
                 Timestamp.valueOf(goodDate),
@@ -58,6 +57,24 @@ public class JDController {
                 jdForm.getPlace());
         jdRepo.save(newJD);
         return "redirect:/admin/jd";
+    }
+
+    @PostMapping("/admin/jd/{id}")
+    public String updateJD(@ModelAttribute("id") Long id,@ModelAttribute("JDForm") JDForm jdForm, Model model) {
+        JD jd;
+        Optional<JD> jdCandidate = jdRepo.findById(id);
+        if (!jdCandidate.isPresent()) {
+            model.addAttribute("error", "La sesión especificada no existe.");
+            return "redirect:/error";
+        } else
+            jd = jdCandidate.get();
+
+         String goodDate = jdForm.getDate().replace('T', ' ') + ":00";
+        jd.setDate(Timestamp.valueOf(goodDate));
+        jd.setOrdinary(Boolean.valueOf(jdForm.getOrdinary()));
+        jd.setPlace(jdForm.getPlace());
+        jdRepo.saveAndFlush(jd);
+        return "redirect:/admin/jd/" + String.valueOf(id) + "/files";
     }
 
     @GetMapping("/admin/jd/{id}/files")
@@ -71,7 +88,9 @@ public class JDController {
             jd = jdCandidate.get();
 
         model.addAttribute("jd", jd);
+        model.addAttribute("JDForm", new JDForm(jd.getDate().toLocalDateTime().toString(), jd.getOrdinary(), jd.getPlace()));
         model.addAttribute("jdFileForm", new JDFileForm());
+        
         return "admin/jd/session";
     }
 
