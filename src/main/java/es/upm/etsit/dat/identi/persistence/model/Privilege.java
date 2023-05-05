@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ public class Privilege {
     @NonNull
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
     @ManyToMany(mappedBy = "privileges", cascade = CascadeType.ALL)

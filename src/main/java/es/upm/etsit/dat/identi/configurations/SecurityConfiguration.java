@@ -68,9 +68,13 @@ public class SecurityConfiguration {
                                                         (String) userAttributes.get("preferred_username"));
                                         if (censusMember != null) {
                                                 Set<Role> roles = new HashSet<>(censusMember.getRoles());
-                                                for (Role role : roles)
+                                                for (Role role : roles) {
                                                         mappedAuthorities.add(
                                                                         new SimpleGrantedAuthority(role.getName()));
+                                                        for (Privilege privilege : role.getPrivileges())
+                                                        mappedAuthorities.add(
+                                                                        new SimpleGrantedAuthority(privilege.getName()));
+                                                }
                                                                         
                                                 Set<Privilege> privileges = new HashSet<>(censusMember.getPrivileges());
                                                 for (Privilege privilege : privileges)

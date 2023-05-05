@@ -1,21 +1,11 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,27 +16,23 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "jd")
+@Table(name = "Settings")
 @NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
-public class JD {
+public class Setting {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
 
-    @Column(nullable = false, unique = true)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 200, nullable = false, unique = true)
     @NonNull
-    private java.sql.Timestamp date;
+    private String settingKey;
 
-    @Column(nullable = false)
+    @Column(length = 200, nullable = false, unique = true)
     @NonNull
-    private Boolean ordinary;
-
+    private String settingName;
+    
     @Column(length = 200, nullable = false)
     @NonNull
-    private String place;
-
-    @OneToMany(mappedBy="jd", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<JDFile> files;
+    private String settingValue;
 }

@@ -23,11 +23,13 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-10 col-lg-8 col-xl-8">
 
-                <table id="census" class="table table-striped table-hover" style="width:100%">
+                <table id="tokensTable" class="table table-striped table-hover" style="width:100%">
                     <thead>
                         <tr>
                             <th>Comisión</th>
                             <th>Token</th>
+                            <th>Eliminar</th>
+                            <th>Regenerar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,19 +40,26 @@
                             <td>
                                 <a th:href="@{'/register?token=' + ${token.token}}" th:text="${token.token}"></a>
                             </td>
+                            <td>
+                                <a th:href="@{'/admin/tokens/deletecom/' + ${token.id}}"><svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg></span></a>
+                            </td>
+                            <td>
+                                <a th:href="@{'/admin/tokens/regeneratecom/' + ${token.id}}"><svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>reload</title><path d="M2 12C2 16.97 6.03 21 11 21C13.39 21 15.68 20.06 17.4 18.4L15.9 16.9C14.63 18.25 12.86 19 11 19C4.76 19 1.64 11.46 6.05 7.05C10.46 2.64 18 5.77 18 12H15L19 16H19.1L23 12H20C20 7.03 15.97 3 11 3C6.03 3 2 7.03 2 12Z" /></svg></span></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-
+                <a href="/admin/tokens">Volver</a>
             </div>
         </div>
     </div>
     </div>
 
     <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
-    <script th:src="@{/js/adminFunctions.js}"></script>
+    <script th:src="@{/js/admin/adminFunctions.js}"></script>
 </body>
 
 </html>

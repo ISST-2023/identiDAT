@@ -45,5 +45,5 @@ public class CommissionMember {
     
     @Column(nullable = false)
     @NonNull
-    private Integer year;
+    private String year;
 }
