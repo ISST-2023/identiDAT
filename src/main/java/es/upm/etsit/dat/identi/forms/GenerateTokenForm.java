@@ -2,7 +2,6 @@ package es.upm.etsit.dat.identi.forms;
 
 import java.io.Serializable;
 
-import es.upm.etsit.dat.identi.TokenType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

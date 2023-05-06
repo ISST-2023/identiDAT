@@ -1,10 +1,5 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
-import java.time.format.DateTimeFormatter;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
