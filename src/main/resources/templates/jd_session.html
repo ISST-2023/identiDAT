@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap5.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+    <title th:text="'identiDAT - JD ' + ${#dates.format(jd.date, 'dd-MM-yyyy')}"></title>
+</head>
+
+<body>
+
+    <div class="mask d-flex align-items-center h-100 global-margin-bottom"></div>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <img th:src="@{/img/identidat.svg}" alt="logo" id="logo" class="mx-auto logo_smaller">
+        </div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-8">
+                <h2
+                    th:text="'JD ' + (${jd.ordinary} ? 'Ordinaria ' : 'Extraordinaria ') + ${#dates.format(jd.date, 'dd-MM-yyyy - HH:mm')}">
+                </h2>
+                <h4 th:text="${jd.place}"></h4>
+                <button type="button" class="btn btn-dat btn-danger btn-lg" data-bs-target="#newJD">
+                    Excusar asistencia
+                </button>
+                <table id="files" class="table table-striped table-hover" style="width:100%; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th>Archivo</th>
+                            <th>Subido</th>
+                            <th>Actualizado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="file: ${jd.files}" th:id="'file_' + ${file.id}">
+                            <td>
+                                <p th:text="${file.filename}"></p>
+                            </td>
+                            <td class="fileUploaded">
+                                <p th:text="${#dates.format(file.uploaded, 'dd-MM-yyyy HH:mm')}"></p>
+                            </td>
+                            <td class="fileUpdated">
+                                <p th:text="${#dates.format(file.updated, 'dd-MM-yyyy HH:mm')}"></p>
+                            </td>
+                            <td class="actionButtons">
+                                <a th:href="'/admin/jd/' + ${jd.id} + '/files/' + ${file.id}" target="_blank"
+                                    class="btn btn-primary mainMode">Abrir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
+    <script th:src="@{/js/admin/jdFunctions.js}"></script>
+</body>
+
+</html>

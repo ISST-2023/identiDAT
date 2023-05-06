@@ -28,7 +28,7 @@ import es.upm.etsit.dat.identi.persistence.repository.SettingRepository;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-public class JDController {
+public class JDControllerAdmin {
     @Autowired
     private JDRepository jdRepo;
 
