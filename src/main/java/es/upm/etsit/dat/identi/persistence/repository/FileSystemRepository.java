@@ -11,14 +11,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FileSystemRepository {
 
-    public String save(byte[] content, String path) throws Exception {
-        Path newFile = Paths.get(path);
-        Files.createDirectories(newFile.getParent());
-
-        Files.write(newFile, content);
-
-        return newFile.toAbsolutePath()
-                .toString();
+    public Boolean save(byte[] content, String path) throws Exception {
+        try {
+            Path newFile = Paths.get(path);
+            Files.createDirectories(newFile.getParent());
+    
+            Files.write(newFile, content);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Optional<FileSystemResource> retrieve(String path) {
