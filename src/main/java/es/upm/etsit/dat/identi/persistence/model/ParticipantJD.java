@@ -3,7 +3,6 @@ package es.upm.etsit.dat.identi.persistence.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,19 +28,19 @@ public class ParticipantJD {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="jdId")
     @NonNull
     private JD jd;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="censusId")
     @NonNull
     private CensusMember censusMember;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="assistanceId")
     @NonNull

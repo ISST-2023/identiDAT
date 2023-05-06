@@ -9,11 +9,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import es.upm.etsit.dat.identi.persistence.model.AssistanceJD;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.model.Privilege;
 import es.upm.etsit.dat.identi.persistence.model.Role;
 import es.upm.etsit.dat.identi.persistence.model.Setting;
+import es.upm.etsit.dat.identi.persistence.repository.AssistanceJDRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PrivilegeRepository;
@@ -40,7 +42,8 @@ public class SetupDataLoader implements
     @Autowired
     private SettingRepository stngRepo;
 
-    
+    @Autowired
+    private AssistanceJDRepository assistJDRepo;    
 
     @Override
     @Transactional
@@ -67,6 +70,13 @@ public class SetupDataLoader implements
 
         cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(1), "Delegado de Alumnos", "ETSIT-UPM", "delegado.alumnos.etsit@upm.es", "delegado.alumnos.etsit", "00000000D", "636980510", dgrRepo.findByCode("09DA"), Arrays.asList(adminRole), Arrays.asList(callPrivilege)));
         cenMemRepo.saveAndFlush(new CensusMember(Long.valueOf(2), "Secretaría de la Delegación de Alumnos", "ETSIT-UPM", "secretaria.dat.etsit@upm.es", "secretaria.dat.etsit", "00000000S", "910671919", dgrRepo.findByCode("09DA"), Arrays.asList(adminRole, secretaryRole), null));
+
+        AssistanceJD attends = new AssistanceJD(Long.valueOf(1), "Asiste");
+        AssistanceJD misses = new AssistanceJD(Long.valueOf(2), "No asiste");
+        AssistanceJD excuses = new AssistanceJD(Long.valueOf(3), "Excusa");
+        AssistanceJD expelled = new AssistanceJD(Long.valueOf(4), "Expulsado");
+
+        assistJDRepo.saveAllAndFlush(Arrays.asList(attends, misses, excuses, expelled));
 
         stngRepo.saveAndFlush(new Setting(1, "alreadySetup", "Primera configuración completada", "true"));
         stngRepo.saveAndFlush(new Setting(2, "filesPath", "Ruta para la subida de ficheros", "uploads"));
