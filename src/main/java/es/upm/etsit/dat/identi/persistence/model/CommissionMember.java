@@ -23,7 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CommissionMembers", uniqueConstraints = {@UniqueConstraint(columnNames = {"censusId", "commissionId", "year"})})
+@Table(name = "CommissionMembers", uniqueConstraints = {@UniqueConstraint(columnNames = {"censusId", "commissionId", "academicYear"})})
 @NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor @Getter @Setter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
 public class CommissionMember {
     @Id
@@ -45,5 +45,5 @@ public class CommissionMember {
     
     @Column(nullable = false)
     @NonNull
-    private String year;
+    private String academicYear;
 }

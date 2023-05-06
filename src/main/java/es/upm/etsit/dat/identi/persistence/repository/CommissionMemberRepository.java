@@ -9,4 +9,5 @@ import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
 
 public interface CommissionMemberRepository extends JpaRepository<CommissionMember, Long> {
     List<CommissionMember> findByCensusMember(CensusMember censusMember);
+    List<CommissionMember> findByCensusMemberAndAcademicYear(CensusMember censusMember, String academicYear);
 }

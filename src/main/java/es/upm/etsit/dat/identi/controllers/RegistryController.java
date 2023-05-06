@@ -215,7 +215,7 @@ public class RegistryController {
                 Position position = token.getPosition();
                 Degree degree = token.getDegree();
                 Integer diferentiator = token.getDiferentiator();
-                if (dlgRepo.findByPositionAndDiferentiatorAndYear(position, diferentiator, stngRepo.findBySettingKey("academicYear").getSettingValue()) != null) {
+                if (dlgRepo.findByPositionAndDiferentiatorAndAcademicYear(position, diferentiator, stngRepo.findBySettingKey("academicYear").getSettingValue()) != null) {
                     model.addAttribute("error", "Este cargo ya está registrado para este curso académico.");
                     return "error";
                 }
