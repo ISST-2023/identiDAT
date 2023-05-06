@@ -3,6 +3,9 @@ package es.upm.etsit.dat.identi.controllers.admin;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.upm.etsit.dat.identi.forms.JDFileForm;
 import es.upm.etsit.dat.identi.forms.JDForm;
+import es.upm.etsit.dat.identi.persistence.model.CDMember;
+import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
+import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.model.JD;
 import es.upm.etsit.dat.identi.persistence.model.JDFile;
+import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
+import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.persistence.repository.FileSystemRepository;
 import es.upm.etsit.dat.identi.persistence.repository.JDFileRepository;
 import es.upm.etsit.dat.identi.persistence.repository.JDRepository;
@@ -43,7 +54,8 @@ public class JDControllerAdmin {
 
     @GetMapping("/admin/jd")
     public String jd(Model model) {
-        model.addAttribute("JDs", jdRepo.findByAcademicYear(stngRepo.findBySettingKey("academicYear").getSettingValue()));
+        model.addAttribute("JDs",
+                jdRepo.findByAcademicYear(stngRepo.findBySettingKey("academicYear").getSettingValue()));
         model.addAttribute("JDForm", new JDForm());
         return "admin/jd/index";
     }
@@ -68,7 +80,7 @@ public class JDControllerAdmin {
     }
 
     @PostMapping("/admin/jd/{id}")
-    public String updateJD(@ModelAttribute("id") Long id,@ModelAttribute("JDForm") JDForm jdForm, Model model) {
+    public String updateJD(@ModelAttribute("id") Long id, @ModelAttribute("JDForm") JDForm jdForm, Model model) {
         JD jd;
         Optional<JD> jdCandidate = jdRepo.findById(id);
         if (!jdCandidate.isPresent()) {
@@ -77,7 +89,7 @@ public class JDControllerAdmin {
         } else
             jd = jdCandidate.get();
 
-         String goodDate = jdForm.getDate().replace('T', ' ') + ":00";
+        String goodDate = jdForm.getDate().replace('T', ' ') + ":00";
         jd.setDate(Timestamp.valueOf(goodDate));
         jd.setOrdinary(Boolean.valueOf(jdForm.getOrdinary()));
         jd.setPlace(jdForm.getPlace());
@@ -96,9 +108,10 @@ public class JDControllerAdmin {
             jd = jdCandidate.get();
 
         model.addAttribute("jd", jd);
-        model.addAttribute("JDForm", new JDForm(jd.getDate().toLocalDateTime().toString(), jd.getOrdinary(), jd.getPlace()));
+        model.addAttribute("JDForm",
+                new JDForm(jd.getDate().toLocalDateTime().toString(), jd.getOrdinary(), jd.getPlace()));
         model.addAttribute("jdFileForm", new JDFileForm());
-        
+
         return "admin/jd/session";
     }
 
@@ -269,5 +282,60 @@ public class JDControllerAdmin {
 
         response.setStatus(HttpServletResponse.SC_OK);
         return "";
+    }
+
+    @Autowired
+    private CensusMemberRepository cenMemRepo;
+
+    @Autowired
+    private DelegateRepository dlgRepo;
+
+    @Autowired
+    private CDMemberRepository cdMemRepo;
+
+    @Autowired
+    private CommissionMemberRepository cmmMemRepo;
+
+    @GetMapping("/admin/jd/{id}/assistance")
+    public String jdAssistance(@ModelAttribute("id") Long id, Model model) {
+        List<CensusMember> members = new ArrayList<>();
+        List<CensusMember> guests = new ArrayList<>();
+        List<String> allowedDelegates = Arrays.asList("Delegado/a de curso", "Subdelegado/a de curso", "Delegado/a de titulación", "Subdelegado/a de titulación","Delegado/a de Escuela", "Secretario/a");
+
+        JD jd;
+        Optional<JD> jdCandidate = jdRepo.findById(id);
+        if (!jdCandidate.isPresent()) {
+            model.addAttribute("error", "La sesión especificada no existe.");
+            return "redirect:/error";
+        } else
+            jd = jdCandidate.get();
+
+        List<CensusMember> census = cenMemRepo.findAll();
+
+        for (CensusMember censusMember : census) {
+            if (censusMember.getId() == 1 || censusMember.getId() == 2) continue;
+            List<Delegate> delegatePositions = dlgRepo.findByCensusMember(censusMember);
+            List<CDMember> cdMemberPositions = cdMemRepo.findByCensusMember(censusMember);
+            List<CommissionMember> cmmMemberPositions = cmmMemRepo.findByCensusMember(censusMember);
+
+            Boolean allowedDelegate = false;
+            Boolean allowedCommission = false;
+
+            for (Delegate delegate : delegatePositions) {
+                if (allowedDelegates.contains(delegate.getPosition().getName())) allowedDelegate = true;
+            }
+
+            for (CommissionMember cmmMember : cmmMemberPositions) {
+                if (cmmMember.getCommission().getName() == "Junta de Escuela") allowedCommission = true;
+            }
+
+            if (cdMemberPositions.size() > 0 || allowedDelegate || allowedCommission) members.add(censusMember);
+            else guests.add(censusMember);
+        }
+            
+        model.addAttribute("jd", jd);
+        model.addAttribute("members", members);
+        model.addAttribute("guests", guests);
+        return "admin/jd/assistance";
     }
 }

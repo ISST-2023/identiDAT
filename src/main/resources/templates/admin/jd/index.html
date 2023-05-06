@@ -48,7 +48,7 @@
 							<h6 class="card-subtitle mb-2 text-muted"><td th:if="${JD.ordinary}">Ordinaria<td th:unless="${JD.ordinary}">Extraordinaria</td></h6>
 							<p class="card-text" th:text="${JD.place}"></p>
 							<a th:href="'/admin/jd/' + ${JD.id} + '/files'" class="card-link">Documentación</a>
-							<a href="#" class="card-link">Acta</a>
+							<a th:href="'/admin/jd/' + ${JD.id} + '/assistance'" class="card-link">Asistencia</a>
 						</div>
 					</div>
 				</div>
