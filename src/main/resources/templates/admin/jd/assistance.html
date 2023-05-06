@@ -34,7 +34,7 @@
 					<h5 th:text="'Quórum necesario: ' + ${#numbers.formatInteger(T(java.lang.Math).ceil(members.size/2),1)} + ' en 1ª convocatoria / ' + ${#numbers.formatInteger(T(java.lang.Math).ceil(members.size/3),1)} + ' en 2ª convocatoria.'"></h5>
 					<h5 style="text-align:right">Quórum actual: <span id="quorumCounter">-</span></h5>
 					<hr>
-					<table id="" class="table table-striped table-hover" style="width:100%">
+					<table id="members" class="table table-striped table-hover" style="width:100%">
 						<thead>
 							<tr>
 								<th>Nombre</th>
@@ -104,7 +104,7 @@
 
 					<h4>Invitados</h4>
 					<hr>
-					<table id="" class="table table-striped table-hover" style="width:100%">
+					<table id="guests" class="table table-striped table-hover" style="width:100%">
 						<thead>
 							<tr>
 								<th>Nombre</th>
@@ -113,7 +113,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="member: ${guests}" th:class="'member_' + ${member.id}" >
+							<tr th:each="member: ${guests}" th:id="'member_' + ${member.id}">
 								<td>
 									<p class="name" th:text="${member.name}"></p>
 								</td>
@@ -125,7 +125,7 @@
 									<td th:case="'1'">
 										<button th:data-status="0"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
-											class="btn btn-success assist">Asiste</button>
+											class="btn btn-success assist member">Asiste</button>
 										<button th:data-status="2"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
 											class="btn btn-outline-danger miss" style="display:none">No Asiste</button>
@@ -136,7 +136,7 @@
 									<td th:case="'2'">
 										<button th:data-status="1"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
-											class="btn btn-outline-success assist" style="display:none">Asiste</button>
+											class="btn btn-outline-success assist member" style="display:none">Asiste</button>
 										<button th:data-status="0"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
 											class="btn btn-danger miss">No Asiste</button>
@@ -147,7 +147,7 @@
 									<td th:case="'3'">
 										<button th:data-status="1"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ');'"
-											class="btn btn-outline-success assist" style="display:none">Asiste</button>
+											class="btn btn-outline-success assist member" style="display:none">Asiste</button>
 										<button th:data-status="2"
 											th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
 											class="btn btn-outline-danger miss" style="display:none">No Asiste</button>
@@ -159,7 +159,7 @@
 								<td th:unless="${participants.containsKey(member.id)}">
 									<button th:data-status="1"
 										th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
-										class="btn btn-outline-success assist">Asiste</button>
+										class="btn btn-outline-success assist member">Asiste</button>
 									<button th:data-status="2"
 										th:onclick="'javascript:updateAssistance(' + ${jd.id} + ', ' + ${member.id} + ', this);'"
 										class="btn btn-outline-danger miss">No Asiste</button>

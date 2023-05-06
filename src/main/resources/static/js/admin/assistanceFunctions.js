@@ -32,11 +32,12 @@ function updateAssistance(jd, id, button) {
                         $('#member_'+id).find('.excuse').addClass('btn-outline-secondary');
                         $('#member_'+id).find('.excuse').attr('data-status', '3');
 
-                        $('#quorumCounter').html($('.btn-success').length)
+                        $('#quorumCounter').html($('#members').find('.btn-success').length)
                         break;
                     case '1':
                         $('#member_'+id).find('.assist').removeClass('btn-outline-success');
                         $('#member_'+id).find('.assist').addClass('btn-success');
+
                         $('#member_'+id).find('.assist').attr('data-status', '0');
 
                         $('#member_'+id).find('.btnCell').attr('data-assists', 'true');
@@ -45,7 +46,7 @@ function updateAssistance(jd, id, button) {
 
                         $('#member_'+id).find('.excuse').hide();
 
-                        $('#quorumCounter').html($('.btn-success').length)
+                        $('#quorumCounter').html($('#members').find('.btn-success').length)
                         break;
                     case '2':
                         $('#member_'+id).find('.assist').hide()
@@ -81,5 +82,5 @@ function updateAssistance(jd, id, button) {
 }
 
 $(document).ready(() => {
-    $('#quorumCounter').html($('.btn-success').length)
+    $('#quorumCounter').html($('#members').find('.btn-success').length)
 })

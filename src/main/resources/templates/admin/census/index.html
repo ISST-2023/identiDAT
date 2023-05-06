@@ -39,7 +39,7 @@
                         <td th:text="${censusMember.surname}">
                         <td th:text="${censusMember.email}">
                         <td th:text="${censusMember.phone}">
-                        <td th:text="${censusMember.degree}">
+                        <td th:text="${censusMember.degree.acronym}">
                         <td class="text-center">
                             <a th:if="${censusMember.id} > 2" th:href="@{census/edit/} + ${censusMember.id}"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F65555"

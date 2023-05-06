@@ -705,7 +705,7 @@ public class TokenController {
         cdTknRepo.flush();
         cmmTknRepo.flush();
         response.setContentType("text/plain");
-        return "pericos";
+        return "ok";
     }
 
     private void cdComGenToken(Boolean topCheck, Boolean prevCheck, String value, Department dpt, Commission cms, Integer diff) {
