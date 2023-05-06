@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -24,38 +26,34 @@
 
                         <h4 class="text-uppercase text-center mb-5">Cargos actuales</h4>
 
-                        <form th:action="@{/admin/census/edit}" th:object="${form}" method="POST">
+                        <input type="hidden" th:field="*{form.censusMemberId}">
 
-                            <input type="hidden" th:field="*{censusMemberId}">
-
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0"></h6>
-                                </div>
-                                <div th:each="position : ${positions}" class="col-sm-9 text-secondary" th:text="${position.name}"></div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Cargos</h6>
                             </div>
+                            <div th:each="position : ${form.positions}" class="col-sm-9 text-secondary" th:text="${position.name}"></div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0"></h6>
-                                </div>
-                                <div th:each="department : ${departments}" class="col-sm-9 text-secondary" th:text="${department.acronym}"></div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Departamentos</h6>
                             </div>
+                            <div th:each="department : ${form.departments}" class="col-sm-9 text-secondary" th:text="${department.acronym}"></div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0"></h6>
-                                </div>
-                                <div th:each="commission : ${commissions}" class="col-sm-9 text-secondary" th:text="${commission.name}"></div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Comisiones</h6>
                             </div>
-                        </form>
+                            <div th:each="commission : ${form.commissions}" class="col-sm-9 text-secondary" th:text="${commission.name}"></div>
+                        </div>
 
                         <h4 class="text-uppercase text-center mb-5">Añadir cargos</h4>
 
-                        <form th:action="@{newPosition}" th:object="${posForm}" method="POST">
+                        <form action="javascript:;" th:object="${posForm}" onsubmit='uploadNewPos(this)'><!--method="POST"-->
 
                             <!--<input type="checkbox" id="posForm" text="Posiciones" value="on"></input>-->
-
                             <input type="checkbox" id="posForm" name="posForm" value="on">
                                 <label for="posForm">Posiciones</label>
                             </input>
@@ -133,7 +131,9 @@
                             </div>
                         </form>
 
-                        
+    <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
     <script th:src="@{/js/positions.js}"></script>
 </body>
 
