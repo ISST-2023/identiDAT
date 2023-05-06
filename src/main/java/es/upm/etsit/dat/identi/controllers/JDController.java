@@ -39,7 +39,7 @@ public class JDController {
 
     @GetMapping("/jd")
     public String jd(Model model) {
-        model.addAttribute("JDs", jdRepo.findAll());
+        model.addAttribute("JDs", jdRepo.findByAcademicYear(stngRepo.findBySettingKey("academicYear").getSettingValue()));
         model.addAttribute("JDForm", new JDForm());
         return "jd";
     }

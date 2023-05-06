@@ -43,6 +43,13 @@ public class JDControllerAdmin {
 
     @GetMapping("/admin/jd")
     public String jd(Model model) {
+        model.addAttribute("JDs", jdRepo.findByAcademicYear(stngRepo.findBySettingKey("academicYear").getSettingValue()));
+        model.addAttribute("JDForm", new JDForm());
+        return "admin/jd/index";
+    }
+
+    @GetMapping("/admin/jd/all")
+    public String allJD(Model model) {
         model.addAttribute("JDs", jdRepo.findAll());
         model.addAttribute("JDForm", new JDForm());
         return "admin/jd/index";
@@ -54,7 +61,8 @@ public class JDControllerAdmin {
         JD newJD = new JD(
                 Timestamp.valueOf(goodDate),
                 Boolean.valueOf(jdForm.getOrdinary()),
-                jdForm.getPlace());
+                jdForm.getPlace(),
+                stngRepo.findBySettingKey("academicYear").getSettingValue());
         jdRepo.save(newJD);
         return "redirect:/admin/jd";
     }

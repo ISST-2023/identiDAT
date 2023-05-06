@@ -1,10 +1,6 @@
 package es.upm.etsit.dat.identi.persistence.model;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,6 +42,10 @@ public class JD {
     @Column(length = 200, nullable = false)
     @NonNull
     private String place;
+
+    @Column(length = 200, nullable = false)
+    @NonNull
+    private String academicYear;
 
     @OneToMany(mappedBy="jd", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<JDFile> files;
