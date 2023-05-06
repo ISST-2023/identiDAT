@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import es.upm.etsit.dat.identi.controllers.ViewMockupController;
+import es.upm.etsit.dat.identi.controllers.BasicViewCotroller;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,7 +24,7 @@ public class SecurityTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ViewMockupController viewMockupController;
+    private BasicViewCotroller viewMockupController;
 
     @Mock
     DefaultOAuth2User principal;
