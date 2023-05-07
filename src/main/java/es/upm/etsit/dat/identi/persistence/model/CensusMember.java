@@ -50,6 +50,7 @@ public class CensusMember {
     @NonNull
     private String username;
 
+    @NonNull
     @Column(length = 200, nullable = false, unique = true)
     private String personalID;
 

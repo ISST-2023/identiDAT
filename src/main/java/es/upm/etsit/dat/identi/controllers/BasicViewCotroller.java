@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class ViewMockupController {
+public class BasicViewCotroller {
 
   @Value("${spring.profiles.active}")
   private String activeProfile;
@@ -39,11 +39,5 @@ public class ViewMockupController {
   @GetMapping("/admin")
   public String admin(Model model) {
     return "admin/index";
-  }
-
-
-  @GetMapping("/admin/assistance")
-  public String assistance(Model model) {
-    return "assistance_jd";
   }
 }

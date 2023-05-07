@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.upm.etsit.dat.identi.forms.JDFileForm;
 import es.upm.etsit.dat.identi.forms.JDForm;
+import es.upm.etsit.dat.identi.persistence.model.AssistanceJD;
 import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
 import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
 import es.upm.etsit.dat.identi.persistence.model.JD;
 import es.upm.etsit.dat.identi.persistence.model.JDFile;
+import es.upm.etsit.dat.identi.persistence.model.ParticipantJD;
+import es.upm.etsit.dat.identi.persistence.repository.AssistanceJDRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
@@ -35,7 +40,9 @@ import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.persistence.repository.FileSystemRepository;
 import es.upm.etsit.dat.identi.persistence.repository.JDFileRepository;
 import es.upm.etsit.dat.identi.persistence.repository.JDRepository;
+import es.upm.etsit.dat.identi.persistence.repository.ParticipantJDRepository;
 import es.upm.etsit.dat.identi.persistence.repository.SettingRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -98,7 +105,7 @@ public class JDControllerAdmin {
     }
 
     @GetMapping("/admin/jd/{id}/files")
-    public String jdFiles(@ModelAttribute("id") Long id, Model model) {
+    public String jdFiles(@ModelAttribute("id") Long id, Model model, HttpServletRequest request) {
         JD jd;
         Optional<JD> jdCandidate = jdRepo.findById(id);
         if (!jdCandidate.isPresent()) {
@@ -108,11 +115,12 @@ public class JDControllerAdmin {
             jd = jdCandidate.get();
 
         model.addAttribute("jd", jd);
+        model.addAttribute("_csrf", request.getAttribute("_csrf"));
         model.addAttribute("JDForm",
                 new JDForm(jd.getDate().toLocalDateTime().toString(), jd.getOrdinary(), jd.getPlace()));
         model.addAttribute("jdFileForm", new JDFileForm());
 
-        return "admin/jd/session";
+        return "admin/jd/files";
     }
 
     @PostMapping("/admin/jd/{id}/files")
@@ -296,11 +304,18 @@ public class JDControllerAdmin {
     @Autowired
     private CommissionMemberRepository cmmMemRepo;
 
+    @Autowired
+    private AssistanceJDRepository assistJdRepo;
+
+    @Autowired
+    private ParticipantJDRepository partJdRepo;
+
     @GetMapping("/admin/jd/{id}/assistance")
-    public String jdAssistance(@ModelAttribute("id") Long id, Model model) {
+    public String jdAssistance(@ModelAttribute("id") Long id, Model model, HttpServletRequest request) {
         List<CensusMember> members = new ArrayList<>();
         List<CensusMember> guests = new ArrayList<>();
-        List<String> allowedDelegates = Arrays.asList("Delegado/a de curso", "Subdelegado/a de curso", "Delegado/a de titulación", "Subdelegado/a de titulación","Delegado/a de Escuela", "Secretario/a");
+        List<String> allowedDelegates = Arrays.asList("Delegado/a de curso", "Subdelegado/a de curso",
+                "Delegado/a de titulación", "Subdelegado/a de titulación", "Delegado/a de Escuela", "Secretario/a");
 
         JD jd;
         Optional<JD> jdCandidate = jdRepo.findById(id);
@@ -313,7 +328,8 @@ public class JDControllerAdmin {
         List<CensusMember> census = cenMemRepo.findAll();
 
         for (CensusMember censusMember : census) {
-            if (censusMember.getId() == 1 || censusMember.getId() == 2) continue;
+            if (censusMember.getId() == 1 || censusMember.getId() == 2)
+                continue;
             List<Delegate> delegatePositions = dlgRepo.findByCensusMember(censusMember);
             List<CDMember> cdMemberPositions = cdMemRepo.findByCensusMember(censusMember);
             List<CommissionMember> cmmMemberPositions = cmmMemRepo.findByCensusMember(censusMember);
@@ -322,20 +338,76 @@ public class JDControllerAdmin {
             Boolean allowedCommission = false;
 
             for (Delegate delegate : delegatePositions) {
-                if (allowedDelegates.contains(delegate.getPosition().getName())) allowedDelegate = true;
+                if (allowedDelegates.contains(delegate.getPosition().getName()))
+                    allowedDelegate = true;
             }
 
             for (CommissionMember cmmMember : cmmMemberPositions) {
-                if (cmmMember.getCommission().getName() == "Junta de Escuela") allowedCommission = true;
+                if (cmmMember.getCommission().getName() == "Junta de Escuela")
+                    allowedCommission = true;
             }
 
-            if (cdMemberPositions.size() > 0 || allowedDelegate || allowedCommission) members.add(censusMember);
-            else guests.add(censusMember);
+            if (cdMemberPositions.size() > 0 || allowedDelegate || allowedCommission)
+                members.add(censusMember);
+            else
+                guests.add(censusMember);
         }
-            
+
+        List<ParticipantJD> participantJdObjects = partJdRepo.findByJd(jd);
+        Map<Long, Long> participants = new HashMap<>();
+
+        for (ParticipantJD participantJd : participantJdObjects)
+            participants.put(participantJd.getCensusMember().getId(), participantJd.getAssistance().getId());
+
         model.addAttribute("jd", jd);
         model.addAttribute("members", members);
         model.addAttribute("guests", guests);
+        model.addAttribute("participants", participants);
+        model.addAttribute("_csrf", request.getAttribute("_csrf"));
         return "admin/jd/assistance";
+    }
+
+    @PostMapping("/admin/jd/{id}/assistance/{cenMemId}/{status}")
+    @ResponseBody
+    public String jdAssistanceRegister(@ModelAttribute("id") Long id, @ModelAttribute("cenMemId") Long cenMemId,
+            @ModelAttribute("status") Long status, Model model, HttpServletResponse response) {
+        JD jd;
+        Optional<JD> jdCandidate = jdRepo.findById(id);
+        if (!jdCandidate.isPresent()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "La sesión especificada no existe.";
+        } else
+            jd = jdCandidate.get();
+
+        CensusMember censusMember;
+        Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(cenMemId);
+        if (!censusMemberCandidate.isPresent()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "El usuario especificado no existe.";
+        } else
+            censusMember = censusMemberCandidate.get();
+
+        if (status != 0) {
+            AssistanceJD assistanceJd;
+            Optional<AssistanceJD> assistanceJdCandidate = assistJdRepo.findById(status);
+            if (!assistanceJdCandidate.isPresent()) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return "No existe un estado previo para este usuario.";
+            } else
+                assistanceJd = assistanceJdCandidate.get();
+
+            ParticipantJD currentStatus = partJdRepo.findByCensusMemberAndJd(censusMember, jd);
+            if (currentStatus != null)
+                currentStatus.setAssistance(assistanceJd);
+            else
+                currentStatus = new ParticipantJD(jd, censusMember, assistanceJd);
+            partJdRepo.save(currentStatus);
+        } else {
+            ParticipantJD currentStatus = partJdRepo.findByCensusMemberAndJd(censusMember, jd);
+            if (currentStatus != null)
+                partJdRepo.delete(currentStatus);
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
+        return "";
     }
 }

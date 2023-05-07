@@ -28,15 +28,11 @@ import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartmentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
 import es.upm.etsit.dat.identi.persistence.repository.TokenRepository;
-import es.upm.etsit.dat.identi.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class TokenController {
-    @Autowired
-    private TokenService tknService;
-
     @Autowired
     private TokenRepository tknRepo;
 
@@ -187,7 +183,7 @@ public class TokenController {
 
         String[] elements = values.toString().replace("{", "").replace("}", "").split(",");
         
-        String regexp = "/([1-4][1-6]-?)+/";
+        //String regexp = "/([1-4][1-6]-?)+/";
         Boolean datChecked = false; 
         Boolean[] gitstChecked = new Boolean[5];
         Boolean[] gibChecked = new Boolean[5];
@@ -709,7 +705,7 @@ public class TokenController {
         cdTknRepo.flush();
         cmmTknRepo.flush();
         response.setContentType("text/plain");
-        return "pericos";
+        return "ok";
     }
 
     private void cdComGenToken(Boolean topCheck, Boolean prevCheck, String value, Department dpt, Commission cms, Integer diff) {
