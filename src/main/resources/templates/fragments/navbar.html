@@ -1,0 +1,31 @@
+<nav sec:authorize="hasRole('ROLE_ADMIN')"  class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/profile">IdentiDAT</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin">Admin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/census">Censo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/jd">JD</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="/admin/tokens" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Tokens
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/admin/tokens/delegates">Delegados</a></li>
+                  <li><a class="dropdown-item" href="/admin/tokens/cds">CDs</a></li>
+                  <li><a class="dropdown-item" href="/admin/tokens/commissions">Comisiones</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
