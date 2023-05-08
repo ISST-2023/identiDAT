@@ -24,6 +24,123 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-10 col-lg-8 col-xl-8">
 
+                <form action="https://www.overleaf.com/docs" method="post" target="_blank">
+                    <textarea rows="1" cols="1" name="snip" style="display:none">
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %
+ % Delegación de Alumnos de Telecomunicación
+ %
+ % Necesario incluir los ficheros background.pdf y rubrica.svg
+ %
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ \documentclass[11pt]{article} % Documento de tipo "artículo", con fuente por defecto de 11pt.
+ \usepackage{qrcode} % Para generar QRs
+ \usepackage[utf8]{inputenc}   % Permite el uso de caracteres UTF8.
+ \usepackage[T1]{fontenc}      % Usa fuentes "ricas", que facilitan el copy-paste en la salida.
+ \usepackage[spanish]{babel}   % Traducción al español de meses, funciones matemáticas, etc.
+ \usepackage{enumitem}         % Ajuste de espacios entre elementos de listas.
+ \usepackage{graphicx}         % Permite la inserción de imágenes.
+ \usepackage{hyperref}         % Convierte las referencias en hiperenlaces y añade el comando \url.
+ \usepackage{wallpaper}        % Para la plantilla del fondo.
+ \usepackage{xcolor}           % Fuentes de colores.
+ \usepackage{fbb}              % Fuente para documentos.
+ \usepackage{pgffor}           % Permite el uso de bucles para generar documentos a partir de parametros.   
+ \usepackage[                  % Márgenes personalizados.
+ a4paper,
+ lmargin=2cm,
+ rmargin=2cm,
+ tmargin=4.5cm,
+ bmargin=3.5cm,
+ headheight=3cm
+ ]{geometry}
+ 
+ \usepackage[inkscapeformat=png]{svg}
+ 
+ % Fondo de la plantilla de DAT.
+ \ULCornerWallPaper{1}{background.pdf}
+ 
+ % Elimina el sangrado de cada párrafo.
+ \setlength{\parindent}{0cm}
+ % Espacio de 1 línea entre párrafos.
+ \setlength{\parskip}{\baselineskip}
+ 
+ % Elimina cabeceras/pies de página por defecto.
+ \pagestyle{empty}
+ 
+ % Elimina la separación adicional entre ítems de listas.
+ \setlist[enumerate]{itemsep=0mm}
+ 
+ % Definición de colores de la plantilla.
+ \definecolor{DATblue}{HTML}{0067C8}
+ \definecolor{DATorange}{HTML}{F65555}
+ 
+ \makeatletter
+ 
+ 
+ \def\@qrsize{4cm}
+ 
+ \def\@sexodelegado{Delegado}
+ \def\@nombredelegado{Pablo Fernández López}
+ \def\@fecha{}
+ 
+ \begin{document}
+ 
+ <th:block th:each="token: ${tokens}">
+ \def\@position{<th:block th:text="${token.position.name}"></th:block>}
+ \def\@diferentiator{<th:block th:text="${token.diferentiator}"></th:block>}
+ \def\@degree{<th:block th:text="${token.degree.acronym}"></th:block>}
+ \def\@link{<th:block th:text="'https://identi.dat.etsit.upm.es/register?token=' + ${token.token}"></th:block>}
+ 
+ \begin{center}
+ \Large\textbf{BIENVENIDA NUEVOS DELEGADOS}
+ \end{center}
+ 
+ ¡¡Enhorabuena!! Acabas de ser elegido \textbf{\@position<th:block th:if="${token.position.id < 5}">\ \@diferentiator</th:block>}. Esto conlleva una gran responsabilidad. A lo largo de este curso deberás ejercer como portavoz de tu clase y \textbf{comunicarte con tus profesores} cuando sea necesario (para preguntar dudas generales, acordar cambios de fechas de entrega o exámenes, etc.). 
+ 
+ No te preocupes si suena muy laborioso o complicado. En la práctica, \textbf{tendrás al resto del equipo de Delegación de Alumnos para ayudarte}. 
+ 
+ Además de profesores, te deberás \textbf{coordinar con el resto de delegados} de grupo, con el delegado/a de tu curso y el de tu titulación (\textbf{\@degree}), para trasladarles cualquier problema o contratiempo que surja. Ellos, además de echarte una mano y aconsejarte, se harán cargo de todo lo que abarque más allá de tu clase.
+ 
+ Para poder \textbf{coordinarnos} todos de forma fácil, necesitamos que nos facilites unos datos, que nos deberás dejar escaneando el siguiente QR:
+ \begin{center}
+     \qrcode[version=5, nolink, height=\@qrsize]{\@link}
+ \end{center}
+ 
+ En los próximos días tendremos una \textbf{pequeña reunión} para conocernos todos y explicaros los aspectos más básicos de vuestro puesto y de la delegación en nuestro local (DAT A101.1-L, primer pasillo de clubes a la derecha). 
+ 
+ \begin{center}
+     \textbf{\textit{Vuestra labor es muy importante. Gracias por presentaros voluntarios.}}
+ \end{center}
+ 
+ 
+ \begin{flushright}
+ Madrid, \today
+ \end{flushright}
+ \vspace{1cm}
+ \begin{flushright}
+ \vspace{-1.65cm}
+     \begin{figure}[htbp]
+         \hfill
+         \centering
+         \includesvg[scale=0.95]{rubrica}
+     \end{figure}
+ \textbf{
+     \@nombredelegado \\
+     \textcolor{DATblue}{\@sexodelegado \ de Alumnos}
+ }
+ \end{flushright}
+ </th:block>
+ \newpage
+ 
+ % Final
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \end{document}
+            
+                    </textarea>
+                    <input type="submit" value="Generar documentos">
+                </form>
+
                 <table id="tokensTable" class="table table-striped table-hover" style="width:100%; position: relative; left: -170px">
                     <thead>
                         <tr>

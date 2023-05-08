@@ -213,9 +213,9 @@ public class SetupDataLoader implements
 
   @Transactional
   public void seedMockPositions() {
-    Position deleGrupo = positionRepository.findByName("Delegado/a de grupo");
-    Position deleCurso = positionRepository.findByName("Delegado/a de curso");
-    Position deleTitulacion = positionRepository.findByName("Delegado/a de titulación");
+    Position deleGrupo = positionRepository.findByName("Delegado/a de Grupo");
+    Position deleCurso = positionRepository.findByName("Delegado/a de Curso");
+    Position deleTitulacion = positionRepository.findByName("Delegado/a de Titulación");
 
     Department dit = departmentRepository.findByAcronym("DIT");
     Department ssr = departmentRepository.findByAcronym("SSR");
@@ -304,22 +304,22 @@ public class SetupDataLoader implements
 
   @Transactional
   public void seedPositions() {
-    Position deleGrupo = new Position(Long.valueOf(1), "Delegado/a de grupo");
+    Position deleGrupo = new Position(Long.valueOf(1), "Delegado/a de Grupo");
     positionRepository.save(deleGrupo);
 
-    Position subGrupo = new Position(Long.valueOf(2), "Subdelegado/a de grupo");
+    Position subGrupo = new Position(Long.valueOf(2), "Subdelegado/a de Grupo");
     positionRepository.save(subGrupo);
 
-    Position deleCurso = new Position(Long.valueOf(3), "Delegado/a de curso");
+    Position deleCurso = new Position(Long.valueOf(3), "Delegado/a de Curso");
     positionRepository.save(deleCurso);
 
-    Position subCurso = new Position(Long.valueOf(4), "Subdelegado/a de curso");
+    Position subCurso = new Position(Long.valueOf(4), "Subdelegado/a de Curso");
     positionRepository.save(subCurso);
 
-    Position deleTitulacion = new Position(Long.valueOf(5), "Delegado/a de titulación");
+    Position deleTitulacion = new Position(Long.valueOf(5), "Delegado/a de Titulación");
     positionRepository.save(deleTitulacion);
 
-    Position subTitulacion = new Position(Long.valueOf(6), "Subdelegado/a de titulación");
+    Position subTitulacion = new Position(Long.valueOf(6), "Subdelegado/a de Titulación");
     positionRepository.save(subTitulacion);
 
     Position deleEscuela = new Position(Long.valueOf(7), "Delegado/a de Escuela");
