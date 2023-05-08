@@ -49,6 +49,9 @@
                             </svg></a>
                             <a th:href="@{census/positions/} + ${censusMember.id}">Cargos</a>
                         </td>
+                        <input type="checkbox" id="role" name="role" value="on" th:onchange="'javascript:adminPriviliges(' + ${censusMember.id} + ');>
+                            <label for="role">Cargos</label>
+                        </input>
                     </tr>
                 </tbody>
             </table>
@@ -63,4 +66,5 @@
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/dataTables.bootstrap5.min.js}"></script>
     <script th:src="@{/js/admin/adminFunctions.js}"></script>
+    <script th:src="@{/js/admin/rolesFunction.js}"></script>
 </body>

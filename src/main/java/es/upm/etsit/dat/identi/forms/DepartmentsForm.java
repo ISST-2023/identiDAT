@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class DepartmentsForm {
     private Long censusMemId;
-    private Long departmetId;
+    private Long departmentId;
+    private String year;
 }

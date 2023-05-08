@@ -9,4 +9,5 @@ import lombok.Setter;
 public class CommissionsForm {
     private Long cenMemId;
     private Long commissionId;
+    private String year;
 }

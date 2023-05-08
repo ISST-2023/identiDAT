@@ -9,5 +9,7 @@ import lombok.Setter;
 public class PositionsForm {
     private Long cenMemberId;
     private Long positionId;
-    private Integer year;
+    private String degreeCode;
+    private Integer diferentiator;
+    private String year;
 }

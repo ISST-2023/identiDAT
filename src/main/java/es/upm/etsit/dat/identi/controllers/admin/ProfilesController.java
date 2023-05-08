@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.upm.etsit.dat.identi.FieldValidator;
@@ -22,8 +23,13 @@ import es.upm.etsit.dat.identi.forms.DepartmentsForm;
 import es.upm.etsit.dat.identi.forms.CommissionsForm;
 import es.upm.etsit.dat.identi.persistence.model.CDMember;
 import es.upm.etsit.dat.identi.persistence.model.CensusMember;
+import es.upm.etsit.dat.identi.persistence.model.Commission;
 import es.upm.etsit.dat.identi.persistence.model.CommissionMember;
 import es.upm.etsit.dat.identi.persistence.model.Delegate;
+import es.upm.etsit.dat.identi.persistence.model.Department;
+import es.upm.etsit.dat.identi.persistence.model.Position;
+import es.upm.etsit.dat.identi.persistence.model.Role;
+import es.upm.etsit.dat.identi.persistence.model.Degree;
 import es.upm.etsit.dat.identi.persistence.repository.CDMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CensusMemberRepository;
 import es.upm.etsit.dat.identi.persistence.repository.CommissionMemberRepository;
@@ -32,7 +38,9 @@ import es.upm.etsit.dat.identi.persistence.repository.DegreeRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DelegateRepository;
 import es.upm.etsit.dat.identi.persistence.repository.DepartmentRepository;
 import es.upm.etsit.dat.identi.persistence.repository.PositionRepository;
+import es.upm.etsit.dat.identi.persistence.repository.RoleRepository;
 import es.upm.etsit.dat.identi.service.CensusMemberService;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ProfilesController {
@@ -238,6 +246,57 @@ public class ProfilesController {
   @Autowired
   CommissionMemberRepository cmmMemRepo;
 
+  @Autowired
+  RoleRepository roleRepo;
+
+  @PostMapping("/admin/census/addrole/{id}")
+  public String addRole(@ModelAttribute("id") Long id, Model model) {
+    if (id == 1 || id == 2) return "";
+    Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(id);
+    CensusMember censusMember;
+    Long roleId = Long.valueOf(1);
+
+    if (censusMemberCandidate.isPresent()) {
+      censusMember = censusMemberCandidate.get();
+      //censusMember.getRoles().add(roleRepo.findById(roleId).getName()); //no funciona getName();
+      //censusMember.getprivileges().add(privilegeRepository.getById());
+
+      cenMemRepo.saveAndFlush(censusMember);
+    } else {
+      model.addAttribute("error", "El usuario que intentas editar no existe.");
+      return "error";
+    }
+
+    return "";
+  }
+
+  @PostMapping("/admin/census/removerole/{id}")
+  public String removeRole(@ModelAttribute("id") Long id, Model model) {
+    if (id == 1 || id == 2) return "";
+    Optional<CensusMember> censusMemberCandidate = cenMemRepo.findById(id);
+    CensusMember censusMember;
+    Long roleId = Long.valueOf(1);
+
+    if (censusMemberCandidate.isPresent()) {
+      censusMember = censusMemberCandidate.get();
+      Role roleToRemove = censusMember.getRoles().stream().filter(role -> role.getName().equals("ROLE_ADMIN")).findFirst().orElse(null); // Buscas el Role que quieres remover en la colección de roles del CensusMember
+      if (roleToRemove != null) {
+        censusMember.getRoles().remove(roleToRemove); // Remueves el Role de la colección de roles del CensusMember
+        cenMemRepo.saveAndFlush(censusMember);
+        //censusMember.getPrivileges().remove(); //remover los privilegios correspondientes
+      } else {
+        model.addAttribute("error", "El usuario no tiene el rol que intentas remover.");
+        return "error";
+      }
+      
+    } else {
+      model.addAttribute("error", "El usuario que intentas editar no existe.");
+      return "error";
+    }
+
+    return "";
+  }
+
   @GetMapping("/admin/census/positions/{id}")
   public String editPositions(@ModelAttribute("id") Long id, Model model) {
     CensusMember censusMember;
@@ -265,6 +324,7 @@ public class ProfilesController {
     model.addAttribute("positionsL", posRepo.findAll());
     model.addAttribute("departmentsL", depRepo.findAll());
     model.addAttribute("commissionsL", commRepo.findAll());
+    model.addAttribute("degrees", dgrRepo.findAll());
 
     model.addAttribute("form", formP);
     model.addAttribute("posForm", posForm);
@@ -274,28 +334,94 @@ public class ProfilesController {
     return "admin/census/positions";
   }
 
-  @PostMapping("newPosition")
-  public String registerPositions(@ModelAttribute("posForm") PositionsForm form, Model model) {
-    Optional<CensusMember> censusMember = cenMemRepo.findById(form.getCenMemberId());
+  @PostMapping("/admin/census/positions/{id}/newposition")
+  @ResponseBody
+  public String registerPositions(@ModelAttribute("posForm") PositionsForm form, @ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    CensusMember censusMember = cenMemRepo.findById(form.getCenMemberId())
+      .orElseThrow(() -> new RuntimeException("Census member not found"));
 
-    /*if (censusMember.isPresent()) {
-      Delegate delegate = new Delegate(
-        censusMember,
-        posRepo.findById(form.getPositionId()),
-        censusMember.getDegree(),
+    Position position = posRepo.findById(form.getPositionId())
+      .orElseThrow(() -> new RuntimeException("Position not found"));
 
-      );*/
-      /*member.setName(cenMemForm.getName());
-      member.setSurname(cenMemForm.getSurname());
-      member.setEmail(cenMemForm.getEmail());
-      member.setPersonalID(cenMemForm.getPersonalID());
-      member.setPhone(cenMemForm.getPhone());
-      member.setDegree(dgrRepo.findByAcronym(cenMemForm.getDegreeAcronym()));
+    Delegate delegate = new Delegate();
 
-      cenMemRepo.saveAndFlush(member);
-      cenMemRepo.flush();
-    }*/
+    delegate.setCensusMember(censusMember);
+    delegate.setPosition(position);
+    delegate.setDegree(dgrRepo.findByCode(form.getDegreeCode()));
+    delegate.setDiferentiator(222);
+    delegate.setAcademicYear(form.getYear());
 
-    return "redirect:/admin/census";
+    dlgRepo.saveAndFlush(delegate);
+    dlgRepo.flush();
+
+    return "";
+  }
+
+  @PostMapping("/admin/census/positions/{id}/newdepartment")
+  @ResponseBody
+  public String registerDepartments(@ModelAttribute("depForm") DepartmentsForm form, @ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    CensusMember censusMember = cenMemRepo.findById(form.getCensusMemId())
+      .orElseThrow(() -> new RuntimeException("Census member not found"));
+    Department department = depRepo.findById(form.getDepartmentId())
+      .orElseThrow(() -> new RuntimeException("Census member not found"));
+
+    CDMember cdMem = new CDMember();//censusMember.getId(), form.getDepartmentId(), form.getYear, (head)
+
+    cdMem.setCensusMember(censusMember);
+    cdMem.setDepartment(department);
+    cdMem.setAcademicYear(form.getYear());
+    cdMem.setHead(true);                  //Preguntar
+
+    cdMemRepo.saveAndFlush(cdMem);
+    cdMemRepo.flush();
+    
+    return "";
+  }
+
+  @PostMapping("/admin/census/positions/{id}/newcommission")
+  @ResponseBody
+  public String registerCommissions(@ModelAttribute("comForm") CommissionsForm form, @ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    CensusMember censusMember = cenMemRepo.findById(form.getCenMemId())
+      .orElseThrow(() -> new RuntimeException("Census member not found"));
+    Commission comm = commRepo.findById(form.getCommissionId())
+      .orElseThrow(() -> new RuntimeException("Census member not found"));
+    
+    CommissionMember comMem = new CommissionMember();//censusMember.getId(), form.getCommissionId(), form.getYear()
+    
+    comMem.setCensusMember(censusMember);
+    comMem.setCommission(comm);
+    comMem.setAcademicYear(form.getYear());
+
+    cmmMemRepo.saveAndFlush(comMem);
+    cmmMemRepo.flush();
+       
+    return "";
+  }
+
+  @PostMapping("/admin/census/positions/{id}/deleteposition")
+  @ResponseBody
+  public String deletePosition(@ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    
+    dlgRepo.deleteById(id);
+    
+    return "";
+  }
+
+  @PostMapping("/admin/census/positions/{id}/deletedepartment")
+  @ResponseBody
+  public String deleteDepartment(@ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    
+    cdMemRepo.deleteById(id);
+    
+    return "";
+  }
+
+  @PostMapping("/admin/census/positions/{id}/deletecommission")
+  @ResponseBody
+  public String deleteCommission(@ModelAttribute("id") Long id, Model model, HttpServletResponse response) {
+    
+    cmmMemRepo.deleteById(id);
+    
+    return "";
   }
 }
