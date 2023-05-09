@@ -314,8 +314,8 @@ public class JDControllerAdmin {
     public String jdAssistance(@ModelAttribute("id") Long id, Model model, HttpServletRequest request) {
         List<CensusMember> members = new ArrayList<>();
         List<CensusMember> guests = new ArrayList<>();
-        List<String> allowedDelegates = Arrays.asList("Delegado/a de curso", "Subdelegado/a de curso",
-                "Delegado/a de titulación", "Subdelegado/a de titulación", "Delegado/a de Escuela", "Secretario/a");
+        List<String> allowedDelegates = Arrays.asList("Delegado/a de Curso", "Subdelegado/a de Curso",
+                "Delegado/a de Titulación", "Subdelegado/a de Titulación", "Delegado/a de Escuela", "Secretario/a");
 
         JD jd;
         Optional<JD> jdCandidate = jdRepo.findById(id);
